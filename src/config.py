@@ -78,3 +78,24 @@ ESCALATION_PATHS = {
     "Payments": "Finance lead",
     "Support": "Head of customer service",
 }
+
+# --- AI Operations Assistant (rule-based analysis engine) -----------------------
+ASSISTANT_TOP_N = 3
+# A carrier at least this far below the other carriers' on-time rate is an outlier.
+ASSISTANT_CARRIER_GAP = 0.10
+# Ignore carriers with fewer delivered parcels than this (too small to judge).
+ASSISTANT_MIN_DELIVERIES = 20
+# "Concentrated": a segment's share of problems / its share of volume is at least this.
+ASSISTANT_CONCENTRATION_LIFT = 1.5
+# "Demand spike": last 7 days' daily sales at least this multiple of the previous 3 weeks'.
+ASSISTANT_DEMAND_SPIKE = 1.3
+# Impact score = severity weight x scale level (1-3) x urgency (0.5-1.0).
+ASSISTANT_SEVERITY_WEIGHT = {"Critical": 3, "High": 2, "Medium": 1}
+# Scale level 2 from the first number, level 3 from the second.
+ASSISTANT_SCALE_LEVELS = {
+    "customers": (3, 10),        # customers or orders affected
+    "eur": (1_000, 10_000),      # money blocked or overdue
+    "eur_per_day": (200, 1_000),  # sales lost or at risk per day
+}
+# Workload: one owner holding this share (and at least 4) of open Critical/High issues.
+ASSISTANT_OVERLOAD_SHARE = 0.4

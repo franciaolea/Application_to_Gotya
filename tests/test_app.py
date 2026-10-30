@@ -25,6 +25,11 @@ def test_page_renders_without_errors(app, page):
     assert app.title, "every page has a title"
 
 
+def test_dashboard_shows_the_ai_assistant(app):
+    app.switch_page("views/executive_dashboard.py").run()
+    assert "AI Operations Assistant" in [s.value for s in app.subheader]
+
+
 def test_demo_banner_is_always_shown(app):
     app.switch_page("views/executive_dashboard.py").run()
     assert any("DEMO MODE" in m.value for m in app.markdown)

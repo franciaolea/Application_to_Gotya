@@ -13,15 +13,16 @@ Built with Python, Streamlit, pandas and Plotly as a portfolio project for an Op
 1. [What it does](#what-it-does)
 2. [Screenshots](#screenshots)
 3. [Quick start](#quick-start)
-4. [Architecture](#architecture)
-5. [Business rules and KPIs](#business-rules-and-kpis)
-6. [The demo scenario](#the-demo-scenario)
-7. [Two-minute interview demo script](#two-minute-interview-demo-script)
-8. [Testing](#testing)
-9. [Deploying online](#deploying-online)
-10. [Using your own data](#using-your-own-data)
-11. [Design decisions](#design-decisions)
-12. [Limitations and next steps](#limitations-and-next-steps)
+4. [AI Operations Assistant](#ai-operations-assistant)
+5. [Architecture](#architecture)
+6. [Business rules and KPIs](#business-rules-and-kpis)
+7. [The demo scenario](#the-demo-scenario)
+8. [Two-minute interview demo script](#two-minute-interview-demo-script)
+9. [Testing](#testing)
+10. [Deploying online](#deploying-online)
+11. [Using your own data](#using-your-own-data)
+12. [Design decisions](#design-decisions)
+13. [Limitations and next steps](#limitations-and-next-steps)
 
 ---
 
@@ -33,13 +34,14 @@ Operations data usually lives in separate tools: the shop platform, the warehous
 |---|---|
 | How are we doing? | **Executive Dashboard**: six KPIs, each with a status (On track / Watch / At risk / Critical) |
 | What needs a decision now, and who owns it? | **Requires immediate attention** list and the **Daily Briefing** |
-| Why is it happening? | Drill-down pages: **Inventory, Shipping, Payments, Support** |
+| Why is it happening, and what should we do? | **AI Operations Assistant** and the drill-down pages: **Inventory, Shipping, Payments, Support** |
 | Is it being handled? | **Action Tracker**: owners, status, comments, resolution dates |
 
 ### Modules
 
 | Module | What it shows |
 |---|---|
+| 🤖 **AI Operations Assistant** | On the dashboard: the three most important problems today, the root cause the data can prove, specific actions with an owning role, and what to escalate. Rule-based, fully traceable, no external AI service. |
 | 📊 **Executive Dashboard** | Orders processed (vs previous period), pending orders, delayed shipments, low inventory, pending payouts, open tickets; yesterday at a glance; severity-ranked attention list; trends (orders, on-time delivery, support backlog, issues per owner). Filters: period, region, sales channel. |
 | ☀️ **Daily Briefing** | Auto-generated morning report: what is running well, what is delayed, what needs immediate attention, who is responsible, what to escalate and to whom. Downloadable / copyable for email or chat. |
 | ✅ **Action Tracker** | Update status, assign owners, add dated comments, record resolution dates. Create actions straight from open issues. Every change is validated before it is saved. |
@@ -96,6 +98,55 @@ python -m src.demo_data --as-of today   # same scenario, dates relative to today
 
 ---
 
+## AI Operations Assistant
+
+![AI Operations Assistant](docs/screenshots/09_ai_assistant.png)
+
+KPIs say *what* is wrong. The assistant goes further: for the three most important problems it explains **why**, recommends **what to do**, says **who should own it** and flags **what to escalate**. It is a **rule-based analysis engine** (`src/assistant.py`): no external AI service, no API key, no cost, and the same answer every time for the same data.
+
+### How it works
+
+```
+ enriched data (metrics.py)
+      │
+ ① Detectors          carrier performance · stock-outs · support SLA · fulfilment backlog · blocked payments · workload
+      │
+ ② Root-cause checks  only what the data can prove
+      │
+ ③ Impact score       severity × scale × urgency  → top 3
+      │
+ ④ Playbook           (problem, cause) → actions + owning role + escalation contact
+      │
+ ⑤ Evidence           every figure registered with its source; every number in the text is checked
+```
+
+| Root-cause check | What it proves | Example from the demo data |
+|---|---|---|
+| **Concentration** | One segment causes far more problems than its share of volume (ratio ≥ 1.5) | Parcelyn delivers 26% of parcels but has 8 of 10 open late or exception parcels |
+| **Peer comparison** | The problem is not explained by circumstances others share | Parcelyn is slower than other carriers in 5 of 5 countries they both serve |
+| **Cross-module link** | One area's problem drives another's | 17 of 21 "Where is my order" tickets concern parcels that were late |
+| **Demand change** | Sales rose faster than the reorder point assumes (≥ 1.3× and ≥ 5 units a week) | Oak Wall Shelf +170% in the last 7 days vs the previous 3 weeks |
+
+**Impact score** = severity (Critical 3, High 2, Medium 1) × scale (1–3, by customers or euros affected) × urgency (0.5–1.0). Thresholds are in `config.py`. Lower-ranked findings are listed below the top three, and areas with no problem are named, so nothing is hidden.
+
+### How it avoids inventing things
+
+- **Evidence first.** A figure can only appear in a sentence after it has been registered as evidence with its label and source. The **Evidence** panel under each finding shows all of them.
+- **Automated check.** A test extracts every number from every sentence and fails if one is not in the evidence. During development it caught a real slip: a product count that had been computed in the sentence but never registered.
+- **No proof, no cause.** If no root-cause check passes, the finding says *"not determined"* and names the missing data, e.g. for payments: *no hold reason or dispute notes in the data*. A supplier is only blamed with at least 3 affected products, because 2 can be coincidence.
+- **Quiet days stay quiet.** With no problems in the data, the assistant reports none (tested).
+
+**Add to Action Tracker** turns the first recommendation into a tracked action (area, reference, priority, due tomorrow if escalated, suggested owner in the comment). The button is replaced by "Tracked as ACT-…" so a finding cannot be added twice.
+
+### Limitations
+
+- **Rule-based, not a language model.** It only recognises the problem types it has detectors for, and its wording comes from fixed templates. That is a deliberate trade-off for traceability and testability.
+- **Correlation, not experiments.** Root causes are the strongest explanation the data supports (hence the confidence level), not proof in a scientific sense.
+- **Limited by the data available.** It cannot see carrier scan events, purchase orders, staffing or payment terms, and says so in each finding's *data gaps*.
+- **Possible next step (not built):** an optional LLM layer that rewrites the engine's findings as a narrative and answers follow-up questions, using only the engine's evidence, with the same number check and a fallback to the rule-based text. That would need an API key, a spend limit and approval before using real company data.
+
+---
+
 ## Architecture
 
 ```
@@ -122,6 +173,7 @@ src/
   data_loader.py           Load CSVs: text → validation → typed DataFrames (DataBundle)
   validation.py            Schemas per file + checks (columns, blanks, dates, numbers, values, IDs, links)
   metrics.py               Business logic: enrich records with flags, KPIs, trends, severity, area health
+  assistant.py             AI Operations Assistant: detectors, root-cause checks, scoring, evidence
   briefing.py              Daily Briefing: builds the report and its Markdown export
   actions.py               Action Tracker rules, change detection, validated atomic save, demo reset
   charts.py                Plotly charts with one consistent, colour-blind-safe style
@@ -129,7 +181,7 @@ src/
   demo_data.py             Generator for the fictional dataset (seeded, reproducible)
 data/demo/                 Fictional CSVs + _metadata.json ("FICTIONAL DEMO DATA")
 data/live/                 Place for real exports (git-ignored)
-tests/                     75 automated tests (pytest)
+tests/                     88 automated tests (pytest)
 docs/screenshots/          Images used in this README
 assets/logo.svg            Sidebar logo
 .streamlit/config.toml     Theme and toolbar settings
@@ -223,10 +275,10 @@ The fictional data is generated with a fixed seed, so it is identical on every r
 **0:00 – 0:20 · The problem (Executive Dashboard)**
 > "As an Operations Manager I want to know in one minute how the business is doing and what needs me today. This is a control tower for a fictional home-goods retailer, built in Python. Orders are up 39% week on week, but two areas are red."
 
-**0:20 – 0:45 · What needs attention**
-> "Every problem across orders, shipping, inventory, payments and support is ranked by one set of severity rules. Five are critical and must be escalated today, and each has an owner. The colours aren't opinions: each badge comes from a documented rule."
+**0:20 – 0:45 · What needs attention (AI Operations Assistant)**
+> "Below the KPIs, the assistant ranks today's three most important problems. Number one: Parcelyn. It doesn't just say deliveries are late. It shows the cause: Parcelyn has 26% of the parcels but 8 of the 10 late ones, and it's slower than the other carriers in every country they share. Each action has an owning role, and it tells me what to escalate today. Every figure is under Evidence, and where the data can't prove a cause, it says so."
 
-*Scroll to "Requires immediate attention", then click **Shipping details →** under Delayed shipments.*
+*Click **Add to Action Tracker** on the first finding, then **Shipping details →** under Delayed shipments.*
 
 **0:45 – 1:10 · Root cause (Shipping)**
 > "The symptom is late parcels. The cause is one carrier: Parcelyn is at 66% on time while the others are at 92%. And on the Support page" *(open Support, scroll to the last chart)* "it generates 20 complaints per 100 parcels, two to three times the others. That's a carrier review with data behind it, not a feeling."
@@ -238,7 +290,7 @@ The fictional data is generated with a fixed seed, so it is identical on every r
 > "Every morning this briefing is generated automatically: what's running well, what's delayed, what to escalate and to whom. I can paste it into the team channel." *(Open Action Tracker.)* "Then issues become actions with owners and due dates. The rules are enforced: you can't block an action without saying why, and resolution dates are recorded automatically."
 
 **1:50 – 2:00 · Close**
-> "Everything runs on documented business rules, covered by 75 automated tests. With real exports from the shop, carriers and helpdesk, it works the same way."
+> "Everything runs on documented business rules, covered by 88 automated tests. With real exports from the shop, carriers and helpdesk, it works the same way."
 
 ### Questions you may be asked
 
@@ -247,7 +299,8 @@ The fictional data is generated with a fixed seed, so it is identical on every r
 | *Why are the thresholds what they are?* | They are assumptions in `config.py`, one place to agree them with the business. I'd calibrate them on real historical data. |
 | *How would it connect to real systems?* | Replace the CSV exports with scheduled exports or API pulls into the same columns. Validation and every rule stay the same. |
 | *What if two people edit actions at once?* | CSV is single-user. Next step: a database (e.g. PostgreSQL). All logic is in `actions.py`, so only the save/load functions change. |
-| *How do you know the numbers are right?* | 75 automated tests, most on small hand-made examples of each rule (e.g. "a parcel 3 days late is escalated"). The briefing is tested to agree with the dashboard. |
+| *How do you know the numbers are right?* | 88 automated tests, most on small hand-made examples of each rule (e.g. "a parcel 3 days late is escalated"). The briefing is tested to agree with the dashboard. |
+| *Is the assistant really AI?* | It's a rule-based analysis engine, which is how most decision-support tools start: explainable, testable, free to run. Every claim is traceable to the data. An LLM could be added on top to write the narrative, but never as the source of facts. |
 | *What would you add next?* | Automatic email of the briefing at 08:00, alerts when an area turns Critical, sales forecasting for reorder points, and login with roles. |
 
 ---
@@ -255,13 +308,14 @@ The fictional data is generated with a fixed seed, so it is identical on every r
 ## Testing
 
 ```bash
-pytest -v      # 75 tests, ~4 seconds
+pytest -v      # 88 tests, ~5 seconds
 ```
 
 | File | What it proves |
 |---|---|
 | `test_validation.py` | Bad data is caught: missing columns, blanks, invalid dates, negative numbers, unknown statuses, duplicate IDs, broken links, missing files. |
 | `test_metrics.py` | Each business rule on small hand-made examples: stuck orders, lateness and escalation, stock status, days of cover, overdue payments, SLA states (incl. paused clock), severity ranking, KPI comparisons, carrier scorecard, complaint rates. |
+| `test_assistant.py` | The assistant finds the planted problems in impact order, never states a number missing from its evidence (and the check itself catches an invented one), reports unproven causes as "not determined", stays quiet on a quiet day, and agrees with the Shipping page. |
 | `test_briefing.py` | The briefing answers all five questions, escalates exactly the dashboard's Critical issues, and says "all clear" on a day with no problems. |
 | `test_actions.py` | Action rules, dated comments, change detection, validated and atomic save, demo reset. |
 | `test_demo_data.py` | The demo data meets the brief (≥30 orders, ≥20 products, ≥15 tickets), is reproducible, never dated after the snapshot, contains the planted scenarios and is labelled fictional. |

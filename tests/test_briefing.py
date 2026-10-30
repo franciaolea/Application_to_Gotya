@@ -61,21 +61,9 @@ def test_follow_ups_are_open_actions_due_today_or_earlier():
     assert list(due["days_overdue"]) == [2, 0]
 
 
-def test_quiet_day_has_no_escalations(demo_bundle):
+def test_quiet_day_has_no_escalations(quiet_frames, demo_bundle):
     """Remove every problem from the demo data: the briefing should say all is well."""
-    f = {name: df.copy() for name, df in demo_bundle.frames.items()}
-    as_of = demo_bundle.as_of
-    f["orders"]["status"] = "Delivered"
-    s = f["shipments"]
-    s["status"] = "Delivered"
-    s["actual_delivery_date"] = s["expected_delivery_date"].where(
-        s["expected_delivery_date"] < pd.Timestamp(as_of), pd.Timestamp(as_of).normalize() - pd.Timedelta(days=1))
-    f["products"]["stock_on_hand"] = f["products"]["min_stock"] * 3
-    f["payments"]["status"] = "Paid"
-    f["payments"]["paid_date"] = f["payments"]["due_date"]
-    f["tickets"]["status"] = "Resolved"
-    f["tickets"]["resolved_at"] = f["tickets"]["created_at"] + pd.Timedelta(hours=1)
-    b = briefing.build_briefing(f, as_of)
+    b = briefing.build_briefing(quiet_frames, demo_bundle.as_of)
     assert b.escalations.empty and b.attention.empty
     assert set(b.area_status.values()) == {"On track"}
     assert b.headline.startswith("No critical or high-priority issues")

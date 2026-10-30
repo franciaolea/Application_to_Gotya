@@ -83,6 +83,23 @@ def status_badge(status: str) -> str:
             f'{icon} {status}</span>')
 
 
+# Severity uses the same colours as the matching area status (High = "At risk" orange).
+SEVERITY_STYLE = {"Critical": "Critical", "High": "At risk", "Medium": "Watch"}
+
+
+def severity_badge(severity: str) -> str:
+    _, text, background, border = STATUS_STYLES[SEVERITY_STYLE[severity]]
+    icon = STATUS_STYLES[SEVERITY_STYLE[severity]][0]
+    return (f'<span class="badge" style="color:{text};background:{background};border-color:{border}">'
+            f'{icon} {severity}</span>')
+
+
+def escalate_badge() -> str:
+    _, text, background, border = STATUS_STYLES["Critical"]
+    return (f'<span class="badge" style="color:#FFFFFF;background:{border};border-color:{border}">'
+            '⬆ Escalate today</span>')
+
+
 def kpi_card(label: str, value: str, caption: str = "", status: Optional[str] = None) -> None:
     """A KPI tile: label, big number, explanation and (optionally) the area's status."""
     badge = status_badge(status) if status else '<span class="badge" style="visibility:hidden">-</span>'
