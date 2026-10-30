@@ -45,3 +45,21 @@ def test_contains_problems_for_the_dashboard_to_find(demo_bundle):
 def test_is_clearly_labelled_as_demo(demo_bundle):
     assert demo_bundle.is_demo
     assert demo_bundle.metadata["data_classification"] == "FICTIONAL DEMO DATA"
+
+
+def test_where_is_my_order_tickets_mostly_follow_late_parcels(demo_bundle):
+    """The generator links contacts to real problems, so support data tells a true story."""
+    frames = demo_bundle.frames
+    today = pd.Timestamp(demo_bundle.as_of).normalize()
+    s = frames["shipments"]
+    late = s[s["actual_delivery_date"].isna()
+             & ((s["expected_delivery_date"] < today) | (s["status"] == "Exception"))]
+    wismo = frames["tickets"][frames["tickets"]["category"] == "Where is my order"]
+    assert len(wismo) > 0
+    assert wismo["order_id"].isin(late["order_id"]).mean() > 0.5
+
+
+def test_one_supplier_invoice_is_on_hold(demo_bundle):
+    payments = demo_bundle.frames["payments"]
+    on_hold = payments[payments["status"] == "On Hold"]
+    assert len(on_hold) == 1 and on_hold.iloc[0]["type"] == "Supplier Invoice"

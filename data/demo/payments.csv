@@ -18,7 +18,7 @@ PAY-7016,Supplier Invoice,Outgoing,Atlas Ceramics,,3906.8,Paid,2026-10-18,2026-1
 PAY-7017,Carrier Invoice,Outgoing,Parcelyn,,3223.62,Pending,2026-11-09,,Daniel Mensah
 PAY-7018,Customer Refund,Outgoing,Mateo Weber,ORD-10461,36.88,Paid,2026-10-13,2026-10-11,Daniel Mensah
 PAY-7019,Customer Refund,Outgoing,Julia Keller,ORD-10028,39.97,Processing,2026-10-31,,Hannah Lindqvist
-PAY-7020,Supplier Invoice,Outgoing,Brightline Lighting,,9607.67,Pending,2026-11-12,,Daniel Mensah
+PAY-7020,Supplier Invoice,Outgoing,Brightline Lighting,,9607.67,On Hold,2026-11-12,,Daniel Mensah
 PAY-7021,Marketplace Payout,Incoming,MarketHub Marketplace,,6167.53,Pending,2026-10-24,,Hannah Lindqvist
 PAY-7022,Customer Refund,Outgoing,Oscar Petit,ORD-10180,219.77,Paid,2026-10-28,2026-10-25,Daniel Mensah
 PAY-7023,Supplier Invoice,Outgoing,Brightline Lighting,,6692.84,Paid,2026-10-14,2026-10-13,Hannah Lindqvist
@@ -27,3 +27,15 @@ PAY-7025,Marketplace Payout,Incoming,MarketHub Marketplace,,4671.06,Processing,2
 PAY-7026,Marketplace Payout,Incoming,MarketHub Marketplace,,5001.03,Pending,2026-11-02,,Hannah Lindqvist
 PAY-7027,Payment Processor Settlement,Incoming,CardBridge,,4236.92,Paid,2026-10-21,2026-10-19,Hannah Lindqvist
 PAY-7028,Supplier Invoice,Outgoing,Brightline Lighting,,2919.95,Processing,2026-11-10,,Hannah Lindqvist
+PAY-7029,Customer Refund,Outgoing,Mila Laurent,ORD-10476,216.61,Paid,2026-11-01,2026-10-29,Daniel Mensah
+PAY-7030,Supplier Invoice,Outgoing,Atlas Ceramics,,8907.63,Paid,2026-10-19,2026-10-18,Daniel Mensah
+PAY-7031,Carrier Invoice,Outgoing,Parcelyn,,2339.82,Pending,2026-11-04,,Daniel Mensah
+PAY-7032,Supplier Invoice,Outgoing,Atlas Ceramics,,1377.41,Paid,2026-10-17,2026-10-16,Daniel Mensah
+PAY-7033,Supplier Invoice,Outgoing,Brightline Lighting,,884.03,Processing,2026-11-09,,Daniel Mensah
+PAY-7034,Customer Refund,Outgoing,Theo Moreau,ORD-10612,165.0,Pending,2026-11-02,,Daniel Mensah
+PAY-7035,Payment Processor Settlement,Incoming,PayFlow Payments,,2718.46,Pending,2026-11-10,,Daniel Mensah
+PAY-7036,Payment Processor Settlement,Incoming,PayFlow Payments,,4639.18,Pending,2026-11-04,,Hannah Lindqvist
+PAY-7037,Supplier Invoice,Outgoing,Cedar & Stone Supply,,5036.52,Paid,2026-10-21,2026-10-19,Hannah Lindqvist
+PAY-7038,Supplier Invoice,Outgoing,Harbor Textiles,,9000.69,Paid,2026-10-27,2026-10-25,Hannah Lindqvist
+PAY-7039,Customer Refund,Outgoing,Oscar Kowalski,ORD-10334,93.59,Paid,2026-10-20,2026-10-18,Daniel Mensah
+PAY-7040,Customer Refund,Outgoing,Lena Andersen,ORD-10654,46.65,Paid,2026-10-14,2026-10-13,Daniel Mensah

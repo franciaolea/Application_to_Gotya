@@ -261,7 +261,7 @@ def make_shipments(rng: random.Random, as_of: date, orders: pd.DataFrame):
     return orders, pd.DataFrame(rows)
 
 
-def make_payments(rng: random.Random, as_of: date, orders: pd.DataFrame, n: int = 28) -> pd.DataFrame:
+def make_payments(rng: random.Random, as_of: date, orders: pd.DataFrame, n: int = 40) -> pd.DataFrame:
     # type -> (direction, possible counterparties, amount range)
     kinds = {
         "Marketplace Payout": ("Incoming", ["MarketHub Marketplace"], (900, 6500)),
@@ -309,7 +309,13 @@ def make_payments(rng: random.Random, as_of: date, orders: pd.DataFrame, n: int 
             "paid_date": _d(paid),
             "owner": rng.choice(TEAM["finance"]),
         })
-    return pd.DataFrame(rows)
+    df = pd.DataFrame(rows)
+    # Planted scenario: the largest unpaid supplier invoice is on hold (e.g. a disputed delivery),
+    # a decision the finance owner has to unblock.
+    unpaid_supplier = df[(df["type"] == "Supplier Invoice") & (df["status"] != "Paid")]
+    if len(unpaid_supplier):
+        df.loc[unpaid_supplier["amount_eur"].idxmax(), "status"] = "On Hold"
+    return df
 
 
 TICKET_SUBJECTS = {
@@ -324,8 +330,31 @@ TICKET_SUBJECTS = {
 }
 
 
-def make_tickets(rng: random.Random, as_of: date, orders: pd.DataFrame, n: int = 30) -> pd.DataFrame:
+def _ticket_order_pools(as_of: date, orders: pd.DataFrame, shipments: pd.DataFrame) -> Dict[str, pd.DataFrame]:
+    """Which orders a customer could plausibly contact us about, per kind of problem."""
+    today = _d(as_of)
+    late = shipments[(shipments["actual_delivery_date"] == "")
+                     & ((shipments["expected_delivery_date"] < today) | (shipments["status"] == "Exception"))]
+    return {
+        "late": orders[orders["order_id"].isin(late["order_id"])],
+        "shipped": orders[orders["order_id"].isin(shipments["order_id"])],
+        "delivered": orders[orders["order_id"].isin(
+            shipments.loc[shipments["status"] == "Delivered", "order_id"])],
+        "any": orders,
+    }
+
+
+def make_tickets(rng: random.Random, as_of: date, orders: pd.DataFrame, shipments: pd.DataFrame,
+                 n: int = 60, days: int = 10) -> pd.DataFrame:
+    """Support tickets over the last `days` days (~6 a day, about 4% of orders).
+
+    Tickets follow real problems: most "Where is my order" contacts come from
+    parcels that are actually late, and damage/wrong-item complaints come from
+    delivered orders. That is what lets the Support page link contact volume
+    back to carrier performance.
+    """
     as_of_ts = datetime.combine(as_of, time(config.BRIEFING_HOUR))
+    pools = _ticket_order_pools(as_of, orders, shipments)
     # Planted priority mix (10% Critical, 25% High, 40% Medium, rest Low), shuffled.
     priorities = (["Critical"] * round(n * 0.1) + ["High"] * round(n * 0.25)
                   + ["Medium"] * round(n * 0.4))
@@ -334,7 +363,7 @@ def make_tickets(rng: random.Random, as_of: date, orders: pd.DataFrame, n: int =
 
     rows = []
     for priority in priorities:
-        created = as_of_ts - timedelta(hours=rng.randint(1, 24 * 7))
+        created = as_of_ts - timedelta(hours=rng.randint(1, 24 * days))
         sla = created + timedelta(hours=config.TICKET_SLA_HOURS[priority])
         category = _pick(rng, {"Where is my order": 0.3, "Damaged item": 0.15, "Wrong item": 0.1,
                                "Refund request": 0.2, "Payment issue": 0.1, "Product question": 0.15})
@@ -342,8 +371,8 @@ def make_tickets(rng: random.Random, as_of: date, orders: pd.DataFrame, n: int =
         age_hours = (as_of_ts - created).total_seconds() / 3600
         # Tickets older than their SLA are usually done; a few slipped through (breaches).
         if age_hours > sla_hours:
-            status = _pick(rng, {"Resolved": 0.55, "Closed": 0.3, "Open": 0.05,
-                                 "In Progress": 0.05, "Waiting on Customer": 0.05})
+            status = _pick(rng, {"Resolved": 0.6, "Closed": 0.32, "Open": 0.03,
+                                 "In Progress": 0.02, "Waiting on Customer": 0.03})
         else:
             status = _pick(rng, {"Open": 0.4, "In Progress": 0.35, "Waiting on Customer": 0.1,
                                  "Resolved": 0.15})
@@ -352,7 +381,13 @@ def make_tickets(rng: random.Random, as_of: date, orders: pd.DataFrame, n: int =
             # Most are solved within the SLA, some take up to 25% longer.
             took = timedelta(hours=sla_hours * rng.uniform(0.2, 1.25))
             resolved = min(created + took, as_of_ts - timedelta(minutes=5))
-        order = orders.iloc[rng.randrange(len(orders))]
+        if category == "Where is my order":
+            pool = pools["late"] if len(pools["late"]) and rng.random() < 0.7 else pools["shipped"]
+        elif category in ("Damaged item", "Wrong item"):
+            pool = pools["delivered"]
+        else:
+            pool = pools["any"]
+        order = pool.iloc[rng.randrange(len(pool))]
         rows.append({
             "ticket_id": "",  # numbered after sorting below
             "created_at": created,
@@ -423,7 +458,7 @@ def generate_all(as_of: date = DEFAULT_AS_OF, seed: int = SEED) -> Dict[str, pd.
     orders = make_orders(rng, as_of, products, popularity)
     orders, shipments = make_shipments(rng, as_of, orders)
     payments = make_payments(rng, as_of, orders)
-    tickets = make_tickets(rng, as_of, orders)
+    tickets = make_tickets(rng, as_of, orders, shipments)
     actions = make_actions(as_of, products, shipments, payments, tickets)
     return {"products": products, "orders": orders, "shipments": shipments,
             "payments": payments, "tickets": tickets, "actions": actions}

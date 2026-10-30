@@ -351,6 +351,120 @@ def open_shipments_by_lateness(shipments: pd.DataFrame) -> pd.DataFrame:
         .rename_axis("carrier").reset_index()
 
 
+# --- 3c. Module drill-downs: payments and support --------------------------------
+
+def _due_bucket_labels():
+    esc = config.PAYMENT_ESCALATION_DAYS
+    return [f"{esc}+ days overdue", f"1-{esc - 1} days overdue", "Due within 7 days", "Due later"]
+
+
+def payment_kpis(payments: pd.DataFrame, as_of: datetime) -> dict:
+    """Money owed to us (incoming) and by us (outgoing), and what needs chasing."""
+    today = _today(as_of)
+    outstanding = payments[payments["is_outstanding"]]
+    days_to_due = (outstanding["due_date"] - today).dt.days
+    due_soon = outstanding[(days_to_due >= 0) & (days_to_due <= 7)]
+    blocked = outstanding[outstanding["status"].isin(["Failed", "On Hold"])]
+    overdue = outstanding[outstanding["is_overdue"]]
+    paid_recently = payments[payments["paid_date"] >= today - pd.Timedelta(days=30)]
+
+    def total(df: pd.DataFrame) -> float:
+        return float(df["amount_eur"].sum())
+
+    incoming = outstanding[outstanding["direction"] == "Incoming"]
+    outgoing = outstanding[outstanding["direction"] == "Outgoing"]
+    return {
+        "incoming_count": len(incoming), "incoming_eur": total(incoming),
+        "outgoing_count": len(outgoing), "outgoing_eur": total(outgoing),
+        "overdue_count": len(overdue), "overdue_eur": total(overdue),
+        "due_soon_count": len(due_soon), "due_soon_eur": total(due_soon),
+        "blocked_count": len(blocked), "blocked_eur": total(blocked),
+        "paid_30d_count": len(paid_recently), "paid_30d_eur": total(paid_recently),
+    }
+
+
+def payment_due_buckets(payments: pd.DataFrame, as_of: datetime) -> pd.DataFrame:
+    """Outstanding amounts by due-date bucket and direction (a simple ageing report)."""
+    labels = _due_bucket_labels()
+    outstanding = payments[payments["is_outstanding"]].copy()
+    days_to_due = (outstanding["due_date"] - _today(as_of)).dt.days
+    outstanding["bucket"] = np.select(
+        [outstanding["days_overdue"] >= config.PAYMENT_ESCALATION_DAYS, outstanding["days_overdue"] > 0,
+         days_to_due <= 7], labels[:3], default=labels[3])
+    table = outstanding.groupby(["bucket", "direction"]).agg(
+        amount_eur=("amount_eur", "sum"), count=("payment_id", "count"))
+    index = pd.MultiIndex.from_product([labels, ["Incoming", "Outgoing"]], names=["bucket", "direction"])
+    return table.reindex(index, fill_value=0).reset_index()
+
+
+def outstanding_by_type(payments: pd.DataFrame) -> pd.DataFrame:
+    outstanding = payments[payments["is_outstanding"]]
+    return outstanding.groupby(["type", "direction"]).agg(
+        amount_eur=("amount_eur", "sum"), count=("payment_id", "count")) \
+        .reset_index().sort_values("amount_eur")
+
+
+def support_kpis(tickets: pd.DataFrame, as_of: datetime, days: int = 7) -> dict:
+    """Backlog right now, plus how well tickets resolved in the last `days` met their SLA."""
+    now = _now(as_of)
+    open_tickets = tickets[tickets["is_open"]]
+    resolved = tickets[tickets["resolved_at"] >= now - pd.Timedelta(days=days)]
+    hours_to_resolve = (resolved["resolved_at"] - resolved["created_at"]).dt.total_seconds() / 3600
+    return {
+        "open": len(open_tickets),
+        "breached": int(tickets["is_breached"].sum()),
+        "urgent_breached": int(tickets["needs_escalation"].sum()),
+        "at_risk": int(tickets["is_at_risk"].sum()),
+        "paused": int(open_tickets["status"].isin(SLA_PAUSED_STATUSES).sum()),
+        "resolved": len(resolved),
+        "sla_compliance": _rate(resolved["met_sla"].sum(), len(resolved)),
+        "avg_resolution_hours": float(hours_to_resolve.mean()) if len(resolved) else None,
+        "oldest_open_hours": float((now - open_tickets["created_at"]).dt.total_seconds().max() / 3600)
+        if len(open_tickets) else None,
+    }
+
+
+def resolution_vs_sla(tickets: pd.DataFrame) -> pd.DataFrame:
+    """Average time to resolve per priority, next to the SLA allowed for that priority."""
+    resolved = tickets[~tickets["is_open"]].copy()
+    resolved["hours"] = (resolved["resolved_at"] - resolved["created_at"]).dt.total_seconds() / 3600
+    table = resolved.groupby("priority").agg(
+        resolved=("ticket_id", "count"), avg_hours=("hours", "mean"), met_sla=("met_sla", "mean"))
+    table = table.reindex(list(config.TICKET_SLA_HOURS))
+    table["sla_hours"] = list(config.TICKET_SLA_HOURS.values())
+    table["resolved"] = table["resolved"].fillna(0).astype(int)
+    return table.rename_axis("priority").reset_index()
+
+
+def contacts_by_category(tickets: pd.DataFrame) -> pd.DataFrame:
+    """Why customers contact us: tickets per category, open vs resolved."""
+    table = pd.crosstab(tickets["category"], np.where(tickets["is_open"], "Open", "Resolved"))
+    table = table.reindex(columns=["Open", "Resolved"], fill_value=0).rename_axis(columns=None)
+    table["total"] = table.sum(axis=1)
+    return table.sort_values("total").rename_axis("category").reset_index()
+
+
+DELIVERY_CATEGORIES = ["Where is my order", "Damaged item"]
+
+
+def delivery_contacts_by_carrier(tickets: pd.DataFrame, shipments: pd.DataFrame, as_of: datetime,
+                                 days: int = 14) -> pd.DataFrame:
+    """Delivery-related tickets per carrier, per 100 parcels shipped.
+
+    Raw counts would favour the smallest carrier, so we compare a rate:
+    tickets in the last `days` days / parcels shipped in the same period x 100.
+    """
+    since = _today(as_of) - pd.Timedelta(days=days)
+    recent = tickets[(tickets["created_at"] >= since) & tickets["category"].isin(DELIVERY_CATEGORIES)]
+    linked = recent.merge(shipments[["order_id", "carrier"]], on="order_id", how="inner")
+    shipped = shipments[shipments["ship_date"] >= since].groupby("carrier").size()
+    carriers = sorted(shipments["carrier"].dropna().unique())
+    table = pd.DataFrame({"tickets": linked.groupby("carrier").size(), "shipped": shipped}) \
+        .reindex(carriers).fillna(0).astype(int)
+    table["per_100_shipments"] = (table["tickets"] / table["shipped"] * 100).where(table["shipped"] > 0)
+    return table.rename_axis("carrier").reset_index()
+
+
 # --- 4. Attention list -----------------------------------------------------
 
 def _day_count(n: pd.Series, suffix: str) -> pd.Series:
@@ -400,7 +514,9 @@ def _payment_issues(pay: pd.DataFrame) -> pd.DataFrame:
         pay, "Payments",
         np.select([pay["needs_escalation"], pay["status"] == "On Hold"], ["Critical", "High"], "Medium"),
         "payment_id", pay["status"] + " " + pay["type"].str.lower() + " - " + pay["counterparty"], "owner",
-        "€" + pay["amount_eur"].map("{:,.0f}".format) + ", " + _day_count(pay["days_overdue"], "overdue"))
+        "€" + pay["amount_eur"].map("{:,.0f}".format) + ", " + np.where(
+            pay["days_overdue"] > 0, _day_count(pay["days_overdue"], "overdue"),
+            "due " + pay["due_date"].dt.strftime("%d %b")))
 
 
 def _ticket_issues(t: pd.DataFrame) -> pd.DataFrame:

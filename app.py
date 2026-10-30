@@ -30,6 +30,8 @@ pages = {
     "Operations": [
         st.Page("views/inventory.py", title="Inventory", icon="📦"),
         st.Page("views/shipping.py", title="Shipping", icon="🚚"),
+        st.Page("views/payments.py", title="Payments", icon="💳"),
+        st.Page("views/support.py", title="Support", icon="🎧"),
     ],
     "System": [
         st.Page("views/data_health.py", title="Data Health", icon="🩺"),

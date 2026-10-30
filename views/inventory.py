@@ -100,7 +100,7 @@ st.dataframe(
         "stockout_risk": st.column_config.CheckboxColumn("Sells out before restock",
                                                          help="Days of cover shorter than the lead time"),
         "suggested_order_qty": "Order qty",
-        "reorder_cost": st.column_config.NumberColumn("Est. cost", format="€%.0f"),
+        "reorder_cost": st.column_config.NumberColumn("Est. cost", format="euro"),
         "owner": "Owner",
     })
 if not replenish.empty:
@@ -127,7 +127,7 @@ with st.expander(f"Full inventory ({len(view)} products)"):
                                                         format="%.0f%%", help="100% = exactly at minimum"),
             "units_sold": st.column_config.NumberColumn("Sold (4 wks)"),
             "days_of_cover": st.column_config.NumberColumn("Days of cover", format="%.0f"),
-            "unit_cost": st.column_config.NumberColumn("Unit cost", format="€%.2f"),
-            "stock_value": st.column_config.NumberColumn("Stock value", format="€%.0f"),
+            "unit_cost": st.column_config.NumberColumn("Unit cost", format="euro"),
+            "stock_value": st.column_config.NumberColumn("Stock value", format="euro"),
             "last_restock_date": st.column_config.DateColumn("Last restock", format="DD MMM YYYY"),
         })

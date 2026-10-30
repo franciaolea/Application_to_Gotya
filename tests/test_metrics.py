@@ -317,3 +317,80 @@ def test_area_issues_and_status_for_a_single_module():
     assert list(issues["reference"]) == ["LOW"]
     assert metrics.status_of(issues) == "Watch"
     assert metrics.status_of(metrics.area_issues("Inventory", products.iloc[[1]])) == "On track"
+
+
+# --- Payments drill-down ----------------------------------------------------------
+
+def payment(pid, direction, amount, status, due_days_ago, paid_days_ago=None):
+    return {"payment_id": pid, "type": "Supplier Invoice", "direction": direction, "counterparty": "X",
+            "amount_eur": amount, "status": status, "due_date": days_ago(due_days_ago),
+            "paid_date": days_ago(paid_days_ago) if paid_days_ago is not None else pd.NaT,
+            "owner": "Daniel Mensah"}
+
+
+def test_payment_kpis_split_money_in_and_out():
+    p = metrics.enrich_payments(pd.DataFrame([
+        payment("in-pending", "Incoming", 500, "Pending", -3),         # due in 3 days
+        payment("in-overdue", "Incoming", 200, "Pending", 2),          # 2 days overdue
+        payment("out-on-hold", "Outgoing", 1000, "On Hold", -20),
+        payment("out-paid", "Outgoing", 300, "Paid", 5, paid_days_ago=6),
+    ]), AS_OF)
+    kpi = metrics.payment_kpis(p, AS_OF)
+    assert (kpi["incoming_count"], kpi["incoming_eur"]) == (2, 700)
+    assert (kpi["outgoing_count"], kpi["outgoing_eur"]) == (1, 1000)
+    assert (kpi["overdue_count"], kpi["overdue_eur"]) == (1, 200)
+    assert (kpi["blocked_count"], kpi["blocked_eur"]) == (1, 1000)
+    assert (kpi["due_soon_count"], kpi["due_soon_eur"]) == (1, 500)
+    assert (kpi["paid_30d_count"], kpi["paid_30d_eur"]) == (1, 300)
+
+
+def test_payment_due_buckets():
+    p = metrics.enrich_payments(pd.DataFrame([
+        payment("very-late", "Outgoing", 100, "Pending", 9),
+        payment("late", "Outgoing", 200, "Pending", 2),
+        payment("this-week", "Incoming", 300, "Pending", -4),
+        payment("later", "Incoming", 400, "Pending", -30),
+        payment("paid", "Incoming", 999, "Paid", 2, paid_days_ago=2),  # paid: not outstanding
+    ]), AS_OF)
+    t = metrics.payment_due_buckets(p, AS_OF).set_index(["bucket", "direction"])["amount_eur"]
+    assert t[("7+ days overdue", "Outgoing")] == 100
+    assert t[("1-6 days overdue", "Outgoing")] == 200
+    assert t[("Due within 7 days", "Incoming")] == 300
+    assert t[("Due later", "Incoming")] == 400
+    assert t.sum() == 1000
+
+
+# --- Support drill-down -----------------------------------------------------------
+
+def test_support_kpis_and_resolution_vs_sla():
+    t = metrics.enrich_tickets(make_tickets([
+        ("met", "High", "Resolved", -10, 4),          # resolved 4h before its deadline
+        ("missed", "High", "Closed", -10, -2),        # resolved 2h after its deadline
+        ("open-breached", "Low", "Open", -1, None),
+        ("waiting", "Medium", "Waiting on Customer", 5, None),
+    ]), AS_OF)
+    kpi = metrics.support_kpis(t, AS_OF, days=7)
+    assert kpi["open"] == 2 and kpi["paused"] == 1 and kpi["breached"] == 1
+    assert kpi["urgent_breached"] == 0          # the breached ticket is Low priority
+    assert kpi["sla_compliance"] == pytest.approx(0.5)
+    assert kpi["avg_resolution_hours"] == pytest.approx(((24 - 4) + (24 + 2)) / 2)
+
+    high = metrics.resolution_vs_sla(t).set_index("priority").loc["High"]
+    assert high["resolved"] == 2 and high["sla_hours"] == 24 and high["met_sla"] == pytest.approx(0.5)
+
+
+def test_delivery_complaints_are_a_rate_per_100_parcels():
+    shipments = pd.DataFrame({
+        "order_id": [f"BIG-{i}" for i in range(50)] + [f"SMALL-{i}" for i in range(10)],
+        "carrier": ["Big Co"] * 50 + ["Small Co"] * 10,
+        "ship_date": [days_ago(3)] * 60,
+    })
+    tickets = pd.DataFrame({
+        "order_id": ["BIG-1", "BIG-2", "SMALL-1", "SMALL-2", "BIG-3"],
+        "category": ["Where is my order"] * 4 + ["Product question"],   # questions don't count
+        "created_at": [pd.Timestamp(AS_OF) - pd.Timedelta(days=1)] * 5,
+    })
+    rate = metrics.delivery_contacts_by_carrier(tickets, shipments, AS_OF).set_index("carrier")
+    # Same number of complaints, but Small Co ships far less: 20 per 100 vs 4 per 100.
+    assert rate.loc["Big Co", "per_100_shipments"] == pytest.approx(4)
+    assert rate.loc["Small Co", "per_100_shipments"] == pytest.approx(20)

@@ -194,3 +194,87 @@ def open_shipments_by_lateness(table: pd.DataFrame) -> go.Figure:
     fig.update_xaxes(showgrid=True, gridcolor=GRID, title_text="Open shipments")
     fig.update_yaxes(showgrid=False, autorange="reversed")
     return _style(fig)
+
+
+# --- Payments ------------------------------------------------------------------
+
+DIRECTION_COLORS = {"Incoming": SERIES[0], "Outgoing": SERIES[1]}
+DIRECTION_LABELS = {"Incoming": "Owed to us", "Outgoing": "We owe"}
+
+
+def payment_due_buckets(table: pd.DataFrame) -> go.Figure:
+    """Outstanding amounts by when they fall due, money in vs money out side by side."""
+    fig = go.Figure()
+    for direction, color in DIRECTION_COLORS.items():
+        rows = table[table["direction"] == direction]
+        fig.add_bar(
+            x=rows["bucket"], y=rows["amount_eur"], name=DIRECTION_LABELS[direction], marker_color=color,
+            customdata=rows["count"],
+            hovertemplate="%{x}: €%{y:,.0f} across %{customdata} item(s)<extra></extra>")
+    fig.update_layout(barmode="group", bargap=0.35, bargroupgap=0.08)
+    fig.update_yaxes(tickprefix="€", tickformat=",.0f")
+    return _style(fig)
+
+
+def outstanding_by_type(table: pd.DataFrame) -> go.Figure:
+    """Outstanding amount per transaction type, coloured by direction."""
+    fig = go.Figure()
+    for direction, color in DIRECTION_COLORS.items():
+        rows = table[table["direction"] == direction]
+        if rows.empty:
+            continue
+        fig.add_bar(
+            y=rows["type"], x=rows["amount_eur"], name=DIRECTION_LABELS[direction], orientation="h",
+            marker_color=color, customdata=rows["count"],
+            hovertemplate="%{y}: €%{x:,.0f} (%{customdata} item(s))<extra></extra>")
+    fig.update_xaxes(showgrid=True, gridcolor=GRID, tickprefix="€", tickformat=",.0f")
+    fig.update_yaxes(showgrid=False, categoryorder="array", categoryarray=list(table["type"]))
+    return _style(fig)
+
+
+# --- Support -------------------------------------------------------------------
+
+def contacts_by_category(table: pd.DataFrame) -> go.Figure:
+    """Tickets per contact reason; open ones highlighted, resolved ones in grey."""
+    fig = go.Figure()
+    for column, color in (("Open", SERIES[0]), ("Resolved", NEUTRAL)):
+        fig.add_bar(
+            y=table["category"], x=table[column], name=column, orientation="h",
+            marker=dict(color=color, line=dict(color=PAGE_BG, width=2)),
+            hovertemplate=f"%{{y}}: %{{x}} {column.lower()}<extra></extra>")
+    fig.update_layout(barmode="stack")
+    fig.update_xaxes(showgrid=True, gridcolor=GRID, title_text="Tickets")
+    fig.update_yaxes(showgrid=False, categoryorder="array", categoryarray=list(table["category"]))
+    return _style(fig)
+
+
+def delivery_contacts_by_carrier(table: pd.DataFrame) -> go.Figure:
+    """Delivery complaints per 100 parcels shipped, per carrier."""
+    data = table.dropna(subset=["per_100_shipments"])
+    fig = go.Figure()
+    fig.add_bar(
+        x=data["carrier"], y=data["per_100_shipments"], marker_color=SERIES[0],
+        text=data["per_100_shipments"].map("{:.0f}".format), textposition="inside", insidetextanchor="end",
+        textfont=dict(color="white", size=13), customdata=data[["tickets", "shipped"]],
+        hovertemplate="%{x}: %{y:.1f} per 100 parcels (%{customdata[0]} tickets, "
+                      "%{customdata[1]} parcels)<extra></extra>")
+    fig.update_layout(showlegend=False, bargap=0.5)
+    fig.update_yaxes(title_text="Tickets per 100 parcels")
+    return _style(fig)
+
+
+def resolution_vs_sla(table: pd.DataFrame) -> go.Figure:
+    """Average hours to resolve (bars) against the SLA allowed (black tick), per priority."""
+    fig = go.Figure()
+    fig.add_bar(
+        x=table["priority"], y=table["avg_hours"], name="Average time to resolve", marker_color=SERIES[0],
+        customdata=table[["resolved", "met_sla"]],
+        hovertemplate="%{x}: %{y:.1f}h on average · %{customdata[1]:.0%} within SLA "
+                      "(%{customdata[0]} tickets)<extra></extra>")
+    fig.add_scatter(
+        x=table["priority"], y=table["sla_hours"], name="SLA allowed", mode="markers",
+        marker=dict(symbol="line-ew", size=40, line=dict(width=2, color=INK)),
+        hovertemplate="SLA %{y}h<extra></extra>")
+    fig.update_layout(bargap=0.5)
+    fig.update_yaxes(title_text="Hours", ticksuffix="h")
+    return _style(fig)
