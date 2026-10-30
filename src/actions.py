@@ -144,7 +144,8 @@ def enrich_actions(actions: pd.DataFrame, today) -> pd.DataFrame:
 
 def summary(actions: pd.DataFrame, today) -> dict:
     a = enrich_actions(actions, today)
-    week_ago = _day(today) - pd.Timedelta(days=7)
+    # A live work log, so today counts: the last 7 days including today (unlike period KPIs).
+    week_ago = _day(today) - pd.Timedelta(days=6)
     counts = a["status"].value_counts()
     return {
         "open": int(counts.get("Open", 0)),
@@ -157,10 +158,60 @@ def summary(actions: pd.DataFrame, today) -> dict:
     }
 
 
+# --- Linking open issues to actions ---------------------------------------------------------
+
+NO_ACTION = "No action"
+RESOLVED_BUT_OPEN = "Action resolved, issue still open"
+LINK_STATES = [NO_ACTION, "Open", "In Progress", "Blocked", RESOLVED_BUT_OPEN]
+WORKING_STATES = ["Open", "In Progress", "Blocked"]   # an action exists and is not finished
+# When several actions cover one issue, show the one that most needs attention.
+_LINK_PRECEDENCE = {"Blocked": 0, "In Progress": 1, "Open": 2, "Resolved": 3}
+
+
+def _key(values: pd.Series) -> pd.Series:
+    return values.fillna("").astype(str).str.strip().str.upper()
+
+
+def link_issues_to_actions(items: pd.DataFrame, actions: pd.DataFrame) -> pd.DataFrame:
+    """Add `action_id` and `action_status` (one of LINK_STATES) to each open issue.
+
+    An issue and an action are linked when the action's reference_id is the issue's
+    reference (e.g. SHP-5634). Every action status counts: Open, In Progress and
+    Blocked mean the issue is being handled; a Resolved action whose issue still
+    appears in the data is shown as "Action resolved, issue still open", not as
+    "No action", because someone believed it was fixed and it needs re-checking.
+    """
+    out = items.copy()
+    linked = actions[_key(actions["reference_id"]) != ""].assign(_ref=lambda a: _key(a["reference_id"]))
+    linked = linked.assign(_rank=linked["status"].map(_LINK_PRECEDENCE)) \
+        .sort_values(["_rank", "created_date"], ascending=[True, False]).drop_duplicates("_ref")
+    by_ref = linked.set_index("_ref")
+    refs = _key(out["reference"])
+    out["action_id"] = refs.map(by_ref["action_id"]).fillna("")
+    status = refs.map(by_ref["status"])
+    out["action_status"] = status.replace({"Resolved": RESOLVED_BUT_OPEN}).fillna(NO_ACTION)
+    return out
+
+
+def issue_action_summary(items: pd.DataFrame, actions: pd.DataFrame) -> dict:
+    """How many of the given open issues are in each link state, plus issues resolved through actions.
+
+    'resolved_issues' = resolved actions whose issue no longer appears among open issues.
+    """
+    linked = link_issues_to_actions(items, actions)
+    counts = {state: int((linked["action_status"] == state).sum()) for state in LINK_STATES}
+    open_refs = set(_key(items["reference"]))
+    resolved = actions[(actions["status"] == "Resolved") & (_key(actions["reference_id"]) != "")]
+    counts["with_action"] = sum(counts[s] for s in WORKING_STATES)
+    counts["total"] = len(items)
+    counts["resolved_issues"] = int((~_key(resolved["reference_id"]).isin(open_refs)).sum())
+    return counts
+
+
 def untracked_issues(items: pd.DataFrame, actions: pd.DataFrame) -> pd.DataFrame:
-    """Open issues (from the attention list) that no open action covers yet."""
-    open_refs = set(actions.loc[actions["status"] != "Resolved", "reference_id"].dropna().astype(str))
-    return items[~items["reference"].astype(str).isin(open_refs)]
+    """Open issues that no unfinished action covers: 'No action' or 'Action resolved, issue still open'."""
+    linked = link_issues_to_actions(items, actions)
+    return items[~linked["action_status"].isin(WORKING_STATES).values]
 
 
 def to_text(actions: pd.DataFrame) -> pd.DataFrame:

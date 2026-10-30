@@ -41,17 +41,31 @@ s = act.summary(actions, today)
 cards = st.columns(5)
 with cards[0]:
     ui.kpi_card("Open", f"{s['open']}", f"{s['unassigned']} without an owner",
-                "Watch" if s["unassigned"] else None)
+                "Watch" if s["unassigned"] else None, period="Now")
 with cards[1]:
-    ui.kpi_card("In progress", f"{s['in_progress']}", "Being worked on")
+    ui.kpi_card("In progress", f"{s['in_progress']}", "Being worked on", period="Now")
 with cards[2]:
     ui.kpi_card("Blocked", f"{s['blocked']}", "Waiting on someone else, see comments",
-                "At risk" if s["blocked"] else "On track")
+                "At risk" if s["blocked"] else "On track", period="Now")
 with cards[3]:
     ui.kpi_card("Overdue", f"{s['overdue']}", f"{s['due_today']} more due today",
-                "Critical" if s["overdue"] else "On track")
+                "Critical" if s["overdue"] else "On track", period="Now")
 with cards[4]:
-    ui.kpi_card("Resolved", f"{s['resolved_7d']}", "In the last 7 days")
+    ui.kpi_card("Resolved", f"{s['resolved_7d']}", "Actions marked Resolved", period="Last 7 days incl. today")
+
+# --- Issue coverage: which open issues have an action -----------------------------------
+items = metrics.attention_items(metrics.enrich_all(bundle.frames, bundle.as_of))
+urgent_items = items[items["severity"].isin(["Critical", "High"])]
+coverage = act.issue_action_summary(urgent_items, actions)
+coverage_text = (f"**Issue coverage:** of {coverage['total']} open Critical/High issues, "
+                 f"{coverage['with_action']} have an action ({coverage['Open']} open, "
+                 f"{coverage['In Progress']} in progress, {coverage['Blocked']} blocked) and "
+                 f"{coverage['No action']} have none")
+if coverage["Action resolved, issue still open"]:
+    coverage_text += (f"; {coverage['Action resolved, issue still open']} have a resolved action but the issue "
+                      "is still open in the data (re-check)")
+st.info(coverage_text + f". {coverage['resolved_issues']} issue(s) resolved through actions. "
+        "Actions are linked to issues by their reference (e.g. SHP-5634).", icon="🔗")
 
 # --- Action list (editable) -----------------------------------------------------------
 st.subheader("Actions")
@@ -87,10 +101,10 @@ else:
             "owner": st.column_config.SelectboxColumn("Owner", options=owners),
             "priority": st.column_config.SelectboxColumn("Priority", options=PRIORITIES, required=True),
             "status": st.column_config.SelectboxColumn("Status", options=ACTION_STATUSES, required=True),
-            "due_date": st.column_config.DateColumn("Due", format="DD MMM YYYY"),
+            "due_date": st.column_config.DateColumn("Due", format=ui.DATE_FORMAT),
             "days_overdue": st.column_config.NumberColumn("Days overdue"),
-            "created_date": st.column_config.DateColumn("Created", format="DD MMM"),
-            "resolution_date": st.column_config.DateColumn("Resolved on", format="DD MMM"),
+            "created_date": st.column_config.DateColumn("Created", format=ui.DATE_FORMAT),
+            "resolution_date": st.column_config.DateColumn("Resolved on", format=ui.DATE_FORMAT),
             "comments": st.column_config.TextColumn("Comments", width="medium"),
         })
     changes = act.changes_between(view[columns], edited)
@@ -130,8 +144,7 @@ with left, st.container(border=True):
 # --- Create an action, optionally from an open issue ------------------------------------
 with right, st.container(border=True):
     st.markdown("**New action**")
-    items = metrics.attention_items(metrics.enrich_all(bundle.frames, bundle.as_of))
-    untracked = act.untracked_issues(items[items["severity"].isin(["Critical", "High"])], actions)
+    untracked = act.untracked_issues(urgent_items, actions)
     issue_options = ["(none - describe it below)"] + untracked.index.tolist()
 
     def describe(i):
@@ -141,7 +154,7 @@ with right, st.container(border=True):
         return f"[{r['severity']}] {r['area']} {r['reference']}: {r['issue']} ({r['owner']})"
 
     with st.form("new_action", clear_on_submit=True):
-        linked = st.selectbox(f"Link to an open issue ({len(untracked)} Critical/High issues have no action yet)",
+        linked = st.selectbox(f"Link to an open issue ({len(untracked)} Critical/High issues have no open action)",
                               issue_options, format_func=describe)
         issue_text = st.text_input("Action", placeholder="e.g. Call carrier to locate parcel")
         c1, c2 = st.columns(2)

@@ -10,6 +10,7 @@ tests all agree on what "delayed" or "overdue" means. No Streamlit code here.
 """
 from __future__ import annotations
 
+from dataclasses import dataclass
 from datetime import datetime
 from typing import Dict, List, Optional, Sequence
 
@@ -40,6 +41,59 @@ def _today(as_of: datetime) -> pd.Timestamp:
     return pd.Timestamp(as_of).normalize()
 
 
+# --- Reporting periods: one rule for every page ----------------------------------
+
+@dataclass(frozen=True)
+class Window:
+    """A reporting period of whole days: from `start` (inclusive) to `end` (exclusive), both midnight."""
+    start: pd.Timestamp
+    end: pd.Timestamp
+
+    @property
+    def days(self) -> int:
+        return int((self.end - self.start).days)
+
+    def contains(self, values: pd.Series) -> pd.Series:
+        return (values >= self.start) & (values < self.end)
+
+    def dates(self) -> pd.DatetimeIndex:
+        return pd.date_range(self.start, self.end - pd.Timedelta(days=1), freq="D")
+
+    @property
+    def label(self) -> str:
+        """'23–29 Oct', '25 Oct – 7 Nov' or '29 Oct'."""
+        last = self.end - pd.Timedelta(days=1)
+        if self.days == 1:
+            return f"{last.day} {last:%b}"
+        if self.start.month == last.month:
+            return f"{self.start.day}–{last.day} {last:%b}"
+        return f"{self.start.day} {self.start:%b} – {last.day} {last:%b}"
+
+
+def reporting_window(as_of: datetime, days: int) -> Window:
+    """'Last N days' = the N complete calendar days before the snapshot.
+
+    A snapshot taken on Friday 30 Oct at 08:00 with days=7 covers Fri 23 – Thu 29 Oct.
+    Today's partial morning is left out, so every period is made of whole days and
+    a period can be compared fairly with the one before it. Every KPI, trend chart
+    and scorecard that reports "last N days" uses this function.
+    """
+    end = _today(as_of)
+    return Window(end - pd.Timedelta(days=days), end)
+
+
+def previous_window(window: Window) -> Window:
+    """The period of the same length immediately before `window`."""
+    return Window(window.start - pd.Timedelta(days=window.days), window.start)
+
+
+def on_time_summary(shipments: pd.DataFrame, window: Window) -> dict:
+    """On-time delivery for parcels delivered within `window` (the single definition used everywhere)."""
+    delivered = shipments[~shipments["is_open"] & window.contains(shipments["actual_delivery_date"])]
+    on_time = int(delivered["delivered_on_time"].sum())
+    return {"delivered": len(delivered), "on_time": on_time, "rate": _rate(on_time, len(delivered))}
+
+
 # --- 1. Enrichment: per-record flags ---------------------------------------
 
 def enrich_orders(orders: pd.DataFrame, as_of: datetime) -> pd.DataFrame:
@@ -58,6 +112,7 @@ def enrich_shipments(shipments: pd.DataFrame, as_of: datetime) -> pd.DataFrame:
     # Delivered: compare actual vs expected. Still travelling: compare today vs expected.
     reference = df["actual_delivery_date"].fillna(today)
     df["days_late"] = (reference - df["expected_delivery_date"]).dt.days.clip(lower=0).fillna(0).astype(int)
+    df["days_to_expected"] = (df["expected_delivery_date"] - today).dt.days  # negative = late
     df["is_delayed"] = df["is_open"] & (df["days_late"] > 0)
     df["delivered_on_time"] = ~df["is_open"] & (df["days_late"] == 0)
     df["has_exception"] = df["status"] == "Exception"
@@ -85,6 +140,7 @@ def enrich_inventory(products: pd.DataFrame) -> pd.DataFrame:
 def enrich_payments(payments: pd.DataFrame, as_of: datetime) -> pd.DataFrame:
     df = payments.copy()
     df["is_outstanding"] = df["status"] != "Paid"
+    df["days_to_due"] = (df["due_date"] - _today(as_of)).dt.days  # negative = overdue
     overdue_days = (_today(as_of) - df["due_date"]).dt.days.clip(lower=0).fillna(0).astype(int)
     df["days_overdue"] = np.where(df["is_outstanding"], overdue_days, 0)
     df["is_overdue"] = df["days_overdue"] > 0
@@ -153,31 +209,31 @@ def executive_kpis(e: Frames, as_of: datetime, period_days: int = 7) -> dict:
 
     Two kinds of KPI:
     - Flow KPIs (orders, revenue, on-time %, SLA %) measure what happened during
-      the selected period and are compared with the period before it.
-    - Snapshot KPIs (pending orders, delayed shipments, low stock, open tickets)
-      describe the situation right now, whatever period is selected.
+      the reporting period (see reporting_window) and are compared with the period before it.
+    - Snapshot KPIs (pending orders, delayed shipments, low stock, payments, open
+      tickets) describe the situation right now, whatever period is selected.
+    Module pages call the same functions, so the same KPI shows the same number everywhere.
     """
-    now = _now(as_of)
-    start = now - pd.Timedelta(days=period_days)
-    prev_start = start - pd.Timedelta(days=period_days)
+    window = reporting_window(as_of, period_days)
+    previous_period = previous_window(window)
     # Only compare if order history reaches back (give or take a day) to the previous period.
     has_previous_data = bool(len(e["orders"])) and \
-        e["orders"]["order_date"].min() <= prev_start + pd.Timedelta(days=1)
+        e["orders"]["order_date"].min() <= previous_period.start + pd.Timedelta(days=1)
 
     orders = e["orders"][~e["orders"]["is_cancelled"]]
-    current = orders[(orders["order_date"] >= start) & (orders["order_date"] < now)]
-    previous = orders[(orders["order_date"] >= prev_start) & (orders["order_date"] < start)]
+    current = orders[window.contains(orders["order_date"])]
+    previous = orders[previous_period.contains(orders["order_date"])]
 
     shipments = e["shipments"]
-    delivered = shipments[(shipments["actual_delivery_date"] >= start.normalize())
-                          & (shipments["actual_delivery_date"] < now)]
+    delivery = on_time_summary(shipments, window)
     tickets = e["tickets"]
-    resolved = tickets[(tickets["resolved_at"] >= start) & (tickets["resolved_at"] < now)]
-    products, payments = e["products"], e["payments"]
-    outstanding = payments[payments["is_outstanding"]]
+    resolved = tickets[window.contains(tickets["resolved_at"])]
+    products = e["products"]
+    pay = payment_kpis(e["payments"], as_of)
 
     return {
         "period_days": period_days,
+        "window": window,
         # Orders (flow)
         "orders_processed": len(current),
         "orders_previous": len(previous) if has_previous_data else None,
@@ -188,37 +244,42 @@ def executive_kpis(e: Frames, as_of: datetime, period_days: int = 7) -> dict:
         # Orders (snapshot)
         "pending_orders": int(e["orders"]["is_open"].sum()),
         "stuck_orders": int(e["orders"]["is_stuck"].sum()),
-        # Shipping
+        # Shipping (snapshot) - delayed and exceptions can overlap; "follow-up" counts each parcel once
         "delayed_shipments": int(shipments["is_delayed"].sum()),
         "shipments_to_escalate": int(shipments["needs_escalation"].sum()),
         "shipment_exceptions": int((shipments["has_exception"] & shipments["is_open"]).sum()),
+        "shipments_follow_up": int((shipments["is_delayed"] | (shipments["has_exception"] & shipments["is_open"])).sum()),
         "in_transit": int(shipments["is_open"].sum()),
-        "on_time_rate": _rate(delivered["delivered_on_time"].sum(), len(delivered)),
-        # Inventory
+        # Shipping (flow)
+        "on_time_rate": delivery["rate"],
+        "delivered": delivery["delivered"],
+        # Inventory (snapshot)
         "low_stock_items": int(products["needs_replenishment"].sum()),
         "out_of_stock_items": int((products["stock_status"] == "Out of Stock").sum()),
-        # Payments
-        "pending_payouts": len(outstanding),
-        "receivable_eur": float(outstanding.loc[outstanding["direction"] == "Incoming", "amount_eur"].sum()),
-        "payable_eur": float(outstanding.loc[outstanding["direction"] == "Outgoing", "amount_eur"].sum()),
-        "overdue_payments": int(payments["is_overdue"].sum()),
-        # Support
+        # Payments (snapshot) - same definitions as the Payments page (payment_kpis)
+        "pending_payouts_count": pay["incoming_count"],
+        "pending_payouts_eur": pay["incoming_eur"],
+        "payables_count": pay["outgoing_count"],
+        "payables_eur": pay["outgoing_eur"],
+        "overdue_payments": pay["overdue_count"],
+        # Support (snapshot + flow)
         "open_tickets": int(tickets["is_open"].sum()),
         "breached_tickets": int(tickets["is_breached"].sum()),
         "at_risk_tickets": int(tickets["is_at_risk"].sum()),
+        "sla_resolved": len(resolved),
         "sla_compliance": _rate(resolved["met_sla"].sum(), len(resolved)),
     }
 
 
 def yesterday_overview(e: Frames, as_of: datetime) -> dict:
-    """What happened during the last full day before the briefing."""
-    day = _today(as_of) - pd.Timedelta(days=1)
+    """What happened during the last full day before the briefing (a 1-day reporting window)."""
+    window = reporting_window(as_of, 1)
 
     def on_day(series: pd.Series) -> int:
-        return int((series.dt.normalize() == day).sum())
+        return int(window.contains(series).sum())
 
     return {
-        "date": day,
+        "date": window.start,
         "orders_received": on_day(e["orders"]["order_date"]),
         "shipments_dispatched": on_day(e["shipments"]["ship_date"]),
         "deliveries": on_day(e["shipments"]["actual_delivery_date"]),
@@ -230,41 +291,42 @@ def yesterday_overview(e: Frames, as_of: datetime) -> dict:
 
 # --- 3. Trends -------------------------------------------------------------
 
-def _days(as_of: datetime, days: int) -> pd.DatetimeIndex:
-    """The last `days` calendar days up to and including the as-of day."""
-    end = _today(as_of)
-    return pd.date_range(end - pd.Timedelta(days=days - 1), end, freq="D")
-
-
 def order_trend(orders: pd.DataFrame, as_of: datetime, days: int) -> pd.DataFrame:
-    """Orders and revenue per day, plus a 7-day moving average to show the direction."""
+    """Orders and revenue per day over the reporting window, plus a 7-day moving average.
+
+    The bars add up exactly to the "Orders processed" KPI for the same period.
+    """
+    window = reporting_window(as_of, days)
     valid = orders[~orders["is_cancelled"]]
     by_day = valid.groupby(valid["order_date"].dt.normalize()).agg(
         orders=("order_id", "count"), revenue=("order_value", "sum"))
     # Compute the average over all history first, so the first days of the window have one too.
-    full = by_day.reindex(pd.date_range(by_day.index.min(), _today(as_of), freq="D"), fill_value=0) \
-        if len(by_day) else by_day
+    last_day = window.end - pd.Timedelta(days=1)
+    full = by_day.reindex(pd.date_range(min(by_day.index.min(), window.start), last_day, freq="D"),
+                          fill_value=0) if len(by_day) else by_day
     full["orders_7d_avg"] = full["orders"].rolling(7, min_periods=1).mean()
-    out = full.reindex(_days(as_of, days), fill_value=0)
+    out = full.reindex(window.dates(), fill_value=0)
     out.index.name = "date"
     return out.reset_index()
 
 
 def on_time_trend(shipments: pd.DataFrame, as_of: datetime, days: int) -> pd.DataFrame:
-    """Rolling 7-day on-time delivery rate per day.
+    """Rolling 7-day on-time delivery rate for each day of the reporting window.
 
     A single day has only a handful of deliveries, so its own rate jumps around
-    (one late parcel = 75%). A rolling 7-day window shows the real trend.
+    (one late parcel = 75%). Each point is on_time_summary() over the 7 days ending
+    that day, so the last point equals the dashboard's 7-day on-time KPI.
     """
+    window = reporting_window(as_of, days)
     delivered = shipments[~shipments["is_open"]]
     grouped = delivered.groupby(delivered["actual_delivery_date"].dt.normalize())
     by_day = pd.DataFrame({"delivered": grouped.size(),
                            "on_time": grouped["delivered_on_time"].sum()})
-    index = pd.date_range(_today(as_of) - pd.Timedelta(days=days + 6), _today(as_of), freq="D")
+    index = pd.date_range(window.start - pd.Timedelta(days=6), window.end - pd.Timedelta(days=1), freq="D")
     by_day = by_day.reindex(index, fill_value=0)
     rolled = by_day.rolling(7, min_periods=1).sum()
     by_day["on_time_rate_7d"] = (rolled["on_time"] / rolled["delivered"]).where(rolled["delivered"] > 0)
-    out = by_day.reindex(_days(as_of, days))
+    out = by_day.reindex(window.dates())
     out.index.name = "date"
     return out.reset_index()
 
@@ -302,9 +364,8 @@ def add_demand(products: pd.DataFrame, orders: pd.DataFrame, as_of: datetime,
     the product will sell out before a new order could arrive.
     """
     df = products.copy()
-    start = _now(as_of) - pd.Timedelta(days=window_days)
-    recent = orders[(orders["order_date"] >= start) & (orders["order_date"] < _now(as_of))
-                    & (orders["status"] != "Cancelled")]
+    window = reporting_window(as_of, window_days)
+    recent = orders[window.contains(orders["order_date"]) & (orders["status"] != "Cancelled")]
     units = recent.groupby("sku")["quantity"].sum()
     df["units_sold"] = df["sku"].map(units).fillna(0).astype(int)
     df["daily_demand"] = df["units_sold"] / window_days
@@ -318,9 +379,9 @@ LATENESS_BUCKETS = ["On schedule", "1-2 days late", "3+ days late"]
 
 
 def carrier_performance(shipments: pd.DataFrame, as_of: datetime, days: int = 28) -> pd.DataFrame:
-    """Scorecard per carrier: on-time rate over the last `days`, plus what is open now."""
-    since = _today(as_of) - pd.Timedelta(days=days)
-    delivered = shipments[~shipments["is_open"] & (shipments["actual_delivery_date"] >= since)]
+    """Scorecard per carrier: on-time rate over the last `days` (reporting window), plus what is open now."""
+    window = reporting_window(as_of, days)
+    delivered = shipments[~shipments["is_open"] & window.contains(shipments["actual_delivery_date"])]
     late = delivered[~delivered["delivered_on_time"]]
     open_now = shipments[shipments["is_open"]]
     carriers = sorted(shipments["carrier"].dropna().unique())
@@ -366,7 +427,7 @@ def payment_kpis(payments: pd.DataFrame, as_of: datetime) -> dict:
     due_soon = outstanding[(days_to_due >= 0) & (days_to_due <= 7)]
     blocked = outstanding[outstanding["status"].isin(["Failed", "On Hold"])]
     overdue = outstanding[outstanding["is_overdue"]]
-    paid_recently = payments[payments["paid_date"] >= today - pd.Timedelta(days=30)]
+    paid_recently = payments[reporting_window(as_of, 30).contains(payments["paid_date"])]
 
     def total(df: pd.DataFrame) -> float:
         return float(df["amount_eur"].sum())
@@ -408,7 +469,7 @@ def support_kpis(tickets: pd.DataFrame, as_of: datetime, days: int = 7) -> dict:
     """Backlog right now, plus how well tickets resolved in the last `days` met their SLA."""
     now = _now(as_of)
     open_tickets = tickets[tickets["is_open"]]
-    resolved = tickets[tickets["resolved_at"] >= now - pd.Timedelta(days=days)]
+    resolved = tickets[reporting_window(as_of, days).contains(tickets["resolved_at"])]
     hours_to_resolve = (resolved["resolved_at"] - resolved["created_at"]).dt.total_seconds() / 3600
     return {
         "open": len(open_tickets),
@@ -454,10 +515,10 @@ def delivery_contacts_by_carrier(tickets: pd.DataFrame, shipments: pd.DataFrame,
     Raw counts would favour the smallest carrier, so we compare a rate:
     tickets in the last `days` days / parcels shipped in the same period x 100.
     """
-    since = _today(as_of) - pd.Timedelta(days=days)
-    recent = tickets[(tickets["created_at"] >= since) & tickets["category"].isin(DELIVERY_CATEGORIES)]
+    window = reporting_window(as_of, days)
+    recent = tickets[window.contains(tickets["created_at"]) & tickets["category"].isin(DELIVERY_CATEGORIES)]
     linked = recent.merge(shipments[["order_id", "carrier"]], on="order_id", how="inner")
-    shipped = shipments[shipments["ship_date"] >= since].groupby("carrier").size()
+    shipped = shipments[window.contains(shipments["ship_date"])].groupby("carrier").size()
     carriers = sorted(shipments["carrier"].dropna().unique())
     table = pd.DataFrame({"tickets": linked.groupby("carrier").size(), "shipped": shipped}) \
         .reindex(carriers).fillna(0).astype(int)
@@ -473,11 +534,19 @@ def _day_count(n: pd.Series, suffix: str) -> pd.Series:
     return n.astype(str) + np.where(n == 1, " day ", " days ") + suffix
 
 
-def _issues(df: pd.DataFrame, area: str, severity, reference: str, issue, owner: str, detail) -> pd.DataFrame:
-    """Build a uniform issue table from any dataset. severity/issue/detail may be columns."""
+def _issues(df: pd.DataFrame, area: str, severity, reference: str, issue, owner: str, detail,
+            hours_to_due=np.nan, impact_eur=np.nan, date_deadline: bool = False) -> pd.DataFrame:
+    """Build a uniform issue table from any dataset. severity/issue/detail may be columns.
+
+    hours_to_due: hours until the record's own deadline (negative = already overdue);
+    NaN when the record has no deadline field. impact_eur: money at stake where the
+    data has it (order value, payment amount). Both drive the urgency ordering.
+    date_deadline: the deadline is a date (delivery/due date), so urgency is shown in days.
+    """
     return pd.DataFrame({
         "severity": severity, "area": area, "reference": df[reference].values,
         "issue": issue, "owner": df[owner].values, "detail": detail,
+        "hours_to_due": hours_to_due, "impact_eur": impact_eur, "date_deadline": date_deadline,
     }, index=df.index)
 
 
@@ -488,7 +557,8 @@ def _order_issues(o: pd.DataFrame) -> pd.DataFrame:
         o, "Orders",
         np.where(o["age_hours"] > config.ORDER_ESCALATION_HOURS, "Critical", "High"),
         "order_id", "Order not shipped (" + o["status"].str.lower() + ")", "owner",
-        o["age_hours"].round().astype(int).astype(str) + "h since order")
+        o["age_hours"].round().astype(int).astype(str) + "h since order",
+        hours_to_due=config.ORDER_FULFILMENT_HOURS - o["age_hours"], impact_eur=o["order_value"])
 
 
 def _shipment_issues(s: pd.DataFrame) -> pd.DataFrame:
@@ -498,7 +568,8 @@ def _shipment_issues(s: pd.DataFrame) -> pd.DataFrame:
         "shipment_id",
         np.where(s["has_exception"], "Carrier exception - " + s["carrier"], "Delivery overdue - " + s["carrier"]),
         "owner", np.where(s["days_late"] > 0, _day_count(s["days_late"], "late"),
-                          "Due " + s["expected_delivery_date"].dt.strftime("%d %b")))
+                          "Due " + s["expected_delivery_date"].dt.strftime("%d %b")),
+        hours_to_due=s["days_to_expected"] * 24, date_deadline=True)
 
 
 def _inventory_issues(p: pd.DataFrame) -> pd.DataFrame:
@@ -506,7 +577,7 @@ def _inventory_issues(p: pd.DataFrame) -> pd.DataFrame:
         p, "Inventory",
         p["stock_status"].map({"Out of Stock": "Critical", "Critical": "High", "Low": "Medium"}),
         "sku", p["stock_status"] + ": " + p["product_name"], "owner",
-        p["stock_on_hand"].astype(int).astype(str) + " / min " + p["min_stock"].astype(int).astype(str))
+        "Stock " + p["stock_on_hand"].astype(int).astype(str) + " / min " + p["min_stock"].astype(int).astype(str))
 
 
 def _payment_issues(pay: pd.DataFrame) -> pd.DataFrame:
@@ -516,7 +587,8 @@ def _payment_issues(pay: pd.DataFrame) -> pd.DataFrame:
         "payment_id", pay["status"] + " " + pay["type"].str.lower() + " - " + pay["counterparty"], "owner",
         "€" + pay["amount_eur"].map("{:,.0f}".format) + ", " + np.where(
             pay["days_overdue"] > 0, _day_count(pay["days_overdue"], "overdue"),
-            "due " + pay["due_date"].dt.strftime("%d %b")))
+            "due " + pay["due_date"].dt.strftime("%d %b")),
+        hours_to_due=pay["days_to_due"] * 24, impact_eur=pay["amount_eur"], date_deadline=True)
 
 
 def _ticket_issues(t: pd.DataFrame) -> pd.DataFrame:
@@ -527,7 +599,8 @@ def _ticket_issues(t: pd.DataFrame) -> pd.DataFrame:
         "ticket_id", t["priority"] + " ticket: " + t["subject"], "owner",
         np.where(t["is_breached"],
                  "SLA breached " + (-t["hours_to_sla"]).round().astype(int).astype(str) + "h ago",
-                 "SLA due in " + t["hours_to_sla"].round(1).astype(str) + "h"))
+                 "SLA due in " + t["hours_to_sla"].round(1).astype(str) + "h"),
+        hours_to_due=t["hours_to_sla"])
 
 
 # Per area: which enriched dataset to read, which records are problems, how to describe them.
@@ -539,10 +612,32 @@ AREA_RULES = {
         p["is_overdue"] | p["status"].isin(["Failed", "On Hold"])), _payment_issues),
     "Support": ("tickets", lambda t: t["is_breached"] | t["is_at_risk"], _ticket_issues),
 }
-ISSUE_COLUMNS = ["severity", "area", "reference", "issue", "owner", "detail", "escalate"]
+ISSUE_COLUMNS = ["severity", "area", "reference", "issue", "owner", "detail", "urgency", "overdue_hours",
+                 "hours_to_due", "impact_eur", "escalate"]
+
+
+def _urgency_text(hours_to_due: float, detail: str, date_deadline: bool) -> str:
+    """'Overdue 5 days', 'Overdue 20h', 'Due in 4h', 'Due today', or the detail when there is no deadline."""
+    if pd.isna(hours_to_due):
+        return detail
+    if date_deadline:  # whole days: today, tomorrow, N days
+        days = int(round(hours_to_due / 24))
+        if days == 0:
+            return "Due today"
+        unit = "day" if abs(days) == 1 else "days"
+        return f"Overdue {-days} {unit}" if days < 0 else f"Due in {days} {unit}"
+    hours = abs(hours_to_due)
+    amount = f"{hours / 24:.0f} days" if hours >= 48 else f"{hours:.0f}h"
+    return f"Overdue {amount}" if hours_to_due < 0 else f"Due in {amount}"
 
 
 def _finalise(parts: List[pd.DataFrame]) -> pd.DataFrame:
+    """Combine issue tables and rank them by urgency.
+
+    Order: severity (Critical first) -> already overdue -> longest overdue -> soonest
+    deadline -> most money at stake. Issues without a deadline field (inventory) come
+    after time-based issues of the same severity. All inputs are existing data fields.
+    """
     parts = [part for part in parts if not part.empty]
     if not parts:
         # Typed empty table: "escalate" must be boolean so items[items["escalate"]] still filters rows.
@@ -551,7 +646,17 @@ def _finalise(parts: List[pd.DataFrame]) -> pd.DataFrame:
     items["escalate"] = items["severity"].astype(str) == "Critical"
     items["severity"] = pd.Categorical(items["severity"].astype(str), SEVERITIES, ordered=True)
     items["area"] = pd.Categorical(items["area"].astype(str), AREAS, ordered=True)
-    return items.sort_values(["severity", "area"]).reset_index(drop=True)[ISSUE_COLUMNS]
+    items["hours_to_due"] = pd.to_numeric(items["hours_to_due"], errors="coerce")
+    items["impact_eur"] = pd.to_numeric(items["impact_eur"], errors="coerce")
+    items["overdue_hours"] = (-items["hours_to_due"]).clip(lower=0).fillna(0)
+    if "urgency" not in items.columns:  # area tables already carry it when combined
+        items["urgency"] = [_urgency_text(h, d, bool(dd)) for h, d, dd in
+                            zip(items["hours_to_due"], items["detail"], items["date_deadline"])]
+    items["_overdue"] = items["overdue_hours"] > 0
+    items = items.sort_values(
+        ["severity", "_overdue", "overdue_hours", "hours_to_due", "impact_eur", "area", "reference"],
+        ascending=[True, False, False, True, False, True, True], na_position="last")
+    return items.reset_index(drop=True)[ISSUE_COLUMNS]
 
 
 def area_issues(area: str, records: pd.DataFrame) -> pd.DataFrame:

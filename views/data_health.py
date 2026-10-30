@@ -36,9 +36,9 @@ st.subheader("Data preview")
 tabs = st.tabs([name.capitalize() for name in bundle.frames])
 for tab, (name, df) in zip(tabs, bundle.frames.items()):
     with tab:
-        date_format = {col: st.column_config.DatetimeColumn(format="DD MMM YYYY HH:mm")
+        date_format = {col: st.column_config.DatetimeColumn(format=ui.DATETIME_FORMAT)
                        if df[col].dt.time.astype(str).ne("00:00:00").any()
-                       else st.column_config.DateColumn(format="DD MMM YYYY")
+                       else st.column_config.DateColumn(format=ui.DATE_FORMAT)
                        for col in SCHEMAS[name].date_columns if col in df.columns}
         st.dataframe(df, width="stretch", hide_index=True, column_config=date_format)
 

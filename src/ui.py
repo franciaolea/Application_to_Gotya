@@ -21,9 +21,10 @@ CSS = """
 div[data-testid="stMetric"] {background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 10px;
                              padding: 0.8rem 1rem;}
 .kpi-card {background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 10px; padding: 0.9rem 1rem;
-           height: 100%; min-height: 168px;}
+           height: 100%; min-height: 228px;}
 .kpi-label {font-size: 0.8rem; color: #52514e; font-weight: 600; text-transform: uppercase;
             letter-spacing: 0.03em;}
+.kpi-period {font-size: 0.72rem; color: #898781; margin-top: 0.1rem;}
 .kpi-value {font-size: 2rem; font-weight: 700; color: #0b0b0b; line-height: 1.2; margin: 0.25rem 0;}
 .kpi-caption {font-size: 0.82rem; color: #52514e; line-height: 1.4;}
 .badge {display: inline-block; font-size: 0.72rem; font-weight: 600; padding: 0.1rem 0.5rem;
@@ -41,7 +42,19 @@ STATUS_STYLES = {
     "At risk": ("▲", "#7C2D12", "#FFEDD5", "#ec835a"),
     "Critical": ("✕", "#7F1D1D", "#FEE2E2", "#d03b3b"),
 }
-SEVERITY_LABELS = {"Critical": "🔴 Critical", "High": "🟠 High", "Medium": "🟡 Medium"}
+# One label per priority level, used for issue severity, ticket priority and action priority alike.
+SEVERITY_LABELS = {"Critical": "🔴 Critical", "High": "🟠 High", "Medium": "🟡 Medium", "Low": "⚪ Low"}
+# Whether an issue is being handled (see actions.link_issues_to_actions).
+ACTION_STATE_LABELS = {
+    "No action": "No action yet",
+    "Open": "Open",
+    "In Progress": "In progress",
+    "Blocked": "Blocked",
+    "Action resolved, issue still open": "Resolved, issue still open",
+}
+# Table formats used on every page.
+DATE_FORMAT = "DD MMM YYYY"
+DATETIME_FORMAT = "DD MMM YYYY, HH:mm"
 
 
 @st.cache_data(show_spinner="Loading operational data...")
@@ -100,13 +113,62 @@ def escalate_badge() -> str:
             '⬆ Escalate today</span>')
 
 
-def kpi_card(label: str, value: str, caption: str = "", status: Optional[str] = None) -> None:
-    """A KPI tile: label, big number, explanation and (optionally) the area's status."""
+def kpi_card(label: str, value: str, caption: str = "", status: Optional[str] = None,
+             period: Optional[str] = None) -> None:
+    """A KPI tile: status badge, label, reporting period, big number, explanation.
+
+    period: what the number covers, e.g. "Last 7 days · 23–29 Oct" or "Now" for snapshot KPIs,
+    so two figures measured over different periods are never confused.
+    """
     badge = status_badge(status) if status else '<span class="badge" style="visibility:hidden">-</span>'
+    period_html = f'<div class="kpi-period">{period}</div>' if period else ""
     st.markdown(
-        f'<div class="kpi-card">{badge}<div class="kpi-label">{label}</div>'
+        f'<div class="kpi-card">{badge}<div class="kpi-label">{label}</div>{period_html}'
         f'<div class="kpi-value">{value}</div><div class="kpi-caption">{caption}</div></div>',
         unsafe_allow_html=True)
+
+
+def period_text(window) -> str:
+    """'Last 7 days · 23–29 Oct' for a metrics.Window."""
+    return f"Last {window.days} day{'s' if window.days != 1 else ''} · {window.label}"
+
+
+# --- Navigation with filters -------------------------------------------------------
+# Streamlit page links cannot carry filters, so the target filters travel in session
+# state: open_page() stores them and switches page; the target page calls
+# apply_navigation() before drawing its widgets, which applies them once.
+
+def open_page(page: str, filters: Optional[dict] = None, focus: Optional[str] = None) -> None:
+    st.session_state["_nav"] = {"page": page, "filters": filters or {}, "focus": focus}
+    st.switch_page(page)
+
+
+def apply_navigation(page: str) -> Optional[str]:
+    """Apply filters sent by open_page() to this page's widgets. Returns the record to focus on, if any."""
+    focus_key = f"_focus:{page}"
+    nav = st.session_state.get("_nav")
+    if nav and nav["page"] == page:
+        st.session_state.pop("_nav")
+        for widget_key, value in nav["filters"].items():
+            st.session_state[widget_key] = value
+        if nav["focus"]:
+            st.session_state[focus_key] = nav["focus"]
+        else:
+            st.session_state.pop(focus_key, None)
+    return st.session_state.get(focus_key)
+
+
+def focus_panel(page: str, reference: str, rows, columns: list, column_config: Optional[dict] = None) -> None:
+    """Show the record the user clicked on the dashboard at the top of a page, with a way back to all."""
+    with st.container(border=True):
+        st.markdown(f"**Opened from the dashboard: {reference}**")
+        if len(rows):
+            st.dataframe(rows[columns], hide_index=True, width="stretch", column_config=column_config)
+        else:
+            st.caption("This record is no longer an open issue in the current data.")
+        if st.button("Clear and show everything", key=f"clear_focus_{page}"):
+            st.session_state.pop(f"_focus:{page}", None)
+            st.rerun()
 
 
 def mini_stat(label: str, value) -> None:

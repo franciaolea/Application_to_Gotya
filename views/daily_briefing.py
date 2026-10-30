@@ -83,7 +83,7 @@ else:
         b.follow_ups, hide_index=True, width="stretch",
         column_config={"action_id": "ID", "module": "Area", "issue": st.column_config.TextColumn(
             "Action", width="large"), "owner": "Owner", "status": "Status",
-            "due_date": st.column_config.DateColumn("Due", format="DD MMM"), "days_overdue": "Days overdue"})
+            "due_date": st.column_config.DateColumn("Due", format=ui.DATE_FORMAT), "days_overdue": "Days overdue"})
 
 # --- Export --------------------------------------------------------------------------------
 st.subheader("Share the briefing")

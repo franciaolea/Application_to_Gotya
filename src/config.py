@@ -99,3 +99,6 @@ ASSISTANT_SCALE_LEVELS = {
 }
 # Workload: one owner holding this share (and at least 4) of open Critical/High issues.
 ASSISTANT_OVERLOAD_SHARE = 0.4
+
+# Executive Dashboard: how many of the most urgent issues are shown before "view all".
+DASHBOARD_TOP_ISSUES = 5

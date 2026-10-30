@@ -46,6 +46,7 @@ def make_payments(rows):
     return pd.DataFrame([{
         "payment_id": pid, "status": status, "due_date": days_ago(due), "type": "Supplier Invoice",
         "direction": "Outgoing", "counterparty": "Atlas Ceramics", "amount_eur": 1000.0, "owner": "Daniel Mensah",
+        "paid_date": days_ago(due) if status == "Paid" else pd.NaT,
     } for pid, status, due in rows])
 
 
@@ -227,13 +228,34 @@ def test_no_comparison_when_history_is_too_short():
 
 def test_order_trend_has_one_row_per_day_with_no_gaps():
     orders = metrics.enrich_orders(make_orders([
-        ("A", 1, "Pending", "Spain", "Website", 10),
-        ("B", 24 * 5, "Delivered", "Spain", "Website", 10),
+        ("yesterday", 10, "Pending", "Spain", "Website", 10),       # Thu 29 Oct, 22:00
+        ("5-days-ago", 24 * 5, "Delivered", "Spain", "Website", 10),
     ]), AS_OF)
     trend = metrics.order_trend(orders, AS_OF, days=7)
     assert len(trend) == 7
     assert trend["orders"].sum() == 2
     assert (trend["orders"] == 0).sum() == 5  # quiet days appear as 0, not missing
+
+
+def test_reporting_window_is_whole_days_before_the_snapshot():
+    window = metrics.reporting_window(AS_OF, 7)
+    assert (window.start, window.end) == (pd.Timestamp("2026-10-23"), pd.Timestamp("2026-10-30"))
+    assert window.days == 7 and window.label == "23–29 Oct"
+    assert metrics.previous_window(window).label == "16–22 Oct"
+    # Activity from this morning (before the 08:00 snapshot) is not part of "the last 7 days".
+    this_morning = pd.Series([pd.Timestamp(AS_OF) - pd.Timedelta(hours=1)])
+    assert not window.contains(this_morning).iloc[0]
+
+
+def test_this_mornings_orders_are_not_counted_in_period_kpis():
+    orders = metrics.enrich_orders(make_orders([
+        ("this-morning", 1, "Pending", "Spain", "Website", 10),
+        ("yesterday", 10, "Pending", "Spain", "Website", 10),
+    ]), AS_OF)
+    assert metrics.order_trend(orders, AS_OF, days=7)["orders"].sum() == 1
+    e = enriched_example()
+    e["orders"] = orders
+    assert metrics.executive_kpis(e, AS_OF, period_days=7)["orders_processed"] == 1
 
 
 def test_region_filter_also_filters_shipments():
@@ -364,8 +386,8 @@ def test_payment_due_buckets():
 
 def test_support_kpis_and_resolution_vs_sla():
     t = metrics.enrich_tickets(make_tickets([
-        ("met", "High", "Resolved", -10, 4),          # resolved 4h before its deadline
-        ("missed", "High", "Closed", -10, -2),        # resolved 2h after its deadline
+        ("met", "High", "Resolved", -30, 4),          # resolved 4h before its deadline (yesterday)
+        ("missed", "High", "Closed", -30, -2),        # resolved 2h after its deadline (yesterday)
         ("open-breached", "Low", "Open", -1, None),
         ("waiting", "Medium", "Waiting on Customer", 5, None),
     ]), AS_OF)
@@ -394,3 +416,47 @@ def test_delivery_complaints_are_a_rate_per_100_parcels():
     # Same number of complaints, but Small Co ships far less: 20 per 100 vs 4 per 100.
     assert rate.loc["Big Co", "per_100_shipments"] == pytest.approx(4)
     assert rate.loc["Small Co", "per_100_shipments"] == pytest.approx(20)
+
+
+# --- Issue prioritisation -------------------------------------------------------------------
+
+def test_urgency_order_within_and_across_severities():
+    frames = {
+        "orders": make_orders([("ORD-STUCK", 60, "Processing", "Spain", "Website", 50)]),   # High, 12h overdue
+        "shipments": make_shipments([
+            ("SHP-5-LATE", 5, None, "In Transit"),        # Critical, 5 days overdue
+            ("SHP-3-LATE", 3, None, "In Transit"),        # Critical, 3 days overdue
+            ("SHP-EXC-SOON", -1, None, "Exception"),      # High, due tomorrow
+            ("SHP-EXC-LATER", -4, None, "Exception"),     # High, due in 4 days
+        ]),
+        "products": make_products([("OUT", 0, 30, 60), ("CRIT", 5, 30, 60)]),               # no deadline field
+        "payments": make_payments([("PAY-1", "Paid", 3)]),
+        "tickets": make_tickets([("TCK-BREACH", "High", "Open", -30, None)]),               # Critical, 30h overdue
+        "actions": pd.DataFrame(),
+    }
+    items = metrics.attention_items(metrics.enrich_all(frames, AS_OF))
+    assert list(items["reference"]) == [
+        "SHP-5-LATE", "SHP-3-LATE", "TCK-BREACH", "OUT",     # Critical: longest overdue first, no deadline last
+        "ORD-STUCK", "SHP-EXC-SOON", "SHP-EXC-LATER", "CRIT",  # High: overdue, then soonest due, then no deadline
+    ]
+    assert list(items["urgency"])[:3] == ["Overdue 5 days", "Overdue 3 days", "Overdue 30h"]
+    assert items.set_index("reference").loc["SHP-EXC-SOON", "urgency"] == "Due in 1 day"
+    assert items.set_index("reference").loc["OUT", "urgency"] == "Stock 0 / min 30"
+
+
+def test_money_at_stake_breaks_ties():
+    payments = metrics.enrich_payments(pd.DataFrame([
+        {**row, "amount_eur": amount} for row, amount in zip(
+            make_payments([("SMALL", "Pending", 2), ("BIG", "Pending", 2)]).to_dict("records"), (100.0, 5000.0))
+    ]), AS_OF)
+    items = metrics.area_issues("Payments", payments)
+    assert list(items["reference"]) == ["BIG", "SMALL"]         # same severity and overdue: larger amount first
+
+
+def test_urgency_wording():
+    assert metrics._urgency_text(0, "", date_deadline=True) == "Due today"
+    assert metrics._urgency_text(-48, "", date_deadline=True) == "Overdue 2 days"
+    assert metrics._urgency_text(24, "", date_deadline=True) == "Due in 1 day"
+    assert metrics._urgency_text(-20, "", date_deadline=False) == "Overdue 20h"
+    assert metrics._urgency_text(3.6, "", date_deadline=False) == "Due in 4h"
+    assert metrics._urgency_text(float("nan"), "Stock 1 / min 9", date_deadline=False) == "Stock 1 / min 9"

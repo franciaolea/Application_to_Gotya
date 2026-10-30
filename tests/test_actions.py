@@ -105,3 +105,72 @@ def test_issues_with_an_open_action_are_not_offered_again(actions):
 def test_reset_only_works_on_demo_data(tmp_path):
     with pytest.raises(act.ActionError, match="only available for demo"):
         act.reset_demo_actions(tmp_path, {"data_classification": "LIVE"})
+
+
+# --- Linking open issues to actions -------------------------------------------------------
+
+def issues(*refs):
+    return pd.DataFrame({"reference": list(refs), "severity": "High"})
+
+
+def action_rows(*rows):
+    """rows: (action_id, reference_id, status, created_days_ago)."""
+    return pd.DataFrame([{"action_id": a, "reference_id": r, "status": s,
+                          "created_date": TODAY - pd.Timedelta(days=d)} for a, r, s, d in rows])
+
+
+def test_every_action_status_is_recognised_as_a_link():
+    linked = act.link_issues_to_actions(
+        issues("NONE", "OPEN", "WIP", "BLOCKED", "REDONE"),
+        action_rows(("A1", "OPEN", "Open", 1), ("A2", "WIP", "In Progress", 1),
+                    ("A3", "BLOCKED", "Blocked", 1), ("A4", "REDONE", "Resolved", 1))).set_index("reference")
+    assert linked.loc["NONE", "action_status"] == act.NO_ACTION and linked.loc["NONE", "action_id"] == ""
+    assert linked.loc["OPEN", "action_status"] == "Open"
+    assert linked.loc["WIP", "action_status"] == "In Progress"
+    assert linked.loc["BLOCKED", "action_status"] == "Blocked"
+    # Resolved action, but the issue is still in the data: not "no action", but flagged for re-check.
+    assert linked.loc["REDONE", "action_status"] == act.RESOLVED_BUT_OPEN and linked.loc["REDONE", "action_id"] == "A4"
+
+
+def test_with_several_actions_the_one_needing_attention_is_shown():
+    linked = act.link_issues_to_actions(
+        issues("X", "Y"),
+        action_rows(("OLD", "X", "Resolved", 9), ("NEW", "X", "Open", 1),
+                    ("A", "Y", "Open", 1), ("B", "Y", "Blocked", 3))).set_index("reference")
+    assert linked.loc["X", "action_id"] == "NEW"      # an unfinished action beats an old resolved one
+    assert linked.loc["Y", "action_id"] == "B"        # blocked is surfaced before open
+
+
+def test_references_match_regardless_of_case_and_spaces():
+    linked = act.link_issues_to_actions(issues("SHP-5634"), action_rows(("A1", "  shp-5634 ", "Open", 1)))
+    assert linked.iloc[0]["action_id"] == "A1"
+
+
+def test_summary_counts_each_state_and_resolved_issues():
+    summary = act.issue_action_summary(
+        issues("NONE", "OPEN", "BLOCKED", "REDONE"),
+        action_rows(("A1", "OPEN", "Open", 1), ("A2", "BLOCKED", "Blocked", 1),
+                    ("A3", "REDONE", "Resolved", 1), ("A4", "GONE", "Resolved", 2), ("A5", "", "Open", 1)))
+    assert summary["total"] == 4
+    assert (summary["No action"], summary["Open"], summary["Blocked"]) == (1, 1, 1)
+    assert summary[act.RESOLVED_BUT_OPEN] == 1
+    assert summary["with_action"] == 2
+    assert summary["resolved_issues"] == 1          # A4: its issue no longer appears; A5 has no reference
+
+
+def test_untracked_means_no_unfinished_action():
+    items = issues("NONE", "OPEN", "REDONE")
+    untracked = act.untracked_issues(items, action_rows(("A1", "OPEN", "In Progress", 1), ("A2", "REDONE", "Resolved", 1)))
+    assert list(untracked["reference"]) == ["NONE", "REDONE"]
+
+
+def test_demo_scenario_keeps_its_realistic_gaps(demo_bundle):
+    """17 Critical/High issues; only 2 are being handled. The logic must report that, not hide it."""
+    from src import metrics
+    items = metrics.attention_items(metrics.enrich_all(demo_bundle.frames, demo_bundle.as_of))
+    urgent = items[items["severity"].isin(["Critical", "High"])]
+    summary = act.issue_action_summary(urgent, demo_bundle.frames["actions"])
+    assert (summary["total"], summary["No action"], summary["Open"], summary["In Progress"]) == (17, 15, 1, 1)
+    everything = act.issue_action_summary(items, demo_bundle.frames["actions"])
+    assert everything["Blocked"] == 1                # ACT-003 covers a Medium issue (PAY-7021)
+    assert everything["resolved_issues"] == 1        # ACT-004: its ticket is no longer an open issue

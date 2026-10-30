@@ -42,9 +42,9 @@ Operations data usually lives in separate tools: the shop platform, the warehous
 | Module | What it shows |
 |---|---|
 | 🤖 **AI Operations Assistant** | On the dashboard: the three most important problems today, the root cause the data can prove, specific actions with an owning role, and what to escalate. Rule-based, fully traceable, no external AI service. |
-| 📊 **Executive Dashboard** | Orders processed (vs previous period), pending orders, delayed shipments, low inventory, pending payouts, open tickets; yesterday at a glance; severity-ranked attention list; trends (orders, on-time delivery, support backlog, issues per owner). Filters: period, region, sales channel. |
+| 📊 **Executive Dashboard** | Six KPI cards, each labelled with its reporting period ("Last 7 days · 23–29 Oct" or "Now") and a definition: orders processed (vs the previous period), pending orders, delayed shipments, low inventory, pending payouts, open tickets. Buttons under the cards open the detail page already filtered (e.g. *Overdue shipments →*). **Requires immediate attention** shows the 5 most urgent issues (severity, issue, area, owner, urgency, action status, *View →* to the record) and the action status of all Critical/High issues, with every open issue one click away. Then the AI Operations Assistant, yesterday at a glance and trends. Filters: period, region, sales channel. |
 | ☀️ **Daily Briefing** | Auto-generated morning report: what is running well, what is delayed, what needs immediate attention, who is responsible, what to escalate and to whom. Downloadable / copyable for email or chat. |
-| ✅ **Action Tracker** | Update status, assign owners, add dated comments, record resolution dates. Create actions straight from open issues. Every change is validated before it is saved. |
+| ✅ **Action Tracker** | Update status, assign owners, add dated comments, record resolution dates. Shows which open issues have an action (open, in progress, blocked) and which have none. Create actions straight from open issues. Every change is validated before it is saved. |
 | 📦 **Inventory** | Stock vs minimum, days of cover, products that will sell out before a restock can arrive, automatic low-stock alerts, replenishment list with cost (CSV download). |
 | 🚚 **Shipping** | Shipment status, overdue alerts with expected dates and owners, carrier on-time scorecard, parcels in transit by lateness. |
 | 💳 **Payments** | Pending payouts (owed to us) vs payables (owed by us), past-due and on-hold items with owners, due-date ageing. |
@@ -172,16 +172,16 @@ src/
   config.py                Every business rule and threshold in one place
   data_loader.py           Load CSVs: text → validation → typed DataFrames (DataBundle)
   validation.py            Schemas per file + checks (columns, blanks, dates, numbers, values, IDs, links)
-  metrics.py               Business logic: enrich records with flags, KPIs, trends, severity, area health
+  metrics.py               Business logic: reporting windows, flags, KPIs, trends, severity, urgency order, area health
   assistant.py             AI Operations Assistant: detectors, root-cause checks, scoring, evidence
   briefing.py              Daily Briefing: builds the report and its Markdown export
-  actions.py               Action Tracker rules, change detection, validated atomic save, demo reset
+  actions.py               Action Tracker rules, issue-to-action links, change detection, validated atomic save, demo reset
   charts.py                Plotly charts with one consistent, colour-blind-safe style
-  ui.py                    Shared Streamlit pieces: cached loading, KPI cards, status badges, formatting
+  ui.py                    Shared Streamlit pieces: cached loading, KPI cards with periods, labels, formats, navigation
   demo_data.py             Generator for the fictional dataset (seeded, reproducible)
 data/demo/                 Fictional CSVs + _metadata.json ("FICTIONAL DEMO DATA")
 data/live/                 Place for real exports (git-ignored)
-tests/                     88 automated tests (pytest)
+tests/                     126 automated tests (pytest)
 docs/screenshots/          Images used in this README
 assets/logo.svg            Sidebar logo
 .streamlit/config.toml     Theme and toolbar settings
@@ -213,18 +213,34 @@ Dates use ISO format (`2026-10-30` or `2026-10-30 08:00`). Files are linked by I
 
 All thresholds live in [`src/config.py`](src/config.py) and can be changed in one place.
 
-### Time
+### Time and reporting periods
 
 "Now" is the moment the data represents. Demo data is a frozen snapshot: **Friday 30 October 2026, 08:00** (the morning briefing time). Live data uses the real current time.
+
+**"Last N days" always means the N complete calendar days before the snapshot.** With the demo snapshot, *last 7 days* = **23–29 Oct**, and the previous period is 16–22 Oct. This morning's partial activity is not included, so periods are whole days and comparable. One function (`metrics.reporting_window`) provides this window to every KPI card, trend chart, scorecard and rate. Each KPI card states what it covers:
+
+| Card / figure | Period | Where |
+|---|---|---|
+| Orders processed, revenue | Selected period (7 / 14 / 28 days), vs the period before | Dashboard (the order chart's bars add up to it) |
+| On-time delivery | Selected period on the dashboard (7 days by default) | Dashboard card; the trend chart's last point equals the 7-day card |
+| On-time delivery by carrier | Last 28 days, so every carrier is judged on enough parcels | Shipping page |
+| SLA compliance, time to resolve | Last 7 days on the Support page; selected period on the dashboard | Support, dashboard |
+| Delivery complaints per 100 parcels | Last 14 days (tickets and parcels shipped, same window) | Support |
+| Days of cover / stock-out risk | Sales rate over the last 28 days | Inventory |
+| Payments completed | Last 30 days | Payments |
+| Pending orders, delayed shipments, low inventory, payouts, open tickets | **Now** (snapshot, unaffected by the period) | Dashboard and module pages |
+| Actions resolved | Last 7 days **including today** (a live work log) | Action Tracker |
+
+So the dashboard's **83%** (7 days, 121 parcels) and the Shipping page's **85%** (28 days, 454 parcels) are both correct: they cover different periods, and each card says which.
 
 ### Definitions per area
 
 | Area | Rule |
 |---|---|
-| **Orders** | *Pending* = Pending or Processing (not yet shipped). *Stuck* = pending for more than **48h**. *Orders processed* = orders placed in the period, excluding cancellations. |
-| **Shipping** | *Delayed / overdue* = not delivered and past the expected delivery date. *On-time rate* = delivered parcels that arrived by the promised date (rolling 7 days on the dashboard, 28 days on the carrier scorecard). Target **95%**; a carrier at **90%+** counts as performing well. |
+| **Orders** | *Pending* = Pending or Processing (not yet shipped). *Stuck* = pending for more than **48h**. *Orders processed* = orders placed in the period, excluding cancellations (a flow figure; *pending orders* is a snapshot of those not yet shipped, whenever they were placed). |
+| **Shipping** | *Delayed / overdue* = not delivered and past the expected delivery date. *Carrier exception* = a problem reported by the carrier; a parcel can be both late and an exception, and is then followed up once. *On-time rate* = delivered parcels that arrived by the promised date, over the period shown on the card. Target **95%**; a carrier at **90%+** counts as performing well. |
 | **Inventory** | *Minimum stock (reorder point)* = average daily demand × (supplier lead time + **7** safety days). *Low* = at or below minimum; *Critical* = at or below **50%** of minimum; *Out of stock* = 0. *Days of cover* = stock ÷ average daily units sold (last 28 days). *Stock-out risk* = days of cover shorter than the supplier lead time. *Suggested order* = standard reorder quantity, or the shortfall if bigger. |
-| **Payments** | *Pending payout* = incoming money not yet received. *Outstanding* = any status other than Paid. *Past due* = unpaid after the due date. *Blocked* = On Hold or Failed. |
+| **Payments** | *Pending payout* = incoming money not yet received (the same definition on the dashboard and the Payments page); *payables* = money we owe, shown separately. *Outstanding* = any status other than Paid. *Past due* = unpaid after the due date. *Blocked* = On Hold or Failed. |
 | **Support** | SLA (time to resolve): **Critical 4h, High 24h, Medium 48h, Low 72h**. *Past SLA* = open beyond its deadline; *at risk* = deadline within **4h**. The SLA clock **pauses** while waiting on the customer. *SLA compliance* = resolved tickets closed before their deadline, target **90%**. *Delivery complaints per 100 parcels* = "Where is my order" + "Damaged item" tickets ÷ parcels shipped × 100 (a rate, so carriers of different sizes compare fairly). |
 
 ### Severity: one rulebook for the whole app
@@ -239,9 +255,23 @@ Every open problem gets a severity. **Critical means escalate to leadership toda
 | Payments | failed, or 7+ days overdue | on hold | past due |
 | Support | Critical/High ticket past SLA | Critical/High at risk, or Medium/Low past SLA | Medium/Low at risk |
 
+**Urgency order.** Within the attention list, issues are ranked by existing data fields only: severity (Critical first) → already overdue → longest overdue → nearest deadline → money at stake (order value or payment amount). Deadlines are each record's own: order time + 48h, expected delivery date, payment due date, ticket SLA deadline. Inventory records have no deadline field, so stock issues come after time-based issues of the same severity. The dashboard shows the first 5 Critical/High issues; *View all* lists every open issue in the same order.
+
 **Area status** comes from the worst open issue in that area: Critical → **Critical**, High → **At risk**, Medium → **Watch**, none → **On track**. The dashboard badges, module pages, Daily Briefing and tests all use the same functions, so they can never disagree.
 
 **Escalation contacts** (Daily Briefing): Orders → Warehouse manager · Shipping → Carrier account manager · Inventory → Purchasing lead · Payments → Finance lead · Support → Head of customer service.
+
+### Issues and actions
+
+An action is linked to an issue when its **reference** matches the issue's reference (e.g. `SHP-5634`). Created from the dashboard, the assistant or the tracker's *Link to an open issue*, the reference is filled in automatically. Each open issue then has one action status:
+
+| Action status | Meaning |
+|---|---|
+| No action yet | No action references this issue |
+| Open / In progress / Blocked | An unfinished action exists (if several, Blocked is shown first, then In progress, then Open) |
+| Resolved, issue still open | The action was marked Resolved but the problem still appears in the data: re-check |
+
+Issues "resolved through the Action Tracker" are resolved actions whose issue no longer appears. With the demo data: of 17 Critical/High issues, **2 have an action (1 open, 1 in progress) and 15 have none**. That gap is deliberate and realistic; a blocked action (ACT-003) covers a Medium-priority payment, and one issue (TCK-3012) has been resolved through an action.
 
 ### Action Tracker rules
 
@@ -258,13 +288,13 @@ Every open problem gets a severity. **Critical means escalate to leadership toda
 
 The fictional data is generated with a fixed seed, so it is identical on every run. Problems are planted in realistic proportions so the dashboard has a story to tell:
 
-- **Growth:** ~9 → ~21 orders a day over 8 weeks; **161 orders in the last 7 days, +39%**.
+- **Growth:** ~9 → ~21 orders a day over 8 weeks; **143 orders in the last 7 days (23–29 Oct), +22%** on the week before, and +44% over 28 days.
 - **Running well:** fulfilment on schedule (no order stuck over 48h); Northlane Freight and Veloxa Courier at **92% on time**; 16 of 24 products above minimum.
-- **The bottleneck:** carrier **Parcelyn** delivers **66% on time** and generates **20 delivery complaints per 100 parcels vs 6–11** for the other carriers.
+- **The bottleneck:** carrier **Parcelyn** delivers **66% on time** and generates **20 delivery complaints per 100 parcels vs 7–11** for the other carriers.
 - **Inventory:** 2 products out of stock; the Oak Wall Shelf has **2 days of cover against a 14-day lead time**.
 - **Payments:** a **€9.6k supplier invoice on hold** and one marketplace payout 6 days overdue.
 - **Support:** 86% SLA compliance (target 90%); one High-priority ticket **154 hours past its SLA**.
-- **Today:** 5 issues to escalate, 12 high-priority issues, each with a named owner.
+- **Today:** 5 issues to escalate, 12 high-priority issues, each with a named owner; only 2 of the 17 have an action so far.
 
 ---
 
@@ -273,12 +303,12 @@ The fictional data is generated with a fixed seed, so it is identical on every r
 *Open the app on the Executive Dashboard before you start. In the Action Tracker, use **Demo controls → Reset demo actions** first.*
 
 **0:00 – 0:20 · The problem (Executive Dashboard)**
-> "As an Operations Manager I want to know in one minute how the business is doing and what needs me today. This is a control tower for a fictional home-goods retailer, built in Python. Orders are up 39% week on week, but two areas are red."
+> "As an Operations Manager I want to know in one minute how the business is doing and what needs me today. This is a control tower for a fictional home-goods retailer, built in Python. Orders are up 22% week on week, but three areas are red. Every card says which period it covers."
 
-**0:20 – 0:45 · What needs attention (AI Operations Assistant)**
-> "Below the KPIs, the assistant ranks today's three most important problems. Number one: Parcelyn. It doesn't just say deliveries are late. It shows the cause: Parcelyn has 26% of the parcels but 8 of the 10 late ones, and it's slower than the other carriers in every country they share. Each action has an owning role, and it tells me what to escalate today. Every figure is under Evidence, and where the data can't prove a cause, it says so."
+**0:20 – 0:45 · What needs attention, and is anyone on it?**
+> "Right under the KPIs: five critical issues to escalate today. The five most urgent are listed by how overdue they are, with an owner, and whether anyone has an action. Only 2 of the 17 urgent issues do, which is exactly what I'd chase in the morning stand-up. Below that, the assistant explains the biggest one: Parcelyn has 26% of the parcels but 8 of the 10 late ones, and it's slower than the other carriers in every country they share."
 
-*Click **Add to Action Tracker** on the first finding, then **Shipping details →** under Delayed shipments.*
+*Click **Overdue shipments →** under Delayed shipments: the Shipping page opens already filtered.*
 
 **0:45 – 1:10 · Root cause (Shipping)**
 > "The symptom is late parcels. The cause is one carrier: Parcelyn is at 66% on time while the others are at 92%. And on the Support page" *(open Support, scroll to the last chart)* "it generates 20 complaints per 100 parcels, two to three times the others. That's a carrier review with data behind it, not a feeling."
@@ -290,7 +320,7 @@ The fictional data is generated with a fixed seed, so it is identical on every r
 > "Every morning this briefing is generated automatically: what's running well, what's delayed, what to escalate and to whom. I can paste it into the team channel." *(Open Action Tracker.)* "Then issues become actions with owners and due dates. The rules are enforced: you can't block an action without saying why, and resolution dates are recorded automatically."
 
 **1:50 – 2:00 · Close**
-> "Everything runs on documented business rules, covered by 88 automated tests. With real exports from the shop, carriers and helpdesk, it works the same way."
+> "Everything runs on documented business rules, covered by 126 automated tests. With real exports from the shop, carriers and helpdesk, it works the same way."
 
 ### Questions you may be asked
 
@@ -299,7 +329,7 @@ The fictional data is generated with a fixed seed, so it is identical on every r
 | *Why are the thresholds what they are?* | They are assumptions in `config.py`, one place to agree them with the business. I'd calibrate them on real historical data. |
 | *How would it connect to real systems?* | Replace the CSV exports with scheduled exports or API pulls into the same columns. Validation and every rule stay the same. |
 | *What if two people edit actions at once?* | CSV is single-user. Next step: a database (e.g. PostgreSQL). All logic is in `actions.py`, so only the save/load functions change. |
-| *How do you know the numbers are right?* | 88 automated tests, most on small hand-made examples of each rule (e.g. "a parcel 3 days late is escalated"). The briefing is tested to agree with the dashboard. |
+| *How do you know the numbers are right?* | 126 automated tests, most on small hand-made examples of each rule (e.g. "a parcel 3 days late is escalated"). The briefing is tested to agree with the dashboard. |
 | *Is the assistant really AI?* | It's a rule-based analysis engine, which is how most decision-support tools start: explainable, testable, free to run. Every claim is traceable to the data. An LLM could be added on top to write the narrative, but never as the source of facts. |
 | *What would you add next?* | Automatic email of the briefing at 08:00, alerts when an area turns Critical, sales forecasting for reorder points, and login with roles. |
 
@@ -308,18 +338,19 @@ The fictional data is generated with a fixed seed, so it is identical on every r
 ## Testing
 
 ```bash
-pytest -v      # 88 tests, ~5 seconds
+pytest -v      # 126 tests, ~8 seconds
 ```
 
 | File | What it proves |
 |---|---|
 | `test_validation.py` | Bad data is caught: missing columns, blanks, invalid dates, negative numbers, unknown statuses, duplicate IDs, broken links, missing files. |
-| `test_metrics.py` | Each business rule on small hand-made examples: stuck orders, lateness and escalation, stock status, days of cover, overdue payments, SLA states (incl. paused clock), severity ranking, KPI comparisons, carrier scorecard, complaint rates. |
+| `test_kpi_consistency.py` | The same KPI shows the same number everywhere: the dashboard's 7-day on-time card equals the trend chart's last point; the 28-day card equals the carrier scorecard; the orders card equals the sum of the order chart; payouts and support figures match their module pages; every window is whole days before the snapshot; a late parcel with an exception is followed up once; the committed demo data equals what the generator produces. |
+| `test_metrics.py` | Each business rule on small hand-made examples: stuck orders, lateness and escalation, stock status, days of cover, overdue payments, SLA states (incl. paused clock), severity and urgency ranking (overdue first, longest overdue first, nearest deadline, money at stake), urgency wording, KPI comparisons, carrier scorecard, complaint rates. |
 | `test_assistant.py` | The assistant finds the planted problems in impact order, never states a number missing from its evidence (and the check itself catches an invented one), reports unproven causes as "not determined", stays quiet on a quiet day, and agrees with the Shipping page. |
 | `test_briefing.py` | The briefing answers all five questions, escalates exactly the dashboard's Critical issues, and says "all clear" on a day with no problems. |
-| `test_actions.py` | Action rules, dated comments, change detection, validated and atomic save, demo reset. |
+| `test_actions.py` | Action rules, dated comments, change detection, validated and atomic save, demo reset, and issue-to-action links (every status recognised, resolved-but-still-open flagged, precedence with several actions, case-insensitive references, the demo's 15 of 17 gap preserved). |
 | `test_demo_data.py` | The demo data meets the brief (≥30 orders, ≥20 products, ≥15 tickets), is reproducible, never dated after the snapshot, contains the planted scenarios and is labelled fictional. |
-| `test_app.py` | Every page of the real app renders without errors, and the demo banner is always shown. |
+| `test_app.py` | Every page renders without errors; the demo banner is always shown; the dashboard shows exactly the 5 most urgent issues in order and lists all issues under *View all*; each drill-down button opens its page with the right filter; *View →* focuses the record; the period, region and channel filters still change the numbers. |
 
 Two real bugs were found during development: the attention list crashed when an area had no problems (found by generating many demo scenarios), and the briefing crashed on a fully "quiet" day (found by a test). Both are fixed and covered by regression tests.
 
@@ -374,6 +405,8 @@ Alternatives: Hugging Face Spaces (free, Streamlit template) or Render (free tie
 | **Business logic separate from the UI** | Rules are testable and reusable; the dashboard, briefing and module pages share them, so numbers always agree. |
 | **Validate raw text before converting types** | A typo like `2026-13-45` is reported precisely instead of silently becoming a blank. |
 | **Flag first, then count** ("enrich" → "summarise") | Every record carries its own `is_delayed`, `needs_escalation`... flags, so a KPI is just a count of flags and is easy to explain. |
+| **One reporting-window rule** | "Last N days" is computed in one place for every page, and each card shows its period, so figures that measure different periods are labelled instead of looking contradictory. |
+| **Filters travel with navigation** | Drill-down buttons pass their filters through session state (Streamlit page links cannot carry filters); the target page applies them once, and the user can change them as usual. |
 | **One severity rulebook** | The area colours, the attention list and the escalations all derive from it; nothing is judged twice. |
 | **Frozen snapshot date for demo data** | The demo always shows the same story; "3 days late" means the same thing in every rehearsal. |
 | **Seeded, scenario-driven demo data** | Reproducible, realistic proportions, and problems linked to causes (late parcels drive "where is my order" tickets). |
@@ -389,6 +422,9 @@ Alternatives: Hugging Face Spaces (free, Streamlit template) or Render (free tie
 - **Single user, file-based.** Good for a demo or a small team; the next step is a database and user login with roles.
 - **Snapshot, not real time.** Live mode reads exported files; production would schedule exports or connect to APIs.
 - **One product per order** in the demo data, to keep the model simple.
+- **Drill-down filters are not in the URL**, so a filtered view cannot be bookmarked or shared as a link; Orders issues have no detail page to open.
+- **Inventory issues have no deadline field**, so they are ranked after time-based issues of the same severity.
+- **Streamlit's test runner** cannot follow page switches made by a button across reruns; the tests check the landing page, and the full click-through was verified in a real browser.
 - **Rule-based, not predictive.** Reorder points use recent average demand; forecasting seasonality would improve them.
 - **Next features:** emailing the Daily Briefing at 08:00, alerts when an area turns Critical, trend history of KPIs, and a carrier performance report over time.
 

@@ -18,18 +18,28 @@ st.title("Inventory Management")
 st.caption(f"Stock position as of {as_of:%d %B %Y, %H:%M}. Minimum stock (reorder point) = average daily "
            f"demand × (supplier lead time + {config.SAFETY_STOCK_DAYS} safety days).")
 
-# --- Filters ---------------------------------------------------------------
+# --- Filters (can be pre-set by the dashboard's drill-down buttons) ---------------
+focus = ui.apply_navigation("views/inventory.py")
 f1, f2, f3, f4 = st.columns(4)
 with f1:
-    categories = st.multiselect("Category", sorted(products["category"].unique()), placeholder="All")
+    categories = st.multiselect("Category", sorted(products["category"].unique()), placeholder="All",
+                                key="inv_category")
 with f2:
-    warehouses = st.multiselect("Warehouse", sorted(products["warehouse"].unique()), placeholder="All")
+    warehouses = st.multiselect("Warehouse", sorted(products["warehouse"].unique()), placeholder="All",
+                                key="inv_warehouse")
 with f3:
-    suppliers = st.multiselect("Supplier", sorted(products["supplier"].unique()), placeholder="All")
+    suppliers = st.multiselect("Supplier", sorted(products["supplier"].unique()), placeholder="All",
+                               key="inv_supplier")
 with f4:
-    statuses = st.multiselect("Stock status", ["Out of Stock", "Critical", "Low", "Healthy"], placeholder="All")
+    statuses = st.multiselect("Stock status", ["Out of Stock", "Critical", "Low", "Healthy"], placeholder="All",
+                              key="inv_status")
 view = metrics.filter_frame(products, {"category": categories, "warehouse": warehouses,
                                        "supplier": suppliers, "stock_status": statuses})
+if focus:
+    ui.focus_panel("views/inventory.py", focus, products[products["sku"] == focus],
+                   ["sku", "product_name", "stock_status", "stock_on_hand", "min_stock", "days_of_cover",
+                    "lead_time_days", "suggested_order_qty", "supplier", "owner"],
+                   {"days_of_cover": st.column_config.NumberColumn("Days of cover", format="%.0f")})
 if view.empty:
     st.info("No products match these filters.")
     st.stop()
@@ -44,21 +54,23 @@ cards = st.columns(5)
 with cards[0]:
     ui.kpi_card("Products", f"{len(view)}",
                 f"{int(view['stock_on_hand'].sum()):,} units on hand<br>"
-                f"{ui.fmt_eur(view['stock_value'].sum())} stock value at cost")
+                f"{ui.fmt_eur(view['stock_value'].sum())} stock value at cost", period="Now")
 with cards[1]:
     counts = view["stock_status"].value_counts()
     ui.kpi_card("Below minimum", f"{len(below)}",
-                f"{counts.get('Critical', 0)} critical · {counts.get('Low', 0)} low", metrics.status_of(issues))
+                f"{counts.get('Critical', 0)} critical · {counts.get('Low', 0)} low", metrics.status_of(issues),
+                period="Now")
 with cards[2]:
     ui.kpi_card("Out of stock", f"{len(out_of_stock)}", "Losing sales until restocked",
-                "Critical" if len(out_of_stock) else "On track")
+                "Critical" if len(out_of_stock) else "On track", period="Now")
 with cards[3]:
     ui.kpi_card("Stock-out risk", f"{len(at_risk)}",
                 "In stock now, but will sell out before a new order can arrive",
-                "At risk" if len(at_risk) else "On track")
+                "At risk" if len(at_risk) else "On track",
+                period=f"Now · sales rate from {ui.period_text(metrics.reporting_window(as_of, config.DEMAND_WINDOW_DAYS)).lower()}")
 with cards[4]:
     ui.kpi_card("Replenishment cost", ui.fmt_eur(below["reorder_cost"].sum()),
-                f"{len(below)} purchase lines suggested")
+                f"{len(below)} purchase lines suggested", period="Now")
 
 # --- Automatic low-stock alerts ----------------------------------------------
 st.subheader("Low-stock alerts")
@@ -129,5 +141,5 @@ with st.expander(f"Full inventory ({len(view)} products)"):
             "days_of_cover": st.column_config.NumberColumn("Days of cover", format="%.0f"),
             "unit_cost": st.column_config.NumberColumn("Unit cost", format="euro"),
             "stock_value": st.column_config.NumberColumn("Stock value", format="euro"),
-            "last_restock_date": st.column_config.DateColumn("Last restock", format="DD MMM YYYY"),
+            "last_restock_date": st.column_config.DateColumn("Last restock", format=ui.DATE_FORMAT),
         })

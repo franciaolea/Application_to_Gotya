@@ -18,23 +18,31 @@ st.caption(f"Transactions as of {as_of:%d %B %Y, %H:%M}. Incoming = money owed t
            "card settlements). Outgoing = money we owe (supplier and carrier invoices, customer refunds). "
            f"Unpaid items {config.PAYMENT_ESCALATION_DAYS}+ days past due, or failed, are escalated.")
 
-# --- Filters ---------------------------------------------------------------
+# --- Filters (can be pre-set by the dashboard's drill-down buttons) ---------------
+focus = ui.apply_navigation("views/payments.py")
 f1, f2, f3, f4, f5 = st.columns([1.2, 1, 1, 1, 0.9])
 with f1:
-    types = st.multiselect("Type", sorted(payments["type"].unique()), placeholder="All")
+    types = st.multiselect("Type", sorted(payments["type"].unique()), placeholder="All", key="pay_type")
 with f2:
-    directions = st.multiselect("Direction", ["Incoming", "Outgoing"], placeholder="Both")
+    directions = st.multiselect("Direction", ["Incoming", "Outgoing"], placeholder="Both", key="pay_direction")
 with f3:
-    statuses = st.multiselect("Status", ["Pending", "Processing", "On Hold", "Failed", "Paid"], placeholder="All")
+    statuses = st.multiselect("Status", ["Pending", "Processing", "On Hold", "Failed", "Paid"], placeholder="All",
+                              key="pay_status")
 with f4:
-    owners = st.multiselect("Owner", sorted(payments["owner"].unique()), placeholder="All")
+    owners = st.multiselect("Owner", sorted(payments["owner"].unique()), placeholder="All", key="pay_owner")
 with f5:
     st.write("")  # aligns the toggle with the dropdowns
-    only_outstanding = st.toggle("Only unpaid")
+    only_outstanding = st.toggle("Only unpaid", key="pay_unpaid")
 view = metrics.filter_frame(payments, {"type": types, "direction": directions,
                                        "status": statuses, "owner": owners})
 if only_outstanding:
     view = view[view["is_outstanding"]]
+if focus:
+    ui.focus_panel("views/payments.py", focus, payments[payments["payment_id"] == focus],
+                   ["payment_id", "type", "direction", "counterparty", "amount_eur", "status", "due_date",
+                    "days_overdue", "owner"],
+                   {"amount_eur": st.column_config.NumberColumn("Amount", format="euro"),
+                    "due_date": st.column_config.DateColumn("Due", format=ui.DATE_FORMAT)})
 if view.empty:
     st.info("No transactions match these filters.")
     st.stop()
@@ -46,23 +54,23 @@ kpi = metrics.payment_kpis(view, as_of)
 cards = st.columns(5)
 with cards[0]:
     ui.kpi_card("Pending payouts", ui.fmt_eur(kpi["incoming_eur"]),
-                f"{kpi['incoming_count']} incoming payments not yet received")
+                f"{kpi['incoming_count']} incoming payments not yet received", period="Now")
 with cards[1]:
     ui.kpi_card("Outstanding payables", ui.fmt_eur(kpi["outgoing_eur"]),
-                f"{kpi['outgoing_count']} invoices and refunds not yet paid")
+                f"{kpi['outgoing_count']} invoices and refunds not yet paid", period="Now")
 overdue_ids = view.loc[view["is_overdue"], "payment_id"]
 blocked_ids = view.loc[view["is_outstanding"] & view["status"].isin(["Failed", "On Hold"]), "payment_id"]
 with cards[2]:  # each card's badge reflects only the items it counts
     ui.kpi_card("Past due date", f"{kpi['overdue_count']}",
                 f"{ui.fmt_eur(kpi['overdue_eur'])} unpaid after its due date",
-                metrics.status_of(issues[issues["reference"].isin(overdue_ids)]))
+                metrics.status_of(issues[issues["reference"].isin(overdue_ids)]), period="Now")
 with cards[3]:
     ui.kpi_card("On hold or failed", f"{kpi['blocked_count']}",
                 f"{ui.fmt_eur(kpi['blocked_eur'])} blocked until someone decides",
-                metrics.status_of(issues[issues["reference"].isin(blocked_ids)]))
+                metrics.status_of(issues[issues["reference"].isin(blocked_ids)]), period="Now")
 with cards[4]:
     ui.kpi_card("Due in the next 7 days", f"{kpi['due_soon_count']}",
-                f"{ui.fmt_eur(kpi['due_soon_eur'])} to pay or receive this week")
+                f"{ui.fmt_eur(kpi['due_soon_eur'])} to pay or receive", period="Today + 7 days")
 
 # --- Items that need action ------------------------------------------------------
 st.subheader("Requires follow-up")
@@ -86,7 +94,7 @@ else:
             "severity": "Severity", "payment_id": "Payment", "type": "Type", "direction": "Direction",
             "counterparty": "Counterparty", "status": "Status", "owner": "Owner",
             "amount_eur": st.column_config.NumberColumn("Amount", format="euro"),
-            "due_date": st.column_config.DateColumn("Due", format="DD MMM YYYY"),
+            "due_date": st.column_config.DateColumn("Due", format=ui.DATE_FORMAT),
             "days_overdue": st.column_config.NumberColumn("Days overdue"),
         })
 
@@ -113,7 +121,8 @@ with right, st.container(border=True):
 
 # --- All transactions ----------------------------------------------------------
 st.subheader("Transactions")
-st.caption(f"{kpi['paid_30d_count']} payments ({ui.fmt_eur(kpi['paid_30d_eur'])}) completed in the last 30 days. "
+st.caption(f"{kpi['paid_30d_count']} payments ({ui.fmt_eur(kpi['paid_30d_eur'])}) completed in the "
+           f"{ui.period_text(metrics.reporting_window(as_of, 30)).lower()}. "
            "Unpaid items first, earliest due date first.")
 st.dataframe(
     view.sort_values(["is_outstanding", "due_date"], ascending=[False, True])[[
@@ -124,8 +133,8 @@ st.dataframe(
         "payment_id": "Payment", "type": "Type", "direction": "Direction", "counterparty": "Counterparty",
         "reference": "Order ref.", "status": "Status", "owner": "Owner",
         "amount_eur": st.column_config.NumberColumn("Amount", format="euro"),
-        "due_date": st.column_config.DateColumn("Due", format="DD MMM YYYY"),
-        "paid_date": st.column_config.DateColumn("Paid", format="DD MMM YYYY"),
+        "due_date": st.column_config.DateColumn("Due", format=ui.DATE_FORMAT),
+        "paid_date": st.column_config.DateColumn("Paid", format=ui.DATE_FORMAT),
         "days_overdue": st.column_config.NumberColumn("Days overdue"),
     })
 st.download_button("Download transactions (CSV)", view.to_csv(index=False),
