@@ -49,8 +49,12 @@ ORDER_ESCALATION_HOURS = 96
 SHIPMENT_ESCALATION_DAYS = 3
 ON_TIME_DELIVERY_TARGET = 0.95
 
-# Inventory: stock at or below this share of the minimum is "critical".
+# Inventory: minimum stock (reorder point) = daily demand x (lead time + safety days).
+SAFETY_STOCK_DAYS = 7
+# Stock at or below this share of the minimum is "critical".
 CRITICAL_STOCK_RATIO = 0.5
+# Sales over this many days set the demand rate used for "days of cover".
+DEMAND_WINDOW_DAYS = 28
 
 # Support: hours allowed to resolve a ticket, by priority.
 TICKET_SLA_HOURS = {"Critical": 4, "High": 24, "Medium": 48, "Low": 72}

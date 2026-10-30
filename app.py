@@ -27,6 +27,10 @@ pages = {
     "Overview": [
         st.Page("views/executive_dashboard.py", title="Executive Dashboard", icon="📊", default=True),
     ],
+    "Operations": [
+        st.Page("views/inventory.py", title="Inventory", icon="📦"),
+        st.Page("views/shipping.py", title="Shipping", icon="🚚"),
+    ],
     "System": [
         st.Page("views/data_health.py", title="Data Health", icon="🩺"),
     ],

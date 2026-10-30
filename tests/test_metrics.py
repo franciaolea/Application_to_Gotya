@@ -25,7 +25,7 @@ def make_orders(rows):
 def make_shipments(rows):
     """rows: (shipment_id, expected_days_ago, delivered_days_ago or None, status)."""
     return pd.DataFrame([{
-        "shipment_id": sid, "order_id": "ORD-1", "carrier": "SwiftParcel", "status": status,
+        "shipment_id": sid, "order_id": "ORD-1", "carrier": "Veloxa Courier", "status": status,
         "ship_date": days_ago(expected + 3),
         "expected_delivery_date": days_ago(expected),
         "actual_delivery_date": days_ago(delivered) if delivered is not None else pd.NaT,
@@ -37,7 +37,7 @@ def make_products(rows):
     """rows: (sku, stock_on_hand, min_stock, reorder_qty)."""
     return pd.DataFrame([{
         "sku": sku, "product_name": f"Product {sku}", "stock_on_hand": stock, "min_stock": minimum,
-        "reorder_qty": reorder, "unit_cost": 10.0, "owner": "Priya Raman",
+        "reorder_qty": reorder, "unit_cost": 10.0, "lead_time_days": 7, "owner": "Priya Raman",
     } for sku, stock, minimum, reorder in rows])
 
 
@@ -245,3 +245,75 @@ def test_region_filter_also_filters_shipments():
     filtered = metrics.apply_order_filters(frames, regions=["Spain"])
     assert list(filtered["orders"]["order_id"]) == ["ORD-ES"]
     assert list(filtered["shipments"]["shipment_id"]) == ["S1"]
+
+
+# --- Inventory drill-down ------------------------------------------------------
+
+def test_days_of_cover_and_stockout_risk():
+    products = metrics.enrich_inventory(make_products([
+        ("FAST", 10, 30, 60),   # sells 1/day -> 10 days of cover
+        ("SLOW", 10, 30, 60),   # sells 4 in 28 days (1 every 7 days) -> 70 days of cover
+        ("NONE", 10, 30, 60),   # no recent sales
+    ])).assign(lead_time_days=14)
+    orders = make_orders([("A", 24 * d, "Delivered", "Spain", "Website", 10) for d in range(1, 29)])
+    orders["sku"] = ["FAST"] * 28
+    orders["quantity"] = 1
+    extra = make_orders([("B", 24 * d, "Delivered", "Spain", "Website", 10) for d in (1, 8, 15, 22)])
+    extra["sku"], extra["quantity"] = "SLOW", 1
+    p = metrics.add_demand(products, pd.concat([orders, extra]), AS_OF, window_days=28).set_index("sku")
+
+    assert p.loc["FAST", "days_of_cover"] == pytest.approx(10)
+    assert p.loc["FAST", "stockout_risk"]          # 10 days of stock, 14 days to restock
+    assert p.loc["SLOW", "days_of_cover"] == pytest.approx(70)
+    assert not p.loc["SLOW", "stockout_risk"]
+    assert pd.isna(p.loc["NONE", "days_of_cover"]) and not p.loc["NONE", "stockout_risk"]
+    assert p.loc["FAST", "reorder_cost"] == 60 * 10.0
+
+
+def test_cancelled_orders_do_not_count_as_demand():
+    products = metrics.enrich_inventory(make_products([("X", 10, 30, 60)]))
+    orders = make_orders([("A", 24, "Cancelled", "Spain", "Website", 10)])
+    orders["sku"], orders["quantity"] = "X", 5
+    assert metrics.add_demand(products, orders, AS_OF).iloc[0]["units_sold"] == 0
+
+
+# --- Shipping drill-down --------------------------------------------------------
+
+def test_carrier_scorecard():
+    s = make_shipments([
+        ("A1", 5, 5, "Delivered"), ("A2", 5, 5, "Delivered"), ("A3", 5, 3, "Delivered"),  # 2 of 3 on time
+        ("A4", 4, None, "In Transit"),                                                      # 4 days overdue
+        ("B1", 5, 5, "Delivered"), ("B2", 0, None, "Exception"),
+    ])
+    s["carrier"] = ["Slow Co"] * 4 + ["Fast Co"] * 2
+    perf = metrics.carrier_performance(metrics.enrich_shipments(s, AS_OF), AS_OF).set_index("carrier")
+
+    assert perf.loc["Slow Co", "on_time_rate"] == pytest.approx(2 / 3)
+    assert perf.loc["Slow Co", "below_target"]
+    assert perf.loc["Slow Co", "delayed"] == 1
+    assert perf.loc["Fast Co", "on_time_rate"] == 1.0
+    assert perf.loc["Fast Co", "exceptions"] == 1
+
+
+def test_open_shipments_are_bucketed_by_lateness():
+    s = make_shipments([("on-time", 0, None, "In Transit"), ("late", 2, None, "In Transit"),
+                        ("very-late", 5, None, "In Transit"), ("done", 9, 9, "Delivered")])
+    table = metrics.open_shipments_by_lateness(metrics.enrich_shipments(s, AS_OF)).iloc[0]
+    assert (table["On schedule"], table["1-2 days late"], table["3+ days late"]) == (1, 1, 1)
+
+
+# --- Shared helpers ---------------------------------------------------------------
+
+def test_filter_frame_treats_empty_selection_as_all():
+    df = pd.DataFrame({"category": ["Kitchen", "Bath", "Decor"], "warehouse": ["A", "A", "B"]})
+    assert len(metrics.filter_frame(df, {"category": [], "warehouse": None})) == 3
+    assert list(metrics.filter_frame(df, {"category": ["Kitchen", "Decor"], "warehouse": ["B"]})["category"]) \
+        == ["Decor"]
+
+
+def test_area_issues_and_status_for_a_single_module():
+    products = metrics.enrich_inventory(make_products([("LOW", 20, 30, 60), ("OK", 50, 30, 60)]))
+    issues = metrics.area_issues("Inventory", products)
+    assert list(issues["reference"]) == ["LOW"]
+    assert metrics.status_of(issues) == "Watch"
+    assert metrics.status_of(metrics.area_issues("Inventory", products.iloc[[1]])) == "On track"

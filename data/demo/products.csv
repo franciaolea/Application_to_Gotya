@@ -1,25 +1,25 @@
 sku,product_name,category,supplier,warehouse,stock_on_hand,min_stock,reorder_qty,lead_time_days,unit_cost,unit_price,last_restock_date,owner
-LUM-001,Linen Duvet Cover - Double,Bedding,Harbor Textiles,Rotterdam DC,139,40,80,21,38.0,89.0,2026-09-27,Tomás Herrera
-LUM-002,Linen Duvet Cover - King,Bedding,Harbor Textiles,Leipzig DC,79,20,40,7,44.0,109.0,2026-10-17,Tomás Herrera
-LUM-003,Waffle Bath Towel Set,Bath,Harbor Textiles,Rotterdam DC,113,50,100,3,18.0,45.0,2026-09-30,Tomás Herrera
-LUM-004,Organic Cotton Pillowcases (2),Bedding,Harbor Textiles,Rotterdam DC,0,20,40,5,9.5,24.0,2026-09-26,Priya Raman
-LUM-005,Stoneware Dinner Plate Set (4),Kitchen,Atlas Ceramics,Rotterdam DC,104,30,60,5,21.0,54.0,2026-09-14,Priya Raman
-LUM-006,Speckled Mug Set (4),Kitchen,Atlas Ceramics,Rotterdam DC,144,40,80,7,12.0,32.0,2026-09-19,Tomás Herrera
-LUM-007,Glazed Serving Bowl,Kitchen,Atlas Ceramics,Leipzig DC,44,20,40,10,11.0,29.0,2026-10-03,Priya Raman
-LUM-008,Ceramic Table Lamp,Lighting,Brightline Lighting,Rotterdam DC,0,30,60,7,34.0,79.0,2026-10-14,Tomás Herrera
-LUM-009,Rattan Pendant Shade,Lighting,Brightline Lighting,Rotterdam DC,24,30,60,14,26.0,65.0,2026-10-10,Priya Raman
-LUM-010,Brass Floor Lamp,Lighting,Brightline Lighting,Rotterdam DC,92,25,50,7,72.0,169.0,2026-10-04,Priya Raman
-LUM-011,LED Candle Set (3),Lighting,Brightline Lighting,Rotterdam DC,11,40,80,7,8.0,22.0,2026-10-09,Priya Raman
-LUM-012,Oak Wall Shelf,Storage,Cedar & Stone Supply,Leipzig DC,93,30,60,7,19.0,49.0,2026-09-23,Priya Raman
-LUM-013,Woven Storage Basket - Large,Storage,Cedar & Stone Supply,Leipzig DC,60,50,100,5,14.0,36.0,2026-09-06,Tomás Herrera
-LUM-014,Bamboo Drawer Organiser,Storage,Cedar & Stone Supply,Rotterdam DC,43,50,100,3,7.0,19.0,2026-09-18,Priya Raman
-LUM-015,Marble Bathroom Tray,Bath,Cedar & Stone Supply,Rotterdam DC,13,30,60,7,13.0,34.0,2026-09-11,Priya Raman
-LUM-016,Teak Bath Mat,Bath,Cedar & Stone Supply,Leipzig DC,60,20,40,10,16.0,42.0,2026-09-08,Tomás Herrera
-LUM-017,Chunky Knit Throw,Decor,Nordic Loom Co.,Leipzig DC,36,20,40,21,29.0,75.0,2026-10-25,Priya Raman
-LUM-018,Wool Cushion Cover,Decor,Nordic Loom Co.,Rotterdam DC,78,25,50,21,10.0,28.0,2026-10-04,Tomás Herrera
-LUM-019,Jute Area Rug 160x230,Decor,Nordic Loom Co.,Rotterdam DC,6,20,40,5,58.0,149.0,2026-10-21,Priya Raman
-LUM-020,Round Wall Mirror,Decor,Cedar & Stone Supply,Rotterdam DC,19,30,60,10,41.0,99.0,2026-09-17,Tomás Herrera
-LUM-021,Scented Soy Candle,Decor,Nordic Loom Co.,Leipzig DC,39,20,40,7,6.5,18.0,2026-10-24,Tomás Herrera
-LUM-022,Glass Storage Jars (3),Kitchen,Atlas Ceramics,Leipzig DC,69,25,50,5,9.0,26.0,2026-09-02,Tomás Herrera
-LUM-023,Cast Iron Casserole Dish,Kitchen,Atlas Ceramics,Rotterdam DC,120,30,60,14,39.0,95.0,2026-09-03,Priya Raman
-LUM-024,Bedside Table Lamp,Lighting,Brightline Lighting,Rotterdam DC,107,30,60,5,22.0,55.0,2026-10-18,Tomás Herrera
+LUM-001,Linen Duvet Cover - Double,Bedding,Harbor Textiles,Rotterdam DC,54,29,58,14,38.0,89.0,2026-09-29,Priya Raman
+LUM-002,Linen Duvet Cover - King,Bedding,Harbor Textiles,Leipzig DC,1,10,20,3,44.0,109.0,2026-10-06,Priya Raman
+LUM-003,Waffle Bath Towel Set,Bath,Harbor Textiles,Rotterdam DC,28,18,36,14,18.0,45.0,2026-10-01,Tomás Herrera
+LUM-004,Organic Cotton Pillowcases (2),Bedding,Harbor Textiles,Rotterdam DC,55,31,62,14,9.5,24.0,2026-09-06,Priya Raman
+LUM-005,Stoneware Dinner Plate Set (4),Kitchen,Atlas Ceramics,Rotterdam DC,34,19,38,10,21.0,54.0,2026-10-03,Tomás Herrera
+LUM-006,Speckled Mug Set (4),Kitchen,Atlas Ceramics,Rotterdam DC,88,26,52,10,12.0,32.0,2026-09-12,Tomás Herrera
+LUM-007,Glazed Serving Bowl,Kitchen,Atlas Ceramics,Rotterdam DC,62,18,36,5,11.0,29.0,2026-08-31,Priya Raman
+LUM-008,Ceramic Table Lamp,Lighting,Brightline Lighting,Leipzig DC,8,9,18,7,34.0,79.0,2026-10-15,Priya Raman
+LUM-009,Rattan Pendant Shade,Lighting,Brightline Lighting,Leipzig DC,18,20,40,5,26.0,65.0,2026-10-05,Tomás Herrera
+LUM-010,Brass Floor Lamp,Lighting,Brightline Lighting,Rotterdam DC,29,24,48,5,72.0,169.0,2026-10-04,Tomás Herrera
+LUM-011,LED Candle Set (3),Lighting,Brightline Lighting,Leipzig DC,39,24,48,5,8.0,22.0,2026-09-27,Tomás Herrera
+LUM-012,Oak Wall Shelf,Storage,Cedar & Stone Supply,Leipzig DC,3,29,58,14,19.0,49.0,2026-08-31,Tomás Herrera
+LUM-013,Woven Storage Basket - Large,Storage,Cedar & Stone Supply,Leipzig DC,33,13,26,21,14.0,36.0,2026-09-22,Tomás Herrera
+LUM-014,Bamboo Drawer Organiser,Storage,Cedar & Stone Supply,Rotterdam DC,4,9,18,14,7.0,19.0,2026-10-15,Tomás Herrera
+LUM-015,Marble Bathroom Tray,Bath,Cedar & Stone Supply,Leipzig DC,51,17,34,21,13.0,34.0,2026-10-17,Tomás Herrera
+LUM-016,Teak Bath Mat,Bath,Cedar & Stone Supply,Leipzig DC,119,40,80,14,16.0,42.0,2026-09-21,Tomás Herrera
+LUM-017,Chunky Knit Throw,Decor,Nordic Loom Co.,Leipzig DC,30,15,30,10,29.0,75.0,2026-10-19,Tomás Herrera
+LUM-018,Wool Cushion Cover,Decor,Nordic Loom Co.,Leipzig DC,6,10,20,3,10.0,28.0,2026-09-21,Priya Raman
+LUM-019,Jute Area Rug 160x230,Decor,Nordic Loom Co.,Leipzig DC,0,19,38,3,58.0,149.0,2026-10-20,Priya Raman
+LUM-020,Round Wall Mirror,Decor,Cedar & Stone Supply,Leipzig DC,33,9,18,3,41.0,99.0,2026-09-02,Tomás Herrera
+LUM-021,Scented Soy Candle,Decor,Nordic Loom Co.,Leipzig DC,49,15,30,5,6.5,18.0,2026-09-06,Tomás Herrera
+LUM-022,Glass Storage Jars (3),Kitchen,Atlas Ceramics,Leipzig DC,36,15,30,7,9.0,26.0,2026-09-28,Tomás Herrera
+LUM-023,Cast Iron Casserole Dish,Kitchen,Atlas Ceramics,Rotterdam DC,0,14,28,21,39.0,95.0,2026-09-08,Priya Raman
+LUM-024,Bedside Table Lamp,Lighting,Brightline Lighting,Rotterdam DC,63,19,38,7,22.0,55.0,2026-09-12,Priya Raman

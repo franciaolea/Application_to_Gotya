@@ -119,3 +119,78 @@ def issues_by_owner(table: pd.DataFrame) -> go.Figure:
     fig.update_xaxes(showgrid=True, gridcolor=GRID, dtick=1, title_text="Open issues")
     fig.update_yaxes(showgrid=False, categoryorder="array", categoryarray=owners)
     return _style(fig, height=max(260, 28 * len(owners) + 80))
+
+
+# --- Inventory ---------------------------------------------------------------
+
+# Problems get status colours; healthy items stay neutral so problems stand out.
+STOCK_STATUS_COLORS = {"Out of Stock": STATUS["critical"], "Critical": STATUS["serious"],
+                       "Low": STATUS["warning"], "Healthy": NEUTRAL}
+
+
+def stock_vs_minimum(products: pd.DataFrame) -> go.Figure:
+    """Stock on hand per product (bars) against its minimum (black tick). Worst first."""
+    data = products.assign(cover=products["stock_on_hand"] / products["min_stock"]) \
+        .sort_values("cover", ascending=False)  # plotly draws the first row at the bottom
+    fig = go.Figure()
+    for status, color in STOCK_STATUS_COLORS.items():
+        rows = data[data["stock_status"] == status]
+        if rows.empty:
+            continue
+        fig.add_bar(
+            y=rows["product_name"], x=rows["stock_on_hand"], name=status, orientation="h",
+            marker=dict(color=color, line=dict(color=PAGE_BG, width=1)),
+            customdata=rows[["min_stock", "sku"]],
+            hovertemplate="%{customdata[1]} · %{x} in stock (minimum %{customdata[0]})<extra></extra>")
+    fig.add_scatter(
+        y=data["product_name"], x=data["min_stock"], name="Minimum stock", mode="markers",
+        marker=dict(symbol="line-ns", size=14, line=dict(width=2, color=INK)),
+        hovertemplate="Minimum %{x}<extra></extra>")
+    out = data[data["stock_on_hand"] <= 0]
+    if not out.empty:  # a zero-length bar is invisible, so say it in words
+        fig.add_scatter(y=out["product_name"], x=[0] * len(out), mode="text", text=["OUT OF STOCK"] * len(out),
+                        textposition="middle right", textfont=dict(color=STATUS["critical"], size=11),
+                        showlegend=False, hoverinfo="skip")
+    fig.update_layout(barmode="overlay", bargap=0.3)
+    fig.update_xaxes(showgrid=True, gridcolor=GRID, title_text="Units")
+    fig.update_yaxes(showgrid=False, categoryorder="array", categoryarray=list(data["product_name"]))
+    return _style(fig, height=max(280, 24 * len(data) + 100))
+
+
+# --- Shipping ----------------------------------------------------------------
+
+def carrier_on_time(performance: pd.DataFrame) -> go.Figure:
+    """On-time delivery rate per carrier against the target."""
+    target = config.ON_TIME_DELIVERY_TARGET
+    data = performance.dropna(subset=["on_time_rate"])
+    fig = go.Figure()
+    fig.add_bar(
+        x=data["carrier"], y=data["on_time_rate"], marker_color=SERIES[0], name="On-time rate",
+        text=data["on_time_rate"].map("{:.0%}".format), textposition="inside", insidetextanchor="end",
+        textfont=dict(color="white", size=13),
+        customdata=data[["on_time", "delivered"]],
+        hovertemplate="%{x}: %{y:.0%} on time (%{customdata[0]} of %{customdata[1]} parcels)<extra></extra>")
+    fig.add_hline(y=target, line=dict(color=MUTED, width=1, dash="dot"),
+                  annotation_text=f"Target {target:.0%}", annotation_position="top left",
+                  annotation_font_color=INK_SECONDARY)
+    fig.update_layout(showlegend=False, bargap=0.5, uniformtext=dict(mode="show", minsize=11))
+    fig.update_yaxes(range=[0, 1.05])
+    return _style(fig, y_format=".0%")
+
+
+LATENESS_COLORS = {"On schedule": STATUS["good"], "1-2 days late": STATUS["warning"],
+                   "3+ days late": STATUS["critical"]}
+
+
+def open_shipments_by_lateness(table: pd.DataFrame) -> go.Figure:
+    """Parcels still travelling per carrier, split by how late they are."""
+    fig = go.Figure()
+    for bucket, color in LATENESS_COLORS.items():
+        fig.add_bar(
+            y=table["carrier"], x=table[bucket], name=bucket, orientation="h",
+            marker=dict(color=color, line=dict(color=PAGE_BG, width=2)),
+            hovertemplate=f"%{{y}}: %{{x}} {bucket.lower()}<extra></extra>")
+    fig.update_layout(barmode="stack")
+    fig.update_xaxes(showgrid=True, gridcolor=GRID, title_text="Open shipments")
+    fig.update_yaxes(showgrid=False, autorange="reversed")
+    return _style(fig)

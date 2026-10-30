@@ -282,6 +282,75 @@ def support_backlog(tickets: pd.DataFrame) -> pd.DataFrame:
     return table.reindex(index=priorities, columns=states, fill_value=0).rename_axis("priority").reset_index()
 
 
+# --- 3b. Module drill-downs: inventory and shipping ----------------------------
+
+def filter_frame(df: pd.DataFrame, selections: Dict[str, Sequence]) -> pd.DataFrame:
+    """Keep rows matching every non-empty selection, e.g. {"category": ["Kitchen"]}.
+    An empty selection means "all"."""
+    for column, values in selections.items():
+        if values:
+            df = df[df[column].isin(values)]
+    return df
+
+
+def add_demand(products: pd.DataFrame, orders: pd.DataFrame, as_of: datetime,
+               window_days: int = config.DEMAND_WINDOW_DAYS) -> pd.DataFrame:
+    """Add sales velocity and "days of cover" to enriched products.
+
+    Days of cover = stock / average daily units sold: how long the stock lasts
+    at the current selling rate. If that is shorter than the supplier lead time,
+    the product will sell out before a new order could arrive.
+    """
+    df = products.copy()
+    start = _now(as_of) - pd.Timedelta(days=window_days)
+    recent = orders[(orders["order_date"] >= start) & (orders["order_date"] < _now(as_of))
+                    & (orders["status"] != "Cancelled")]
+    units = recent.groupby("sku")["quantity"].sum()
+    df["units_sold"] = df["sku"].map(units).fillna(0).astype(int)
+    df["daily_demand"] = df["units_sold"] / window_days
+    df["days_of_cover"] = (df["stock_on_hand"] / df["daily_demand"]).where(df["daily_demand"] > 0)
+    df["stockout_risk"] = (df["days_of_cover"] < df["lead_time_days"]).fillna(False)
+    df["reorder_cost"] = df["suggested_order_qty"] * df["unit_cost"]
+    return df
+
+
+LATENESS_BUCKETS = ["On schedule", "1-2 days late", "3+ days late"]
+
+
+def carrier_performance(shipments: pd.DataFrame, as_of: datetime, days: int = 28) -> pd.DataFrame:
+    """Scorecard per carrier: on-time rate over the last `days`, plus what is open now."""
+    since = _today(as_of) - pd.Timedelta(days=days)
+    delivered = shipments[~shipments["is_open"] & (shipments["actual_delivery_date"] >= since)]
+    late = delivered[~delivered["delivered_on_time"]]
+    open_now = shipments[shipments["is_open"]]
+    carriers = sorted(shipments["carrier"].dropna().unique())
+    table = pd.DataFrame({
+        "delivered": delivered.groupby("carrier").size(),
+        "on_time": delivered.groupby("carrier")["delivered_on_time"].sum(),
+        "avg_days_late": late.groupby("carrier")["days_late"].mean(),
+        "open": open_now.groupby("carrier").size(),
+        "delayed": open_now.groupby("carrier")["is_delayed"].sum(),
+        "exceptions": open_now.groupby("carrier")["has_exception"].sum(),
+    }).reindex(carriers)
+    count_columns = ["delivered", "on_time", "open", "delayed", "exceptions"]
+    table[count_columns] = table[count_columns].fillna(0).astype(int)
+    table["on_time_rate"] = (table["on_time"] / table["delivered"]).where(table["delivered"] > 0)
+    table["below_target"] = table["on_time_rate"] < config.ON_TIME_DELIVERY_TARGET
+    return table.rename_axis("carrier").reset_index()
+
+
+def open_shipments_by_lateness(shipments: pd.DataFrame) -> pd.DataFrame:
+    """Open shipments per carrier, split into on schedule / 1-2 days late / 3+ days late."""
+    open_now = shipments[shipments["is_open"]].copy()
+    open_now["lateness"] = np.select(
+        [open_now["days_late"] >= config.SHIPMENT_ESCALATION_DAYS, open_now["days_late"] > 0],
+        ["3+ days late", "1-2 days late"], default="On schedule")
+    table = pd.crosstab(open_now["carrier"], open_now["lateness"])
+    carriers = sorted(shipments["carrier"].dropna().unique())
+    return table.reindex(index=carriers, columns=LATENESS_BUCKETS, fill_value=0) \
+        .rename_axis("carrier").reset_index()
+
+
 # --- 4. Attention list -----------------------------------------------------
 
 def _day_count(n: pd.Series, suffix: str) -> pd.Series:
@@ -345,6 +414,42 @@ def _ticket_issues(t: pd.DataFrame) -> pd.DataFrame:
                  "SLA due in " + t["hours_to_sla"].round(1).astype(str) + "h"))
 
 
+# Per area: which enriched dataset to read, which records are problems, how to describe them.
+AREA_RULES = {
+    "Orders": ("orders", lambda o: o["is_stuck"], _order_issues),
+    "Shipping": ("shipments", lambda s: s["is_delayed"] | (s["has_exception"] & s["is_open"]), _shipment_issues),
+    "Inventory": ("products", lambda p: p["needs_replenishment"], _inventory_issues),
+    "Payments": ("payments", lambda p: p["is_outstanding"] & (
+        p["is_overdue"] | p["status"].isin(["Failed", "On Hold"])), _payment_issues),
+    "Support": ("tickets", lambda t: t["is_breached"] | t["is_at_risk"], _ticket_issues),
+}
+ISSUE_COLUMNS = ["severity", "area", "reference", "issue", "owner", "detail", "escalate"]
+
+
+def _finalise(parts: List[pd.DataFrame]) -> pd.DataFrame:
+    parts = [part for part in parts if not part.empty]
+    if not parts:
+        return pd.DataFrame(columns=ISSUE_COLUMNS)
+    items = pd.concat(parts, ignore_index=True)
+    items["escalate"] = items["severity"].astype(str) == "Critical"
+    items["severity"] = pd.Categorical(items["severity"].astype(str), SEVERITIES, ordered=True)
+    items["area"] = pd.Categorical(items["area"].astype(str), AREAS, ordered=True)
+    return items.sort_values(["severity", "area"]).reset_index(drop=True)[ISSUE_COLUMNS]
+
+
+def area_issues(area: str, records: pd.DataFrame) -> pd.DataFrame:
+    """Open issues for one area, e.g. area_issues("Inventory", enriched_products).
+
+    Module pages use this on their filtered data; the dashboard combines all areas.
+    Either way the same rules apply.
+    """
+    _, is_problem, build = AREA_RULES[area]
+    if records.empty:
+        return _finalise([])
+    problems = records[is_problem(records)]
+    return _finalise([build(problems)] if not problems.empty else [])
+
+
 def attention_items(e: Frames) -> pd.DataFrame:
     """Every open problem in one list, ranked by severity.
 
@@ -356,28 +461,14 @@ def attention_items(e: Frames) -> pd.DataFrame:
       Support    urgent ticket past SLA -> Critical, urgent at risk or other past SLA -> High,
                  other at risk -> Medium
     """
-    orders, shipments, products = e["orders"], e["shipments"], e["products"]
-    payments, tickets = e["payments"], e["tickets"]
-    problems = [
-        (orders[orders["is_stuck"]], _order_issues),
-        (shipments[shipments["is_delayed"] | (shipments["has_exception"] & shipments["is_open"])],
-         _shipment_issues),
-        (products[products["needs_replenishment"]], _inventory_issues),
-        (payments[payments["is_outstanding"]
-                  & (payments["is_overdue"] | payments["status"].isin(["Failed", "On Hold"]))],
-         _payment_issues),
-        (tickets[tickets["is_breached"] | tickets["is_at_risk"]], _ticket_issues),
-    ]
-    parts = [build(records) for records, build in problems if not records.empty]
+    return _finalise([area_issues(area, e[dataset]) for area, (dataset, _, _) in AREA_RULES.items()])
 
-    columns = ["severity", "area", "reference", "issue", "owner", "detail", "escalate"]
-    if not parts:
-        return pd.DataFrame(columns=columns)
-    items = pd.concat(parts, ignore_index=True)
-    items["escalate"] = items["severity"] == "Critical"
-    items["severity"] = pd.Categorical(items["severity"], SEVERITIES, ordered=True)
-    items["area"] = pd.Categorical(items["area"], AREAS, ordered=True)
-    return items.sort_values(["severity", "area"]).reset_index(drop=True)[columns]
+
+def status_of(items: pd.DataFrame) -> str:
+    """'On track', 'Watch', 'At risk' or 'Critical', from the most severe issue."""
+    if items.empty:
+        return HEALTH_BY_SEVERITY[None]
+    return HEALTH_BY_SEVERITY[items["severity"].min()]  # ordered: Critical < High < Medium
 
 
 def area_health(items: pd.DataFrame) -> pd.DataFrame:
@@ -385,11 +476,10 @@ def area_health(items: pd.DataFrame) -> pd.DataFrame:
     rows = []
     for area in AREAS:
         in_area = items[items["area"] == area]
-        worst = in_area["severity"].min() if len(in_area) else None  # ordered: Critical < High < Medium
         counts = in_area["severity"].value_counts()
         rows.append({
             "area": area,
-            "status": HEALTH_BY_SEVERITY[None if pd.isna(worst) else worst],
+            "status": status_of(in_area),
             "open_issues": len(in_area),
             "critical": int(counts.get("Critical", 0)),
             "high": int(counts.get("High", 0)),

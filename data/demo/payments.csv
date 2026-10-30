@@ -1,29 +1,29 @@
 payment_id,type,direction,counterparty,reference,amount_eur,status,due_date,paid_date,owner
-PAY-7001,Marketplace Payout,Incoming,MarketHub Marketplace,,2021.01,Paid,2026-10-17,2026-10-17,Daniel Mensah
-PAY-7002,Supplier Invoice,Outgoing,Nordic Loom Co.,,7012.0,Paid,2026-10-10,2026-10-08,Daniel Mensah
-PAY-7003,Customer Refund,Outgoing,Felix Costa,ORD-10211,134.45,Paid,2026-10-25,2026-10-22,Daniel Mensah
-PAY-7004,Marketplace Payout,Incoming,MarketHub Marketplace,,2964.71,Pending,2026-11-02,,Daniel Mensah
-PAY-7005,Supplier Invoice,Outgoing,Atlas Ceramics,,11004.15,Paid,2026-10-27,2026-10-26,Hannah Lindqvist
-PAY-7006,Customer Refund,Outgoing,Hugo Berg,ORD-10178,112.32,Pending,2026-11-11,,Daniel Mensah
-PAY-7007,Payment Processor Settlement,Incoming,PayFlow Payments,,8757.42,Pending,2026-11-13,,Daniel Mensah
-PAY-7008,Payment Processor Settlement,Incoming,PayFlow Payments,,3369.49,Processing,2026-11-08,,Daniel Mensah
-PAY-7009,Customer Refund,Outgoing,Oscar Berg,ORD-10199,145.45,Paid,2026-10-29,2026-10-26,Daniel Mensah
-PAY-7010,Supplier Invoice,Outgoing,Brightline Lighting,,5490.66,Paid,2026-10-17,2026-10-15,Hannah Lindqvist
-PAY-7011,Supplier Invoice,Outgoing,Harbor Textiles,,3447.05,Paid,2026-10-14,2026-10-11,Hannah Lindqvist
-PAY-7012,Payment Processor Settlement,Incoming,PayFlow Payments,,6642.32,Paid,2026-10-27,2026-10-25,Hannah Lindqvist
-PAY-7013,Payment Processor Settlement,Incoming,PayFlow Payments,,4106.25,Paid,2026-10-30,2026-10-29,Hannah Lindqvist
-PAY-7014,Marketplace Payout,Incoming,MarketHub Marketplace,,4266.37,Paid,2026-10-13,2026-10-11,Hannah Lindqvist
-PAY-7015,Customer Refund,Outgoing,Emma Weber,ORD-10154,131.54,Pending,2026-11-13,,Hannah Lindqvist
-PAY-7016,Marketplace Payout,Incoming,MarketHub Marketplace,,5907.24,Paid,2026-10-16,2026-10-15,Daniel Mensah
-PAY-7017,Supplier Invoice,Outgoing,Atlas Ceramics,,3189.39,Paid,2026-10-18,2026-10-18,Daniel Mensah
-PAY-7018,Payment Processor Settlement,Incoming,PayFlow Payments,,2490.25,Paid,2026-11-06,2026-10-29,Daniel Mensah
-PAY-7019,Carrier Invoice,Outgoing,EuroPost Express,,2050.28,Paid,2026-10-25,2026-10-22,Daniel Mensah
-PAY-7020,Marketplace Payout,Incoming,MarketHub Marketplace,,6412.82,Paid,2026-10-11,2026-10-11,Daniel Mensah
-PAY-7021,Customer Refund,Outgoing,Lucas Andersen,ORD-10171,55.39,Pending,2026-11-01,,Daniel Mensah
-PAY-7022,Marketplace Payout,Incoming,MarketHub Marketplace,,1911.48,Pending,2026-11-07,,Hannah Lindqvist
-PAY-7023,Carrier Invoice,Outgoing,GreenRoute Logistics,,2508.01,Pending,2026-11-06,,Daniel Mensah
-PAY-7024,Supplier Invoice,Outgoing,Atlas Ceramics,,1050.84,Paid,2026-10-16,2026-10-15,Daniel Mensah
-PAY-7025,Customer Refund,Outgoing,Mateo Moreau,ORD-10050,63.55,Paid,2026-10-22,2026-10-21,Daniel Mensah
-PAY-7026,Customer Refund,Outgoing,Maya Jansen,ORD-10019,38.29,Processing,2026-11-02,,Hannah Lindqvist
-PAY-7027,Supplier Invoice,Outgoing,Harbor Textiles,,8645.63,Paid,2026-10-16,2026-10-16,Daniel Mensah
-PAY-7028,Payment Processor Settlement,Incoming,PayFlow Payments,,7146.02,Paid,2026-10-26,2026-10-26,Daniel Mensah
+PAY-7001,Carrier Invoice,Outgoing,Veloxa Courier,,840.81,Pending,2026-11-11,,Daniel Mensah
+PAY-7002,Customer Refund,Outgoing,Leon Keller,ORD-10179,95.28,Pending,2026-11-07,,Hannah Lindqvist
+PAY-7003,Marketplace Payout,Incoming,MarketHub Marketplace,,2745.74,Paid,2026-10-14,2026-10-12,Hannah Lindqvist
+PAY-7004,Supplier Invoice,Outgoing,Cedar & Stone Supply,,4841.0,Pending,2026-11-07,,Hannah Lindqvist
+PAY-7005,Customer Refund,Outgoing,Nadia Andersen,ORD-10721,195.28,Paid,2026-10-10,2026-10-09,Daniel Mensah
+PAY-7006,Supplier Invoice,Outgoing,Atlas Ceramics,,4181.73,Processing,2026-11-13,,Hannah Lindqvist
+PAY-7007,Carrier Invoice,Outgoing,Northlane Freight,,1367.0,Paid,2026-10-10,2026-10-08,Daniel Mensah
+PAY-7008,Customer Refund,Outgoing,Leon Fischer,ORD-10113,135.56,Paid,2026-10-20,2026-10-18,Daniel Mensah
+PAY-7009,Payment Processor Settlement,Incoming,CardBridge,,1938.1,Processing,2026-11-07,,Hannah Lindqvist
+PAY-7010,Supplier Invoice,Outgoing,Harbor Textiles,,4525.23,Paid,2026-10-16,2026-10-13,Hannah Lindqvist
+PAY-7011,Carrier Invoice,Outgoing,Northlane Freight,,2447.44,Pending,2026-11-08,,Daniel Mensah
+PAY-7012,Carrier Invoice,Outgoing,Parcelyn,,2871.72,Paid,2026-10-26,2026-10-23,Daniel Mensah
+PAY-7013,Carrier Invoice,Outgoing,Parcelyn,,2529.54,Paid,2026-10-16,2026-10-13,Hannah Lindqvist
+PAY-7014,Customer Refund,Outgoing,Hugo Romero,ORD-10216,87.93,Paid,2026-10-17,2026-10-16,Daniel Mensah
+PAY-7015,Customer Refund,Outgoing,Sami Romero,ORD-10840,172.02,Paid,2026-10-21,2026-10-18,Hannah Lindqvist
+PAY-7016,Supplier Invoice,Outgoing,Atlas Ceramics,,3906.8,Paid,2026-10-18,2026-10-17,Daniel Mensah
+PAY-7017,Carrier Invoice,Outgoing,Parcelyn,,3223.62,Pending,2026-11-09,,Daniel Mensah
+PAY-7018,Customer Refund,Outgoing,Mateo Weber,ORD-10461,36.88,Paid,2026-10-13,2026-10-11,Daniel Mensah
+PAY-7019,Customer Refund,Outgoing,Julia Keller,ORD-10028,39.97,Processing,2026-10-31,,Hannah Lindqvist
+PAY-7020,Supplier Invoice,Outgoing,Brightline Lighting,,9607.67,Pending,2026-11-12,,Daniel Mensah
+PAY-7021,Marketplace Payout,Incoming,MarketHub Marketplace,,6167.53,Pending,2026-10-24,,Hannah Lindqvist
+PAY-7022,Customer Refund,Outgoing,Oscar Petit,ORD-10180,219.77,Paid,2026-10-28,2026-10-25,Daniel Mensah
+PAY-7023,Supplier Invoice,Outgoing,Brightline Lighting,,6692.84,Paid,2026-10-14,2026-10-13,Hannah Lindqvist
+PAY-7024,Supplier Invoice,Outgoing,Nordic Loom Co.,,9566.91,Processing,2026-11-10,,Hannah Lindqvist
+PAY-7025,Marketplace Payout,Incoming,MarketHub Marketplace,,4671.06,Processing,2026-11-08,,Hannah Lindqvist
+PAY-7026,Marketplace Payout,Incoming,MarketHub Marketplace,,5001.03,Pending,2026-11-02,,Hannah Lindqvist
+PAY-7027,Payment Processor Settlement,Incoming,CardBridge,,4236.92,Paid,2026-10-21,2026-10-19,Hannah Lindqvist
+PAY-7028,Supplier Invoice,Outgoing,Brightline Lighting,,2919.95,Processing,2026-11-10,,Hannah Lindqvist

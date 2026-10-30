@@ -28,7 +28,7 @@ import pandas as pd
 
 from src import config
 
-SEED = 27  # chosen because it produces a balanced, realistic scenario for demos
+SEED = 10  # chosen because it produces a balanced, realistic scenario for demos
 DEFAULT_AS_OF = date(2026, 10, 30)
 COMPANY = "Lumora Home & Living"  # fictional company
 
@@ -80,18 +80,23 @@ LAST_NAMES = ["Vermeer", "Schulz", "Dubois", "Kowalski", "Rossi", "Jansen", "Mor
 
 REGIONS = {"Netherlands": 2, "Germany": 3, "France": 3, "Belgium": 2, "Spain": 4}
 CHANNELS = ["Website", "Mobile App", "Marketplace"]
-CARRIERS = ["SwiftParcel", "EuroPost Express", "GreenRoute Logistics"]
-# Planted bottleneck: GreenRoute delivers late more often, loses more parcels
+CARRIERS = ["Veloxa Courier", "Northlane Freight", "Parcelyn"]
+# Planted bottleneck: Parcelyn delivers late more often, loses more parcels
 # ("stuck") and raises more exceptions than the other two carriers.
 CARRIER_PROFILES = {
-    "SwiftParcel": {"share": 0.4, "stuck": 0.01, "exception": 0.05,
-                    "delay_days": {"-1": 0.15, "0": 0.75, "1": 0.07, "2": 0.03}},
-    "EuroPost Express": {"share": 0.35, "stuck": 0.01, "exception": 0.05,
-                         "delay_days": {"-1": 0.1, "0": 0.78, "1": 0.09, "2": 0.03}},
-    "GreenRoute Logistics": {"share": 0.25, "stuck": 0.12, "exception": 0.35,
-                             "delay_days": {"-1": 0.05, "0": 0.5, "1": 0.25, "2": 0.2}},
+    "Veloxa Courier": {"share": 0.4, "stuck": 0.005, "exception": 0.03,
+                       "delay_days": {"-1": 0.15, "0": 0.75, "1": 0.07, "2": 0.03}},
+    "Northlane Freight": {"share": 0.35, "stuck": 0.005, "exception": 0.03,
+                          "delay_days": {"-1": 0.1, "0": 0.78, "1": 0.09, "2": 0.03}},
+    "Parcelyn": {"share": 0.25, "stuck": 0.05, "exception": 0.25,
+                 "delay_days": {"-1": 0.05, "0": 0.5, "1": 0.25, "2": 0.2}},
 }
 WAREHOUSES = ["Rotterdam DC", "Leipzig DC"]
+
+# Order volume grows from ~9 to ~21 orders a day over the 8 weeks of history.
+ORDERS_PER_DAY_START, ORDERS_PER_DAY_END = 9, 21
+HISTORY_DAYS = 57  # 8 full weeks + today, so 28-day periods can be compared
+QUANTITY_WEIGHTS = {"1": 0.6, "2": 0.25, "3": 0.1, "4": 0.05}
 
 
 def _pick(rng: random.Random, weighted: Dict[str, float]) -> str:
@@ -109,15 +114,29 @@ def _dt(value: Optional[datetime]) -> str:
 
 # --- Individual datasets ---------------------------------------------------
 
-def make_products(rng: random.Random, as_of: date) -> pd.DataFrame:
+def make_products(rng: random.Random, as_of: date):
+    """Products with stock levels set the way an inventory planner would.
+
+    Each product gets a popularity (share of sales). Its minimum stock - the
+    reorder point - is then: expected daily demand x (supplier lead time +
+    safety stock days). Returns (products, popularity weights for ordering).
+    """
     # Planted stock situations: 2 out of stock, 3 critical, 3 low, the rest healthy.
     states = ["out"] * 2 + ["critical"] * 3 + ["low"] * 3
     states += ["healthy"] * (len(PRODUCTS) - len(states))
     rng.shuffle(states)
 
+    weights = [rng.uniform(0.4, 2.0) for _ in PRODUCTS]
+    avg_qty = sum(int(q) * w for q, w in QUANTITY_WEIGHTS.items())
+    # Demand forecast = average over the last 4 weeks of the growth curve.
+    recent_orders_per_day = ORDERS_PER_DAY_START + (ORDERS_PER_DAY_END - ORDERS_PER_DAY_START) * 0.75
+
     rows = []
-    for i, ((name, category, supplier, cost, price), state) in enumerate(zip(PRODUCTS, states), 1):
-        min_stock = rng.choice([20, 25, 30, 40, 50])
+    for i, ((name, category, supplier, cost, price), state, weight) in enumerate(
+            zip(PRODUCTS, states, weights), 1):
+        lead_time = rng.choice([3, 5, 7, 10, 14, 21])
+        daily_demand = recent_orders_per_day * avg_qty * weight / sum(weights)
+        min_stock = max(5, round(daily_demand * (lead_time + config.SAFETY_STOCK_DAYS)))
         if state == "out":
             stock = 0
         elif state == "critical":
@@ -135,13 +154,13 @@ def make_products(rng: random.Random, as_of: date) -> pd.DataFrame:
             "stock_on_hand": stock,
             "min_stock": min_stock,
             "reorder_qty": min_stock * 2,
-            "lead_time_days": rng.choice([3, 5, 7, 10, 14, 21]),
+            "lead_time_days": lead_time,
             "unit_cost": cost,
             "unit_price": price,
             "last_restock_date": _d(as_of - timedelta(days=rng.randint(5, 60))),
             "owner": rng.choice(TEAM["inventory"]),
         })
-    return pd.DataFrame(rows)
+    return pd.DataFrame(rows), weights
 
 
 def _order_status(rng: random.Random, age_days: int) -> str:
@@ -154,20 +173,19 @@ def _order_status(rng: random.Random, age_days: int) -> str:
     if age_days <= 1:
         return _pick(rng, {"Pending": 0.5, "Processing": 0.45, "Cancelled": 0.05})
     if age_days <= 3:
-        return _pick(rng, {"Pending": 0.04, "Processing": 0.14, "Dispatched": 0.79, "Cancelled": 0.03})
+        return _pick(rng, {"Pending": 0.02, "Processing": 0.05, "Dispatched": 0.9, "Cancelled": 0.03})
     return _pick(rng, {"Dispatched": 0.96, "Cancelled": 0.04})
 
 
 def _daily_order_counts(rng: random.Random, days: int) -> List[int]:
-    """Orders per day, oldest first: a steady growth trend (~3 -> ~7 a day) with noise.
-
-    57 calendar days (8 full weeks + today) lets the dashboard compare the last
-    28 days with the 28 before.
-    """
-    return [max(1, round(3 + 4 * i / (days - 1) + rng.uniform(-1.5, 1.5))) for i in range(days)]
+    """Orders per day, oldest first: a steady growth trend with day-to-day noise."""
+    growth = ORDERS_PER_DAY_END - ORDERS_PER_DAY_START
+    return [max(1, round(ORDERS_PER_DAY_START + growth * i / (days - 1) + rng.uniform(-3, 3)))
+            for i in range(days)]
 
 
-def make_orders(rng: random.Random, as_of: date, products: pd.DataFrame, days: int = 57) -> pd.DataFrame:
+def make_orders(rng: random.Random, as_of: date, products: pd.DataFrame, weights: List[float],
+                days: int = HISTORY_DAYS) -> pd.DataFrame:
     rows = []
     order_times = []
     for i, count in enumerate(_daily_order_counts(rng, days)):
@@ -178,8 +196,8 @@ def make_orders(rng: random.Random, as_of: date, products: pd.DataFrame, days: i
             order_times.append((age_days, datetime.combine(as_of - timedelta(days=age_days),
                                                            time(hour, rng.randint(0, 59)))))
     for age_days, order_dt in order_times:
-        product = products.iloc[rng.randrange(len(products))]
-        qty = _pick(rng, {"1": 0.6, "2": 0.25, "3": 0.1, "4": 0.05})
+        product = products.iloc[rng.choices(range(len(products)), weights=weights, k=1)[0]]
+        qty = _pick(rng, QUANTITY_WEIGHTS)
         rows.append({
             "order_date": order_dt,
             "customer_name": f"{rng.choice(FIRST_NAMES)} {rng.choice(LAST_NAMES)}",
@@ -401,8 +419,8 @@ def make_actions(as_of: date, products: pd.DataFrame, shipments: pd.DataFrame,
 def generate_all(as_of: date = DEFAULT_AS_OF, seed: int = SEED) -> Dict[str, pd.DataFrame]:
     """Build every dataset in memory. Same inputs always give the same output."""
     rng = random.Random(seed)
-    products = make_products(rng, as_of)
-    orders = make_orders(rng, as_of, products)
+    products, popularity = make_products(rng, as_of)
+    orders = make_orders(rng, as_of, products, popularity)
     orders, shipments = make_shipments(rng, as_of, orders)
     payments = make_payments(rng, as_of, orders)
     tickets = make_tickets(rng, as_of, orders)

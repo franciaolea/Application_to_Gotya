@@ -1,293 +1,871 @@
 order_id,order_date,customer_name,channel,region,sku,quantity,order_value,status,owner
-ORD-10001,2026-09-04 09:31,Elena Moreau,Website,France,LUM-021,3,54.0,Delivered,Jonas Vermeulen
-ORD-10002,2026-09-04 18:23,Lucas Berg,Mobile App,Spain,LUM-012,1,49.0,Delivered,Mei Tanaka
-ORD-10003,2026-09-04 22:19,Leon Schulz,Website,France,LUM-004,1,24.0,Delivered,Mei Tanaka
-ORD-10004,2026-09-05 14:14,Freya Bakker,Mobile App,Germany,LUM-006,2,64.0,Delivered,Jonas Vermeulen
-ORD-10005,2026-09-05 14:33,Oscar Vermeer,Mobile App,Belgium,LUM-012,1,49.0,Delivered,Jonas Vermeulen
-ORD-10006,2026-09-05 22:12,Clara Bakker,Website,France,LUM-014,1,19.0,Delivered,Jonas Vermeulen
-ORD-10007,2026-09-06 16:44,Finn Kowalski,Website,Netherlands,LUM-001,1,89.0,Delivered,Mei Tanaka
-ORD-10008,2026-09-06 18:06,Lucas Vermeer,Website,Belgium,LUM-017,2,150.0,Delivered,Mei Tanaka
-ORD-10009,2026-09-07 12:48,Theo Bakker,Mobile App,Netherlands,LUM-003,1,45.0,Delivered,Jonas Vermeulen
-ORD-10010,2026-09-07 16:41,Zara Romero,Website,Germany,LUM-008,1,79.0,Delivered,Mei Tanaka
-ORD-10011,2026-09-07 19:31,Elena Berg,Mobile App,Spain,LUM-019,1,149.0,Delivered,Jonas Vermeulen
-ORD-10012,2026-09-08 12:07,Mateo Lambert,Website,Spain,LUM-001,1,89.0,Delivered,Jonas Vermeulen
-ORD-10013,2026-09-08 15:01,Sami Dubois,Marketplace,Germany,LUM-022,3,78.0,Cancelled,Mei Tanaka
-ORD-10014,2026-09-08 15:26,Hugo Rossi,Marketplace,Germany,LUM-006,3,96.0,Delivered,Jonas Vermeulen
-ORD-10015,2026-09-09 08:48,Mila Silva,Mobile App,Spain,LUM-008,2,158.0,Delivered,Jonas Vermeulen
-ORD-10016,2026-09-09 21:34,Noah Costa,Website,Spain,LUM-024,2,110.0,Delivered,Jonas Vermeulen
-ORD-10017,2026-09-10 08:28,Finn Vermeer,Website,Germany,LUM-005,1,54.0,Delivered,Jonas Vermeulen
-ORD-10018,2026-09-10 14:50,Noah Schulz,Marketplace,Spain,LUM-021,1,18.0,Delivered,Jonas Vermeulen
-ORD-10019,2026-09-10 15:59,Maya Jansen,Mobile App,Belgium,LUM-009,2,130.0,Cancelled,Mei Tanaka
-ORD-10020,2026-09-11 10:07,Sami Berg,Mobile App,Spain,LUM-020,1,99.0,Delivered,Mei Tanaka
-ORD-10021,2026-09-11 11:49,Ines Berg,Website,Belgium,LUM-014,1,19.0,Delivered,Jonas Vermeulen
-ORD-10022,2026-09-12 08:53,Julia Berg,Website,Spain,LUM-011,2,44.0,Delivered,Mei Tanaka
-ORD-10023,2026-09-12 12:41,Mila Bakker,Website,Germany,LUM-005,2,108.0,Delivered,Mei Tanaka
-ORD-10024,2026-09-12 14:19,Theo Moreau,Website,Spain,LUM-008,1,79.0,Delivered,Mei Tanaka
-ORD-10025,2026-09-12 15:17,Omar Vermeer,Website,France,LUM-003,2,90.0,Delivered,Jonas Vermeulen
-ORD-10026,2026-09-12 20:39,Maya Lambert,Mobile App,Belgium,LUM-009,4,260.0,Delivered,Mei Tanaka
-ORD-10027,2026-09-13 08:48,Hugo Schulz,Website,Germany,LUM-010,3,507.0,Delivered,Mei Tanaka
-ORD-10028,2026-09-13 10:05,Leon Laurent,Mobile App,Belgium,LUM-017,1,75.0,Delivered,Jonas Vermeulen
-ORD-10029,2026-09-13 21:46,Jonas Petit,Website,Netherlands,LUM-001,1,89.0,Delivered,Mei Tanaka
-ORD-10030,2026-09-14 07:47,Zara Weber,Website,France,LUM-002,2,218.0,Delivered,Jonas Vermeulen
-ORD-10031,2026-09-14 11:07,Noah Laurent,Mobile App,France,LUM-015,2,68.0,Delivered,Mei Tanaka
-ORD-10032,2026-09-14 14:50,Zara Rossi,Mobile App,Germany,LUM-023,4,380.0,Delivered,Jonas Vermeulen
-ORD-10033,2026-09-14 17:43,Theo Rossi,Website,Netherlands,LUM-017,1,75.0,Delivered,Jonas Vermeulen
-ORD-10034,2026-09-15 07:27,Lucas Jansen,Website,France,LUM-005,3,162.0,Delivered,Mei Tanaka
-ORD-10035,2026-09-15 14:01,Mateo Kowalski,Website,Netherlands,LUM-006,1,32.0,Delivered,Mei Tanaka
-ORD-10036,2026-09-15 15:31,Finn Lambert,Marketplace,Spain,LUM-013,3,108.0,Delivered,Jonas Vermeulen
-ORD-10037,2026-09-15 17:46,Leon Laurent,Mobile App,Belgium,LUM-021,1,18.0,Cancelled,Jonas Vermeulen
-ORD-10038,2026-09-16 07:23,Hugo Moreau,Website,Germany,LUM-002,1,109.0,Delivered,Mei Tanaka
-ORD-10039,2026-09-16 09:34,Clara Lambert,Website,Belgium,LUM-016,2,84.0,Delivered,Mei Tanaka
-ORD-10040,2026-09-17 07:35,Felix Silva,Website,France,LUM-007,1,29.0,Delivered,Jonas Vermeulen
-ORD-10041,2026-09-17 10:07,Ines Andersen,Website,France,LUM-021,2,36.0,Delivered,Mei Tanaka
-ORD-10042,2026-09-17 11:11,Emma Fischer,Mobile App,Germany,LUM-005,2,108.0,Delivered,Mei Tanaka
-ORD-10043,2026-09-17 12:53,Mateo Bakker,Website,Germany,LUM-005,1,54.0,Delivered,Mei Tanaka
-ORD-10044,2026-09-17 16:43,Zara Weber,Website,France,LUM-014,3,57.0,Delivered,Mei Tanaka
-ORD-10045,2026-09-18 08:23,Finn Lambert,Website,Germany,LUM-024,1,55.0,Cancelled,Mei Tanaka
-ORD-10046,2026-09-18 10:31,Finn Novak,Marketplace,France,LUM-019,1,149.0,Delivered,Mei Tanaka
-ORD-10047,2026-09-18 11:21,Felix Keller,Website,Belgium,LUM-023,1,95.0,Delivered,Mei Tanaka
-ORD-10048,2026-09-18 16:31,Lucas Rossi,Mobile App,Belgium,LUM-004,1,24.0,Delivered,Jonas Vermeulen
-ORD-10049,2026-09-18 21:21,Lucas Kowalski,Website,France,LUM-008,1,79.0,Cancelled,Jonas Vermeulen
-ORD-10050,2026-09-19 13:37,Mateo Moreau,Marketplace,Belgium,LUM-012,4,196.0,Delivered,Mei Tanaka
-ORD-10051,2026-09-19 13:49,Freya Laurent,Mobile App,France,LUM-001,1,89.0,Delivered,Jonas Vermeulen
-ORD-10052,2026-09-19 15:47,Theo Weber,Website,Belgium,LUM-018,2,56.0,Delivered,Mei Tanaka
-ORD-10053,2026-09-19 17:16,Aisha Bakker,Marketplace,Belgium,LUM-010,1,169.0,Delivered,Mei Tanaka
-ORD-10054,2026-09-20 11:04,Oscar Moreau,Mobile App,Spain,LUM-001,1,89.0,Delivered,Mei Tanaka
-ORD-10055,2026-09-20 20:32,Theo Novak,Website,Germany,LUM-015,1,34.0,Delivered,Jonas Vermeulen
-ORD-10056,2026-09-20 20:41,Lena Kowalski,Mobile App,Belgium,LUM-003,3,135.0,Delivered,Jonas Vermeulen
-ORD-10057,2026-09-20 21:34,Emma Bakker,Mobile App,Germany,LUM-019,1,149.0,Delivered,Mei Tanaka
-ORD-10058,2026-09-21 09:07,Jonas Keller,Website,Germany,LUM-017,1,75.0,Delivered,Jonas Vermeulen
-ORD-10059,2026-09-21 12:57,Lucas Vermeer,Mobile App,France,LUM-008,4,316.0,Delivered,Mei Tanaka
-ORD-10060,2026-09-21 19:21,Hugo Bakker,Website,Netherlands,LUM-006,2,64.0,Delivered,Mei Tanaka
-ORD-10061,2026-09-21 20:25,Emma Fischer,Website,France,LUM-010,1,169.0,Delivered,Mei Tanaka
-ORD-10062,2026-09-21 20:27,Aisha Weber,Mobile App,Germany,LUM-001,1,89.0,Delivered,Mei Tanaka
-ORD-10063,2026-09-22 11:57,Clara Keller,Mobile App,Netherlands,LUM-012,1,49.0,Delivered,Mei Tanaka
-ORD-10064,2026-09-22 11:58,Hugo Romero,Marketplace,Netherlands,LUM-007,4,116.0,Delivered,Mei Tanaka
-ORD-10065,2026-09-22 13:49,Clara Costa,Mobile App,Germany,LUM-002,1,109.0,Delivered,Jonas Vermeulen
-ORD-10066,2026-09-22 16:31,Oscar Romero,Website,Belgium,LUM-002,4,436.0,Cancelled,Jonas Vermeulen
-ORD-10067,2026-09-22 20:49,Elena Romero,Website,France,LUM-015,1,34.0,Delivered,Mei Tanaka
-ORD-10068,2026-09-23 10:58,Freya Weber,Marketplace,Netherlands,LUM-006,1,32.0,Cancelled,Jonas Vermeulen
-ORD-10069,2026-09-23 12:17,Nadia Novak,Marketplace,Belgium,LUM-021,1,18.0,Delivered,Mei Tanaka
-ORD-10070,2026-09-23 17:05,Aisha Dubois,Website,France,LUM-017,1,75.0,Delivered,Mei Tanaka
-ORD-10071,2026-09-23 19:21,Sami Andersen,Mobile App,Spain,LUM-013,1,36.0,Delivered,Jonas Vermeulen
-ORD-10072,2026-09-24 07:41,Sami Vermeer,Mobile App,France,LUM-008,1,79.0,Delivered,Mei Tanaka
-ORD-10073,2026-09-24 07:54,Lena Andersen,Mobile App,Germany,LUM-015,4,136.0,Delivered,Mei Tanaka
-ORD-10074,2026-09-24 07:58,Emma Schulz,Mobile App,France,LUM-022,1,26.0,Delivered,Mei Tanaka
-ORD-10075,2026-09-24 09:31,Julia Rossi,Marketplace,Spain,LUM-021,1,18.0,Delivered,Jonas Vermeulen
-ORD-10076,2026-09-24 12:16,Maya Andersen,Website,Spain,LUM-019,1,149.0,Delivered,Jonas Vermeulen
-ORD-10077,2026-09-24 12:26,Zara Berg,Website,Netherlands,LUM-014,1,19.0,Delivered,Jonas Vermeulen
-ORD-10078,2026-09-25 07:19,Mila Dubois,Website,Netherlands,LUM-020,3,297.0,Delivered,Mei Tanaka
-ORD-10079,2026-09-25 10:55,Felix Andersen,Website,Netherlands,LUM-019,1,149.0,Delivered,Mei Tanaka
-ORD-10080,2026-09-25 22:56,Finn Keller,Website,Netherlands,LUM-021,1,18.0,Delivered,Jonas Vermeulen
-ORD-10081,2026-09-25 22:58,Mila Petit,Website,Belgium,LUM-004,1,24.0,Delivered,Jonas Vermeulen
-ORD-10082,2026-09-26 17:35,Maya Kowalski,Mobile App,Germany,LUM-022,1,26.0,Delivered,Mei Tanaka
-ORD-10083,2026-09-26 19:20,Emma Weber,Website,Belgium,LUM-024,1,55.0,Delivered,Mei Tanaka
-ORD-10084,2026-09-26 19:36,Mila Vermeer,Website,Germany,LUM-008,1,79.0,Delivered,Mei Tanaka
-ORD-10085,2026-09-26 20:34,Finn Moreau,Website,Spain,LUM-003,1,45.0,Delivered,Mei Tanaka
-ORD-10086,2026-09-26 22:35,Clara Silva,Website,Germany,LUM-014,1,19.0,Cancelled,Mei Tanaka
-ORD-10087,2026-09-27 14:00,Felix Jansen,Website,Belgium,LUM-018,1,28.0,Delivered,Jonas Vermeulen
-ORD-10088,2026-09-27 15:00,Freya Vermeer,Mobile App,France,LUM-014,4,76.0,Delivered,Jonas Vermeulen
-ORD-10089,2026-09-27 19:03,Noah Dubois,Mobile App,Spain,LUM-022,1,26.0,Delivered,Mei Tanaka
-ORD-10090,2026-09-27 20:10,Zara Bakker,Website,Spain,LUM-022,1,26.0,Delivered,Jonas Vermeulen
-ORD-10091,2026-09-27 21:01,Ines Rossi,Mobile App,Germany,LUM-020,1,99.0,Delivered,Jonas Vermeulen
-ORD-10092,2026-09-28 08:32,Mila Schulz,Mobile App,France,LUM-015,2,68.0,Delivered,Jonas Vermeulen
-ORD-10093,2026-09-28 11:08,Hugo Laurent,Mobile App,France,LUM-014,3,57.0,Delivered,Jonas Vermeulen
-ORD-10094,2026-09-28 14:46,Mila Romero,Marketplace,Spain,LUM-020,1,99.0,Delivered,Mei Tanaka
-ORD-10095,2026-09-28 15:12,Maya Vermeer,Website,Belgium,LUM-015,1,34.0,Delivered,Jonas Vermeulen
-ORD-10096,2026-09-28 20:55,Omar Berg,Website,Germany,LUM-004,1,24.0,Delivered,Jonas Vermeulen
-ORD-10097,2026-09-28 22:12,Freya Kowalski,Marketplace,Spain,LUM-002,1,109.0,Delivered,Mei Tanaka
-ORD-10098,2026-09-29 07:48,Mateo Jansen,Mobile App,Netherlands,LUM-002,2,218.0,Delivered,Jonas Vermeulen
-ORD-10099,2026-09-29 21:59,Ines Keller,Mobile App,Netherlands,LUM-024,1,55.0,Delivered,Mei Tanaka
-ORD-10100,2026-09-29 22:12,Felix Laurent,Website,Germany,LUM-011,2,44.0,Delivered,Mei Tanaka
-ORD-10101,2026-09-29 22:35,Aisha Berg,Website,Belgium,LUM-021,1,18.0,Delivered,Jonas Vermeulen
-ORD-10102,2026-09-30 09:39,Elena Schulz,Website,France,LUM-008,1,79.0,Delivered,Mei Tanaka
-ORD-10103,2026-09-30 13:47,Ines Andersen,Website,Spain,LUM-007,2,58.0,Delivered,Mei Tanaka
-ORD-10104,2026-09-30 15:15,Sami Vermeer,Website,Spain,LUM-006,4,128.0,Delivered,Mei Tanaka
-ORD-10105,2026-09-30 19:10,Lucas Dubois,Mobile App,Spain,LUM-001,2,178.0,Delivered,Jonas Vermeulen
-ORD-10106,2026-09-30 22:46,Leon Laurent,Mobile App,Netherlands,LUM-017,2,150.0,Delivered,Mei Tanaka
-ORD-10107,2026-10-01 16:59,Theo Dubois,Website,Germany,LUM-018,1,28.0,Delivered,Jonas Vermeulen
-ORD-10108,2026-10-01 20:03,Oscar Moreau,Mobile App,Belgium,LUM-022,1,26.0,Cancelled,Jonas Vermeulen
-ORD-10109,2026-10-01 21:39,Nadia Vermeer,Mobile App,Netherlands,LUM-012,1,49.0,Delivered,Mei Tanaka
-ORD-10110,2026-10-01 22:24,Theo Fischer,Website,Netherlands,LUM-005,4,216.0,Delivered,Jonas Vermeulen
-ORD-10111,2026-10-02 08:58,Freya Jansen,Website,Belgium,LUM-017,1,75.0,Delivered,Mei Tanaka
-ORD-10112,2026-10-02 10:53,Mateo Petit,Mobile App,Netherlands,LUM-014,2,38.0,Delivered,Mei Tanaka
-ORD-10113,2026-10-02 11:44,Julia Dubois,Website,Spain,LUM-014,2,38.0,Cancelled,Jonas Vermeulen
-ORD-10114,2026-10-02 13:06,Theo Andersen,Website,Spain,LUM-019,4,596.0,Delivered,Jonas Vermeulen
-ORD-10115,2026-10-02 16:17,Aisha Fischer,Mobile App,Spain,LUM-020,1,99.0,Delivered,Mei Tanaka
-ORD-10116,2026-10-02 21:37,Aisha Andersen,Website,Belgium,LUM-006,1,32.0,Delivered,Mei Tanaka
-ORD-10117,2026-10-03 10:23,Emma Fischer,Website,Belgium,LUM-019,1,149.0,Delivered,Jonas Vermeulen
-ORD-10118,2026-10-03 19:14,Elena Schulz,Website,Spain,LUM-021,1,18.0,Delivered,Mei Tanaka
-ORD-10119,2026-10-03 21:26,Noah Novak,Website,Germany,LUM-019,3,447.0,Delivered,Mei Tanaka
-ORD-10120,2026-10-03 22:59,Jonas Weber,Mobile App,Spain,LUM-004,1,24.0,Delivered,Jonas Vermeulen
-ORD-10121,2026-10-04 15:27,Clara Berg,Website,France,LUM-020,1,99.0,Delivered,Mei Tanaka
-ORD-10122,2026-10-04 16:04,Oscar Lambert,Mobile App,Spain,LUM-015,1,34.0,Delivered,Jonas Vermeulen
-ORD-10123,2026-10-04 20:09,Emma Novak,Website,Netherlands,LUM-002,2,218.0,Delivered,Jonas Vermeulen
-ORD-10124,2026-10-04 21:40,Jonas Romero,Mobile App,Germany,LUM-013,1,36.0,Delivered,Mei Tanaka
-ORD-10125,2026-10-04 22:45,Maya Dubois,Website,Germany,LUM-017,3,225.0,Delivered,Jonas Vermeulen
-ORD-10126,2026-10-05 07:31,Felix Laurent,Marketplace,France,LUM-014,1,19.0,Delivered,Jonas Vermeulen
-ORD-10127,2026-10-05 08:35,Aisha Vermeer,Mobile App,Netherlands,LUM-013,1,36.0,Delivered,Jonas Vermeulen
-ORD-10128,2026-10-05 08:54,Julia Laurent,Website,France,LUM-018,3,84.0,Delivered,Mei Tanaka
-ORD-10129,2026-10-05 09:49,Jonas Weber,Website,Netherlands,LUM-021,2,36.0,Delivered,Mei Tanaka
-ORD-10130,2026-10-05 22:58,Ines Bakker,Mobile App,France,LUM-019,1,149.0,Delivered,Mei Tanaka
-ORD-10131,2026-10-06 12:17,Sami Lambert,Website,Belgium,LUM-005,3,162.0,Delivered,Mei Tanaka
-ORD-10132,2026-10-06 15:11,Jonas Laurent,Website,France,LUM-021,1,18.0,Delivered,Jonas Vermeulen
-ORD-10133,2026-10-06 19:27,Noah Kowalski,Mobile App,France,LUM-020,1,99.0,Delivered,Jonas Vermeulen
-ORD-10134,2026-10-06 21:43,Theo Lambert,Website,Spain,LUM-016,2,84.0,Delivered,Jonas Vermeulen
-ORD-10135,2026-10-06 22:34,Oscar Fischer,Website,France,LUM-011,1,22.0,Delivered,Mei Tanaka
-ORD-10136,2026-10-06 22:43,Maya Laurent,Website,Germany,LUM-008,1,79.0,Delivered,Jonas Vermeulen
-ORD-10137,2026-10-07 07:54,Mateo Jansen,Marketplace,Germany,LUM-004,2,48.0,Delivered,Jonas Vermeulen
-ORD-10138,2026-10-07 08:37,Jonas Berg,Mobile App,Netherlands,LUM-007,1,29.0,Delivered,Jonas Vermeulen
-ORD-10139,2026-10-07 10:29,Leon Moreau,Website,Germany,LUM-007,1,29.0,Delivered,Mei Tanaka
-ORD-10140,2026-10-07 14:30,Oscar Andersen,Website,Germany,LUM-012,2,98.0,Delivered,Mei Tanaka
-ORD-10141,2026-10-07 17:44,Lena Vermeer,Website,Netherlands,LUM-018,3,84.0,Delivered,Mei Tanaka
-ORD-10142,2026-10-07 19:34,Oscar Laurent,Mobile App,Belgium,LUM-008,1,79.0,Delivered,Jonas Vermeulen
-ORD-10143,2026-10-07 20:13,Theo Romero,Website,France,LUM-018,3,84.0,Delivered,Mei Tanaka
-ORD-10144,2026-10-08 09:51,Theo Romero,Mobile App,Germany,LUM-008,2,158.0,Delivered,Jonas Vermeulen
-ORD-10145,2026-10-08 10:54,Elena Petit,Marketplace,France,LUM-024,1,55.0,Delivered,Jonas Vermeulen
-ORD-10146,2026-10-08 15:36,Hugo Berg,Website,Belgium,LUM-006,3,96.0,Delivered,Mei Tanaka
-ORD-10147,2026-10-08 16:38,Lena Petit,Website,France,LUM-009,2,130.0,Delivered,Mei Tanaka
-ORD-10148,2026-10-08 18:15,Theo Petit,Mobile App,Germany,LUM-004,1,24.0,Delivered,Mei Tanaka
-ORD-10149,2026-10-08 20:47,Lucas Keller,Mobile App,Germany,LUM-011,2,44.0,Delivered,Jonas Vermeulen
-ORD-10150,2026-10-08 22:58,Nadia Laurent,Website,Netherlands,LUM-020,2,198.0,Delivered,Jonas Vermeulen
-ORD-10151,2026-10-09 12:04,Elena Jansen,Mobile App,Spain,LUM-007,2,58.0,Cancelled,Mei Tanaka
-ORD-10152,2026-10-09 13:24,Zara Dubois,Marketplace,Germany,LUM-014,1,19.0,Delivered,Mei Tanaka
-ORD-10153,2026-10-09 14:51,Oscar Bakker,Mobile App,Spain,LUM-015,1,34.0,Delivered,Jonas Vermeulen
-ORD-10154,2026-10-09 18:13,Emma Weber,Website,Spain,LUM-010,2,338.0,Delivered,Mei Tanaka
-ORD-10155,2026-10-09 22:03,Lena Dubois,Marketplace,Spain,LUM-014,2,38.0,Delivered,Jonas Vermeulen
-ORD-10156,2026-10-10 08:03,Lena Vermeer,Website,Belgium,LUM-013,2,72.0,Delivered,Mei Tanaka
-ORD-10157,2026-10-10 08:47,Ines Fischer,Marketplace,Germany,LUM-022,3,78.0,Delivered,Jonas Vermeulen
-ORD-10158,2026-10-10 17:31,Emma Kowalski,Website,Germany,LUM-013,1,36.0,Delivered,Jonas Vermeulen
-ORD-10159,2026-10-10 21:58,Julia Dubois,Website,Spain,LUM-017,1,75.0,Delivered,Mei Tanaka
-ORD-10160,2026-10-11 08:49,Elena Laurent,Website,Spain,LUM-011,2,44.0,Delivered,Jonas Vermeulen
-ORD-10161,2026-10-11 10:15,Ines Moreau,Mobile App,Spain,LUM-010,1,169.0,Delivered,Jonas Vermeulen
-ORD-10162,2026-10-11 11:07,Julia Romero,Marketplace,France,LUM-013,2,72.0,Delivered,Jonas Vermeulen
-ORD-10163,2026-10-11 19:33,Leon Laurent,Marketplace,Belgium,LUM-011,1,22.0,Delivered,Mei Tanaka
-ORD-10164,2026-10-11 20:22,Freya Silva,Website,Netherlands,LUM-007,1,29.0,Delivered,Mei Tanaka
-ORD-10165,2026-10-11 22:27,Elena Laurent,Marketplace,Belgium,LUM-012,3,147.0,Delivered,Jonas Vermeulen
-ORD-10166,2026-10-12 07:49,Oscar Andersen,Mobile App,Germany,LUM-019,1,149.0,Delivered,Mei Tanaka
-ORD-10167,2026-10-12 10:18,Mila Costa,Marketplace,Spain,LUM-001,3,267.0,Delivered,Mei Tanaka
-ORD-10168,2026-10-12 19:00,Freya Lambert,Website,Belgium,LUM-024,2,110.0,Delivered,Mei Tanaka
-ORD-10169,2026-10-12 19:52,Mateo Bakker,Mobile App,Netherlands,LUM-016,3,126.0,Delivered,Mei Tanaka
-ORD-10170,2026-10-12 21:18,Freya Keller,Mobile App,Germany,LUM-014,1,19.0,Delivered,Mei Tanaka
-ORD-10171,2026-10-12 22:28,Lucas Andersen,Website,Netherlands,LUM-008,1,79.0,Delivered,Mei Tanaka
-ORD-10172,2026-10-13 09:07,Clara Moreau,Website,Netherlands,LUM-011,2,44.0,Delivered,Mei Tanaka
-ORD-10173,2026-10-13 10:21,Clara Rossi,Mobile App,Netherlands,LUM-024,1,55.0,Delivered,Mei Tanaka
-ORD-10174,2026-10-13 10:35,Freya Schulz,Website,Belgium,LUM-004,1,24.0,Delivered,Mei Tanaka
-ORD-10175,2026-10-13 13:51,Omar Vermeer,Mobile App,Spain,LUM-009,1,65.0,Delivered,Jonas Vermeulen
-ORD-10176,2026-10-13 14:20,Mateo Bakker,Website,Spain,LUM-009,1,65.0,Delivered,Mei Tanaka
-ORD-10177,2026-10-13 22:46,Mateo Jansen,Website,Netherlands,LUM-005,2,108.0,Delivered,Mei Tanaka
-ORD-10178,2026-10-14 09:42,Hugo Berg,Website,Netherlands,LUM-011,1,22.0,Delivered,Mei Tanaka
-ORD-10179,2026-10-14 12:08,Hugo Moreau,Mobile App,Belgium,LUM-018,1,28.0,Delivered,Mei Tanaka
-ORD-10180,2026-10-14 14:00,Nadia Silva,Marketplace,Netherlands,LUM-005,2,108.0,Delivered,Mei Tanaka
-ORD-10181,2026-10-14 20:29,Oscar Vermeer,Website,Netherlands,LUM-011,1,22.0,Delivered,Mei Tanaka
-ORD-10182,2026-10-14 21:12,Noah Andersen,Mobile App,France,LUM-013,1,36.0,Delivered,Mei Tanaka
-ORD-10183,2026-10-15 10:04,Oscar Kowalski,Website,Spain,LUM-010,1,169.0,Delivered,Jonas Vermeulen
-ORD-10184,2026-10-15 11:12,Sami Moreau,Website,Belgium,LUM-011,2,44.0,Delivered,Jonas Vermeulen
-ORD-10185,2026-10-15 11:38,Jonas Schulz,Mobile App,Belgium,LUM-021,1,18.0,Delivered,Jonas Vermeulen
-ORD-10186,2026-10-15 14:49,Noah Moreau,Mobile App,Spain,LUM-010,1,169.0,Delivered,Mei Tanaka
-ORD-10187,2026-10-15 15:09,Lucas Bakker,Website,Germany,LUM-005,1,54.0,Delivered,Jonas Vermeulen
-ORD-10188,2026-10-15 15:55,Clara Dubois,Website,Spain,LUM-002,1,109.0,Delivered,Jonas Vermeulen
-ORD-10189,2026-10-15 17:05,Zara Andersen,Website,Netherlands,LUM-009,2,130.0,Delivered,Jonas Vermeulen
-ORD-10190,2026-10-16 08:21,Omar Lambert,Website,Belgium,LUM-008,1,79.0,Delivered,Jonas Vermeulen
-ORD-10191,2026-10-16 09:06,Theo Rossi,Website,Netherlands,LUM-020,1,99.0,Delivered,Jonas Vermeulen
-ORD-10192,2026-10-16 12:32,Aisha Fischer,Mobile App,Germany,LUM-017,1,75.0,Delivered,Mei Tanaka
-ORD-10193,2026-10-16 12:47,Felix Keller,Marketplace,Belgium,LUM-018,2,56.0,Delivered,Jonas Vermeulen
-ORD-10194,2026-10-16 13:19,Noah Vermeer,Marketplace,France,LUM-006,1,32.0,Delivered,Jonas Vermeulen
-ORD-10195,2026-10-17 07:07,Clara Keller,Website,France,LUM-014,1,19.0,Delivered,Jonas Vermeulen
-ORD-10196,2026-10-17 08:18,Zara Dubois,Mobile App,Spain,LUM-021,3,54.0,Delivered,Jonas Vermeulen
-ORD-10197,2026-10-17 08:20,Clara Kowalski,Website,Germany,LUM-024,1,55.0,Delivered,Jonas Vermeulen
-ORD-10198,2026-10-17 09:10,Jonas Andersen,Website,Spain,LUM-002,1,109.0,Delivered,Mei Tanaka
-ORD-10199,2026-10-17 10:01,Oscar Berg,Marketplace,France,LUM-010,3,507.0,Delivered,Jonas Vermeulen
-ORD-10200,2026-10-17 12:14,Nadia Bakker,Mobile App,Germany,LUM-018,1,28.0,Delivered,Mei Tanaka
-ORD-10201,2026-10-17 16:51,Zara Silva,Mobile App,Spain,LUM-012,1,49.0,Delivered,Jonas Vermeulen
-ORD-10202,2026-10-18 08:53,Clara Costa,Mobile App,Netherlands,LUM-017,3,225.0,Delivered,Jonas Vermeulen
-ORD-10203,2026-10-18 11:30,Finn Keller,Website,France,LUM-015,1,34.0,Delivered,Jonas Vermeulen
-ORD-10204,2026-10-18 18:26,Zara Rossi,Website,Germany,LUM-005,1,54.0,Delivered,Mei Tanaka
-ORD-10205,2026-10-18 19:15,Noah Lambert,Website,France,LUM-015,1,34.0,Delivered,Jonas Vermeulen
-ORD-10206,2026-10-18 19:17,Maya Dubois,Website,Netherlands,LUM-002,2,218.0,Delivered,Mei Tanaka
-ORD-10207,2026-10-18 19:24,Lena Costa,Website,Belgium,LUM-010,1,169.0,Delivered,Jonas Vermeulen
-ORD-10208,2026-10-18 19:39,Omar Kowalski,Marketplace,France,LUM-012,2,98.0,Delivered,Mei Tanaka
-ORD-10209,2026-10-18 19:40,Mila Lambert,Website,Netherlands,LUM-012,1,49.0,Delivered,Mei Tanaka
-ORD-10210,2026-10-19 07:28,Maya Laurent,Website,Belgium,LUM-012,2,98.0,Delivered,Mei Tanaka
-ORD-10211,2026-10-19 09:22,Felix Costa,Website,Netherlands,LUM-002,1,109.0,Delivered,Jonas Vermeulen
-ORD-10212,2026-10-19 10:31,Julia Laurent,Marketplace,Belgium,LUM-010,2,338.0,Delivered,Mei Tanaka
-ORD-10213,2026-10-19 11:11,Zara Keller,Mobile App,Spain,LUM-004,2,48.0,Delivered,Mei Tanaka
-ORD-10214,2026-10-19 12:47,Oscar Jansen,Website,France,LUM-014,1,19.0,Delivered,Jonas Vermeulen
-ORD-10215,2026-10-19 15:15,Sami Keller,Marketplace,France,LUM-021,1,18.0,Delivered,Mei Tanaka
-ORD-10216,2026-10-20 07:50,Freya Jansen,Website,Spain,LUM-014,2,38.0,Delivered,Mei Tanaka
-ORD-10217,2026-10-20 09:33,Mila Moreau,Mobile App,Spain,LUM-011,1,22.0,Delivered,Mei Tanaka
-ORD-10218,2026-10-20 17:58,Noah Fischer,Mobile App,Spain,LUM-022,3,78.0,Delivered,Jonas Vermeulen
-ORD-10219,2026-10-20 21:13,Ines Lambert,Mobile App,Belgium,LUM-001,2,178.0,Delivered,Jonas Vermeulen
-ORD-10220,2026-10-20 21:15,Lena Jansen,Mobile App,France,LUM-002,3,327.0,Delivered,Mei Tanaka
-ORD-10221,2026-10-20 21:17,Emma Novak,Website,Germany,LUM-007,1,29.0,Delivered,Mei Tanaka
-ORD-10222,2026-10-21 11:36,Oscar Romero,Mobile App,Spain,LUM-004,1,24.0,Delivered,Mei Tanaka
-ORD-10223,2026-10-21 11:46,Jonas Schulz,Website,France,LUM-024,1,55.0,Delivered,Jonas Vermeulen
-ORD-10224,2026-10-21 14:32,Zara Keller,Website,Spain,LUM-024,1,55.0,Delivered,Mei Tanaka
-ORD-10225,2026-10-21 14:52,Zara Vermeer,Website,Netherlands,LUM-006,1,32.0,Delivered,Jonas Vermeulen
-ORD-10226,2026-10-21 16:15,Emma Andersen,Mobile App,Netherlands,LUM-020,1,99.0,Delivered,Mei Tanaka
-ORD-10227,2026-10-21 21:10,Mateo Dubois,Mobile App,France,LUM-022,3,78.0,Delivered,Jonas Vermeulen
-ORD-10228,2026-10-21 21:15,Freya Moreau,Website,Spain,LUM-021,1,18.0,Cancelled,Mei Tanaka
-ORD-10229,2026-10-22 10:57,Maya Bakker,Marketplace,Spain,LUM-012,3,147.0,Delivered,Jonas Vermeulen
-ORD-10230,2026-10-22 14:58,Leon Petit,Website,Belgium,LUM-016,1,42.0,Shipped,Mei Tanaka
-ORD-10231,2026-10-22 18:31,Mila Novak,Mobile App,Germany,LUM-009,1,65.0,Delivered,Mei Tanaka
-ORD-10232,2026-10-22 20:10,Ines Keller,Marketplace,Germany,LUM-024,1,55.0,Delivered,Mei Tanaka
-ORD-10233,2026-10-22 20:39,Jonas Kowalski,Mobile App,France,LUM-019,1,149.0,Delivered,Jonas Vermeulen
-ORD-10234,2026-10-23 07:01,Noah Schulz,Website,Germany,LUM-015,1,34.0,Delivered,Mei Tanaka
-ORD-10235,2026-10-23 11:00,Clara Weber,Mobile App,Germany,LUM-003,1,45.0,Delivered,Mei Tanaka
-ORD-10236,2026-10-23 12:31,Lena Jansen,Mobile App,France,LUM-002,1,109.0,Delivered,Jonas Vermeulen
-ORD-10237,2026-10-23 13:18,Clara Kowalski,Marketplace,Netherlands,LUM-005,1,54.0,Delivered,Mei Tanaka
-ORD-10238,2026-10-23 13:19,Lucas Keller,Mobile App,Netherlands,LUM-013,1,36.0,Delivered,Jonas Vermeulen
-ORD-10239,2026-10-23 16:04,Jonas Costa,Website,Spain,LUM-010,1,169.0,Delivered,Jonas Vermeulen
-ORD-10240,2026-10-23 19:46,Ines Romero,Mobile App,Netherlands,LUM-016,1,42.0,Delivered,Jonas Vermeulen
-ORD-10241,2026-10-24 10:25,Finn Kowalski,Website,Belgium,LUM-016,3,126.0,Delivered,Mei Tanaka
-ORD-10242,2026-10-24 10:41,Sami Dubois,Website,Germany,LUM-017,2,150.0,Delivered,Jonas Vermeulen
-ORD-10243,2026-10-24 12:24,Freya Moreau,Website,Belgium,LUM-023,1,95.0,Delivered,Mei Tanaka
-ORD-10244,2026-10-24 13:39,Lena Andersen,Mobile App,Germany,LUM-014,1,19.0,Shipped,Mei Tanaka
-ORD-10245,2026-10-24 16:16,Zara Lambert,Website,Germany,LUM-003,1,45.0,Delivered,Jonas Vermeulen
-ORD-10246,2026-10-24 17:38,Theo Dubois,Website,Germany,LUM-018,1,28.0,Delivered,Mei Tanaka
-ORD-10247,2026-10-24 21:43,Emma Rossi,Marketplace,Germany,LUM-022,3,78.0,Delivered,Jonas Vermeulen
-ORD-10248,2026-10-24 21:58,Mateo Petit,Mobile App,Spain,LUM-013,1,36.0,Delivered,Mei Tanaka
-ORD-10249,2026-10-25 07:02,Theo Jansen,Marketplace,Germany,LUM-019,1,149.0,Delivered,Mei Tanaka
-ORD-10250,2026-10-25 08:10,Mateo Lambert,Website,France,LUM-003,1,45.0,Shipped,Mei Tanaka
-ORD-10251,2026-10-25 11:27,Zara Dubois,Website,Germany,LUM-019,1,149.0,Shipped,Jonas Vermeulen
-ORD-10252,2026-10-25 14:40,Jonas Lambert,Website,Spain,LUM-014,1,19.0,Shipped,Jonas Vermeulen
-ORD-10253,2026-10-25 19:01,Mateo Kowalski,Website,Germany,LUM-023,2,190.0,Shipped,Jonas Vermeulen
-ORD-10254,2026-10-25 19:35,Maya Petit,Website,Belgium,LUM-003,1,45.0,Shipped,Jonas Vermeulen
-ORD-10255,2026-10-25 21:00,Ines Costa,Website,France,LUM-001,1,89.0,Delivered,Mei Tanaka
-ORD-10256,2026-10-25 22:50,Maya Rossi,Mobile App,Spain,LUM-006,1,32.0,Shipped,Mei Tanaka
-ORD-10257,2026-10-26 09:51,Lena Dubois,Website,Belgium,LUM-006,1,32.0,Shipped,Mei Tanaka
-ORD-10258,2026-10-26 10:41,Jonas Moreau,Website,Netherlands,LUM-012,1,49.0,Shipped,Jonas Vermeulen
-ORD-10259,2026-10-26 12:11,Hugo Schulz,Website,Spain,LUM-016,2,84.0,Shipped,Mei Tanaka
-ORD-10260,2026-10-26 13:20,Oscar Berg,Website,Netherlands,LUM-019,1,149.0,Shipped,Mei Tanaka
-ORD-10261,2026-10-26 14:13,Omar Moreau,Website,Spain,LUM-002,1,109.0,Shipped,Jonas Vermeulen
-ORD-10262,2026-10-26 14:37,Zara Weber,Website,Germany,LUM-005,1,54.0,Shipped,Mei Tanaka
-ORD-10263,2026-10-26 14:39,Elena Vermeer,Mobile App,France,LUM-006,1,32.0,Shipped,Jonas Vermeulen
-ORD-10264,2026-10-27 08:21,Mateo Dubois,Mobile App,Germany,LUM-006,1,32.0,Shipped,Jonas Vermeulen
-ORD-10265,2026-10-27 10:30,Finn Bakker,Website,Netherlands,LUM-012,4,196.0,Processing,Mei Tanaka
-ORD-10266,2026-10-27 11:46,Zara Laurent,Website,Netherlands,LUM-024,1,55.0,Shipped,Mei Tanaka
-ORD-10267,2026-10-27 14:09,Noah Keller,Mobile App,Netherlands,LUM-006,1,32.0,Shipped,Jonas Vermeulen
-ORD-10268,2026-10-27 16:54,Elena Rossi,Website,France,LUM-011,1,22.0,Shipped,Mei Tanaka
-ORD-10269,2026-10-27 21:57,Emma Vermeer,Marketplace,Netherlands,LUM-014,2,38.0,Shipped,Jonas Vermeulen
-ORD-10270,2026-10-27 22:35,Felix Romero,Marketplace,Germany,LUM-023,2,190.0,Shipped,Mei Tanaka
-ORD-10271,2026-10-28 08:58,Zara Dubois,Website,Germany,LUM-019,1,149.0,Pending,Mei Tanaka
-ORD-10272,2026-10-28 11:40,Lena Keller,Mobile App,France,LUM-003,3,135.0,Shipped,Mei Tanaka
-ORD-10273,2026-10-28 13:34,Lucas Costa,Website,France,LUM-022,2,52.0,Processing,Mei Tanaka
-ORD-10274,2026-10-28 14:37,Emma Bakker,Mobile App,Spain,LUM-024,1,55.0,Shipped,Jonas Vermeulen
-ORD-10275,2026-10-28 14:42,Emma Silva,Website,Belgium,LUM-014,2,38.0,Processing,Jonas Vermeulen
-ORD-10276,2026-10-28 20:13,Elena Vermeer,Website,Spain,LUM-007,2,58.0,Shipped,Mei Tanaka
-ORD-10277,2026-10-28 20:26,Theo Bakker,Website,Belgium,LUM-020,4,396.0,Shipped,Jonas Vermeulen
-ORD-10278,2026-10-28 22:41,Sami Laurent,Marketplace,Germany,LUM-019,1,149.0,Shipped,Mei Tanaka
-ORD-10279,2026-10-29 09:44,Lena Weber,Mobile App,Belgium,LUM-018,4,112.0,Pending,Jonas Vermeulen
-ORD-10280,2026-10-29 09:46,Lena Novak,Website,Germany,LUM-005,1,54.0,Pending,Mei Tanaka
-ORD-10281,2026-10-29 09:57,Julia Weber,Mobile App,Belgium,LUM-015,2,68.0,Cancelled,Mei Tanaka
-ORD-10282,2026-10-29 13:19,Oscar Lambert,Website,Belgium,LUM-020,2,198.0,Processing,Mei Tanaka
-ORD-10283,2026-10-29 13:30,Maya Bakker,Mobile App,Spain,LUM-004,4,96.0,Processing,Jonas Vermeulen
-ORD-10284,2026-10-29 18:39,Freya Costa,Website,Spain,LUM-019,1,149.0,Pending,Jonas Vermeulen
-ORD-10285,2026-10-29 20:54,Maya Vermeer,Website,Spain,LUM-015,1,34.0,Pending,Jonas Vermeulen
-ORD-10286,2026-10-30 01:58,Sami Moreau,Website,Germany,LUM-012,1,49.0,Processing,Mei Tanaka
-ORD-10287,2026-10-30 02:39,Noah Kowalski,Mobile App,Netherlands,LUM-007,1,29.0,Processing,Jonas Vermeulen
-ORD-10288,2026-10-30 06:20,Mateo Schulz,Website,Belgium,LUM-008,1,79.0,Pending,Mei Tanaka
-ORD-10289,2026-10-30 06:33,Clara Keller,Website,France,LUM-001,2,178.0,Processing,Mei Tanaka
-ORD-10290,2026-10-30 06:36,Julia Berg,Marketplace,France,LUM-008,3,237.0,Pending,Jonas Vermeulen
-ORD-10291,2026-10-30 06:59,Aisha Weber,Mobile App,France,LUM-015,1,34.0,Processing,Jonas Vermeulen
-ORD-10292,2026-10-30 07:36,Nadia Bakker,Mobile App,Belgium,LUM-007,1,29.0,Processing,Mei Tanaka
+ORD-10001,2026-09-04 12:38,Hugo Kowalski,Website,Netherlands,LUM-010,3,507.0,Cancelled,Mei Tanaka
+ORD-10002,2026-09-04 15:30,Finn Vermeer,Website,Belgium,LUM-005,1,54.0,Delivered,Mei Tanaka
+ORD-10003,2026-09-04 17:22,Mila Lambert,Mobile App,Belgium,LUM-003,3,135.0,Delivered,Mei Tanaka
+ORD-10004,2026-09-04 18:51,Maya Novak,Website,Netherlands,LUM-009,2,130.0,Delivered,Mei Tanaka
+ORD-10005,2026-09-04 19:58,Elena Jansen,Website,Germany,LUM-017,1,75.0,Delivered,Mei Tanaka
+ORD-10006,2026-09-04 20:46,Ines Keller,Website,Netherlands,LUM-005,4,216.0,Delivered,Jonas Vermeulen
+ORD-10007,2026-09-04 21:40,Clara Laurent,Website,France,LUM-004,1,24.0,Delivered,Mei Tanaka
+ORD-10008,2026-09-04 21:54,Emma Silva,Website,France,LUM-016,1,42.0,Delivered,Mei Tanaka
+ORD-10009,2026-09-04 22:05,Oscar Lambert,Website,Spain,LUM-021,1,18.0,Delivered,Jonas Vermeulen
+ORD-10010,2026-09-04 22:37,Lucas Petit,Mobile App,Germany,LUM-001,1,89.0,Delivered,Mei Tanaka
+ORD-10011,2026-09-05 08:14,Maya Lambert,Mobile App,Belgium,LUM-011,1,22.0,Delivered,Mei Tanaka
+ORD-10012,2026-09-05 09:38,Ines Silva,Website,France,LUM-019,1,149.0,Delivered,Mei Tanaka
+ORD-10013,2026-09-05 10:35,Noah Petit,Marketplace,France,LUM-018,2,56.0,Delivered,Mei Tanaka
+ORD-10014,2026-09-05 12:15,Felix Keller,Website,Spain,LUM-017,2,150.0,Delivered,Mei Tanaka
+ORD-10015,2026-09-05 12:19,Leon Rossi,Mobile App,France,LUM-024,3,165.0,Delivered,Mei Tanaka
+ORD-10016,2026-09-05 16:01,Leon Weber,Marketplace,France,LUM-021,1,18.0,Delivered,Jonas Vermeulen
+ORD-10017,2026-09-05 17:04,Julia Berg,Website,Netherlands,LUM-020,2,198.0,Delivered,Mei Tanaka
+ORD-10018,2026-09-05 17:41,Theo Schulz,Website,Spain,LUM-009,1,65.0,Delivered,Jonas Vermeulen
+ORD-10019,2026-09-05 18:18,Jonas Novak,Marketplace,France,LUM-022,2,52.0,Delivered,Mei Tanaka
+ORD-10020,2026-09-05 19:39,Hugo Rossi,Website,Netherlands,LUM-005,1,54.0,Delivered,Jonas Vermeulen
+ORD-10021,2026-09-06 07:25,Finn Romero,Website,Netherlands,LUM-016,3,126.0,Delivered,Jonas Vermeulen
+ORD-10022,2026-09-06 08:02,Ines Moreau,Marketplace,Spain,LUM-022,1,26.0,Delivered,Jonas Vermeulen
+ORD-10023,2026-09-06 08:42,Theo Novak,Mobile App,Spain,LUM-024,1,55.0,Delivered,Mei Tanaka
+ORD-10024,2026-09-06 09:26,Sami Dubois,Mobile App,Belgium,LUM-019,1,149.0,Delivered,Jonas Vermeulen
+ORD-10025,2026-09-06 13:21,Sami Lambert,Website,France,LUM-011,1,22.0,Delivered,Jonas Vermeulen
+ORD-10026,2026-09-06 13:33,Hugo Costa,Marketplace,France,LUM-009,1,65.0,Delivered,Jonas Vermeulen
+ORD-10027,2026-09-06 13:36,Lena Keller,Website,Belgium,LUM-005,2,108.0,Delivered,Mei Tanaka
+ORD-10028,2026-09-06 17:55,Julia Keller,Mobile App,Germany,LUM-022,1,26.0,Delivered,Mei Tanaka
+ORD-10029,2026-09-06 18:55,Zara Bakker,Website,Netherlands,LUM-001,1,89.0,Delivered,Mei Tanaka
+ORD-10030,2026-09-06 19:20,Jonas Bakker,Website,Germany,LUM-018,2,56.0,Delivered,Jonas Vermeulen
+ORD-10031,2026-09-06 21:58,Noah Dubois,Mobile App,Spain,LUM-019,4,596.0,Delivered,Jonas Vermeulen
+ORD-10032,2026-09-07 07:46,Zara Fischer,Website,Belgium,LUM-002,1,109.0,Delivered,Mei Tanaka
+ORD-10033,2026-09-07 11:59,Sami Jansen,Website,Spain,LUM-018,1,28.0,Delivered,Mei Tanaka
+ORD-10034,2026-09-07 12:07,Noah Berg,Marketplace,Germany,LUM-019,2,298.0,Delivered,Mei Tanaka
+ORD-10035,2026-09-07 12:49,Finn Costa,Website,Spain,LUM-001,2,178.0,Delivered,Jonas Vermeulen
+ORD-10036,2026-09-07 18:03,Aisha Dubois,Website,Belgium,LUM-018,1,28.0,Delivered,Jonas Vermeulen
+ORD-10037,2026-09-07 18:05,Lucas Vermeer,Mobile App,France,LUM-003,1,45.0,Delivered,Mei Tanaka
+ORD-10038,2026-09-07 18:10,Lucas Lambert,Mobile App,Spain,LUM-001,1,89.0,Delivered,Jonas Vermeulen
+ORD-10039,2026-09-07 19:28,Aisha Dubois,Mobile App,Belgium,LUM-021,4,72.0,Delivered,Jonas Vermeulen
+ORD-10040,2026-09-07 21:45,Sami Fischer,Marketplace,Spain,LUM-005,1,54.0,Delivered,Jonas Vermeulen
+ORD-10041,2026-09-07 22:39,Felix Moreau,Mobile App,Spain,LUM-006,2,64.0,Delivered,Jonas Vermeulen
+ORD-10042,2026-09-08 11:02,Emma Dubois,Website,Spain,LUM-005,2,108.0,Delivered,Mei Tanaka
+ORD-10043,2026-09-08 12:22,Ines Kowalski,Marketplace,Germany,LUM-022,1,26.0,Delivered,Mei Tanaka
+ORD-10044,2026-09-08 12:40,Lucas Rossi,Website,Belgium,LUM-007,1,29.0,Delivered,Mei Tanaka
+ORD-10045,2026-09-08 13:06,Nadia Weber,Website,France,LUM-021,1,18.0,Cancelled,Mei Tanaka
+ORD-10046,2026-09-08 13:36,Leon Dubois,Website,Netherlands,LUM-008,1,79.0,Delivered,Mei Tanaka
+ORD-10047,2026-09-08 17:35,Maya Weber,Website,France,LUM-011,1,22.0,Delivered,Mei Tanaka
+ORD-10048,2026-09-08 20:41,Ines Vermeer,Website,Belgium,LUM-002,1,109.0,Delivered,Jonas Vermeulen
+ORD-10049,2026-09-08 20:52,Sami Schulz,Marketplace,Germany,LUM-011,2,44.0,Delivered,Jonas Vermeulen
+ORD-10050,2026-09-08 20:58,Julia Costa,Website,Germany,LUM-012,1,49.0,Delivered,Jonas Vermeulen
+ORD-10051,2026-09-08 21:24,Lucas Vermeer,Mobile App,Germany,LUM-009,1,65.0,Delivered,Jonas Vermeulen
+ORD-10052,2026-09-08 21:38,Zara Jansen,Website,Belgium,LUM-011,1,22.0,Delivered,Jonas Vermeulen
+ORD-10053,2026-09-08 21:46,Mila Fischer,Website,Belgium,LUM-003,1,45.0,Delivered,Jonas Vermeulen
+ORD-10054,2026-09-09 08:10,Nadia Vermeer,Website,France,LUM-012,4,196.0,Delivered,Jonas Vermeulen
+ORD-10055,2026-09-09 08:25,Jonas Dubois,Website,France,LUM-019,1,149.0,Cancelled,Mei Tanaka
+ORD-10056,2026-09-09 08:37,Oscar Jansen,Website,France,LUM-004,1,24.0,Delivered,Mei Tanaka
+ORD-10057,2026-09-09 12:06,Finn Moreau,Marketplace,Netherlands,LUM-008,1,79.0,Delivered,Mei Tanaka
+ORD-10058,2026-09-09 12:10,Freya Dubois,Website,Germany,LUM-016,1,42.0,Delivered,Mei Tanaka
+ORD-10059,2026-09-09 12:19,Oscar Silva,Marketplace,Netherlands,LUM-010,1,169.0,Delivered,Jonas Vermeulen
+ORD-10060,2026-09-09 13:31,Nadia Bakker,Mobile App,Spain,LUM-007,4,116.0,Delivered,Mei Tanaka
+ORD-10061,2026-09-09 16:14,Lucas Petit,Website,France,LUM-010,2,338.0,Delivered,Jonas Vermeulen
+ORD-10062,2026-09-09 18:35,Clara Petit,Mobile App,Belgium,LUM-015,1,34.0,Delivered,Mei Tanaka
+ORD-10063,2026-09-09 18:48,Ines Weber,Website,Spain,LUM-011,2,44.0,Delivered,Jonas Vermeulen
+ORD-10064,2026-09-09 18:53,Maya Novak,Marketplace,Spain,LUM-011,2,44.0,Delivered,Mei Tanaka
+ORD-10065,2026-09-09 19:03,Clara Weber,Mobile App,Spain,LUM-002,1,109.0,Delivered,Jonas Vermeulen
+ORD-10066,2026-09-09 20:04,Finn Rossi,Mobile App,Germany,LUM-011,1,22.0,Delivered,Mei Tanaka
+ORD-10067,2026-09-10 08:11,Noah Petit,Marketplace,Spain,LUM-007,3,87.0,Delivered,Mei Tanaka
+ORD-10068,2026-09-10 10:15,Ines Bakker,Marketplace,France,LUM-019,2,298.0,Delivered,Jonas Vermeulen
+ORD-10069,2026-09-10 10:27,Noah Dubois,Website,France,LUM-011,2,44.0,Delivered,Mei Tanaka
+ORD-10070,2026-09-10 12:37,Maya Berg,Website,Germany,LUM-007,2,58.0,Delivered,Jonas Vermeulen
+ORD-10071,2026-09-10 17:56,Hugo Keller,Mobile App,Netherlands,LUM-015,3,102.0,Delivered,Jonas Vermeulen
+ORD-10072,2026-09-10 19:06,Jonas Weber,Website,Germany,LUM-005,3,162.0,Delivered,Mei Tanaka
+ORD-10073,2026-09-10 19:51,Omar Moreau,Mobile App,Belgium,LUM-006,1,32.0,Delivered,Jonas Vermeulen
+ORD-10074,2026-09-10 19:52,Mateo Fischer,Website,Spain,LUM-019,1,149.0,Delivered,Jonas Vermeulen
+ORD-10075,2026-09-10 20:09,Mateo Novak,Mobile App,France,LUM-017,1,75.0,Delivered,Jonas Vermeulen
+ORD-10076,2026-09-10 21:49,Zara Rossi,Mobile App,France,LUM-023,2,190.0,Delivered,Jonas Vermeulen
+ORD-10077,2026-09-11 10:22,Sami Petit,Marketplace,Netherlands,LUM-011,1,22.0,Delivered,Jonas Vermeulen
+ORD-10078,2026-09-11 12:43,Clara Lambert,Mobile App,Belgium,LUM-009,3,195.0,Delivered,Mei Tanaka
+ORD-10079,2026-09-11 13:18,Felix Fischer,Website,Spain,LUM-009,1,65.0,Delivered,Mei Tanaka
+ORD-10080,2026-09-11 14:06,Mateo Vermeer,Website,Germany,LUM-004,1,24.0,Delivered,Jonas Vermeulen
+ORD-10081,2026-09-11 14:34,Mateo Silva,Website,Germany,LUM-010,1,169.0,Delivered,Jonas Vermeulen
+ORD-10082,2026-09-11 16:00,Felix Berg,Mobile App,France,LUM-004,1,24.0,Delivered,Mei Tanaka
+ORD-10083,2026-09-11 16:34,Maya Andersen,Website,Spain,LUM-024,1,55.0,Delivered,Jonas Vermeulen
+ORD-10084,2026-09-11 16:46,Lena Weber,Mobile App,France,LUM-006,1,32.0,Delivered,Jonas Vermeulen
+ORD-10085,2026-09-11 18:04,Mila Costa,Mobile App,France,LUM-005,1,54.0,Delivered,Jonas Vermeulen
+ORD-10086,2026-09-11 19:37,Felix Moreau,Website,Germany,LUM-016,4,168.0,Delivered,Mei Tanaka
+ORD-10087,2026-09-11 19:44,Jonas Kowalski,Website,Belgium,LUM-017,2,150.0,Delivered,Jonas Vermeulen
+ORD-10088,2026-09-11 22:06,Clara Jansen,Mobile App,Spain,LUM-006,1,32.0,Delivered,Mei Tanaka
+ORD-10089,2026-09-11 22:38,Aisha Novak,Website,Spain,LUM-007,2,58.0,Delivered,Mei Tanaka
+ORD-10090,2026-09-12 07:04,Maya Andersen,Website,Germany,LUM-022,1,26.0,Delivered,Mei Tanaka
+ORD-10091,2026-09-12 08:01,Emma Weber,Mobile App,Spain,LUM-010,1,169.0,Delivered,Jonas Vermeulen
+ORD-10092,2026-09-12 08:22,Mateo Silva,Website,Netherlands,LUM-013,3,108.0,Delivered,Mei Tanaka
+ORD-10093,2026-09-12 12:01,Lucas Moreau,Website,Netherlands,LUM-004,3,72.0,Delivered,Mei Tanaka
+ORD-10094,2026-09-12 12:46,Emma Bakker,Website,Germany,LUM-006,1,32.0,Delivered,Mei Tanaka
+ORD-10095,2026-09-12 13:08,Julia Andersen,Website,Germany,LUM-004,1,24.0,Delivered,Jonas Vermeulen
+ORD-10096,2026-09-12 13:39,Julia Silva,Mobile App,Germany,LUM-018,1,28.0,Delivered,Jonas Vermeulen
+ORD-10097,2026-09-12 16:52,Freya Fischer,Mobile App,Spain,LUM-024,1,55.0,Cancelled,Mei Tanaka
+ORD-10098,2026-09-12 17:40,Hugo Bakker,Mobile App,Belgium,LUM-019,2,298.0,Delivered,Mei Tanaka
+ORD-10099,2026-09-12 19:51,Mateo Berg,Website,Germany,LUM-016,1,42.0,Delivered,Jonas Vermeulen
+ORD-10100,2026-09-12 20:21,Jonas Costa,Marketplace,Netherlands,LUM-009,1,65.0,Delivered,Jonas Vermeulen
+ORD-10101,2026-09-12 22:50,Hugo Bakker,Marketplace,Spain,LUM-002,1,109.0,Delivered,Mei Tanaka
+ORD-10102,2026-09-13 07:07,Lena Silva,Website,Netherlands,LUM-022,1,26.0,Delivered,Mei Tanaka
+ORD-10103,2026-09-13 07:08,Freya Dubois,Website,Belgium,LUM-014,1,19.0,Delivered,Mei Tanaka
+ORD-10104,2026-09-13 07:42,Lucas Andersen,Mobile App,Spain,LUM-006,1,32.0,Delivered,Mei Tanaka
+ORD-10105,2026-09-13 07:53,Theo Moreau,Mobile App,Netherlands,LUM-010,2,338.0,Delivered,Mei Tanaka
+ORD-10106,2026-09-13 08:43,Noah Dubois,Mobile App,Belgium,LUM-019,3,447.0,Delivered,Mei Tanaka
+ORD-10107,2026-09-13 12:07,Maya Vermeer,Website,Netherlands,LUM-022,2,52.0,Delivered,Mei Tanaka
+ORD-10108,2026-09-13 12:39,Oscar Vermeer,Website,Belgium,LUM-022,2,52.0,Delivered,Jonas Vermeulen
+ORD-10109,2026-09-13 13:15,Omar Weber,Mobile App,France,LUM-021,2,36.0,Delivered,Jonas Vermeulen
+ORD-10110,2026-09-13 14:24,Lena Kowalski,Website,Spain,LUM-017,4,300.0,Delivered,Mei Tanaka
+ORD-10111,2026-09-13 19:04,Mila Jansen,Mobile App,Germany,LUM-004,1,24.0,Cancelled,Jonas Vermeulen
+ORD-10112,2026-09-13 20:47,Theo Lambert,Website,Germany,LUM-017,1,75.0,Delivered,Jonas Vermeulen
+ORD-10113,2026-09-13 20:55,Leon Fischer,Mobile App,France,LUM-015,1,34.0,Delivered,Mei Tanaka
+ORD-10114,2026-09-13 20:57,Leon Vermeer,Mobile App,Netherlands,LUM-016,2,84.0,Delivered,Jonas Vermeulen
+ORD-10115,2026-09-14 08:25,Hugo Rossi,Website,Spain,LUM-018,1,28.0,Delivered,Mei Tanaka
+ORD-10116,2026-09-14 08:35,Oscar Romero,Website,France,LUM-001,2,178.0,Delivered,Mei Tanaka
+ORD-10117,2026-09-14 12:03,Mila Petit,Marketplace,France,LUM-019,1,149.0,Delivered,Jonas Vermeulen
+ORD-10118,2026-09-14 17:11,Elena Petit,Marketplace,France,LUM-012,2,98.0,Delivered,Jonas Vermeulen
+ORD-10119,2026-09-14 18:42,Omar Moreau,Website,Netherlands,LUM-015,1,34.0,Delivered,Jonas Vermeulen
+ORD-10120,2026-09-14 19:37,Sami Vermeer,Website,Spain,LUM-003,1,45.0,Delivered,Jonas Vermeulen
+ORD-10121,2026-09-14 21:29,Leon Bakker,Mobile App,Netherlands,LUM-008,1,79.0,Delivered,Jonas Vermeulen
+ORD-10122,2026-09-14 21:31,Julia Costa,Website,Germany,LUM-018,2,56.0,Delivered,Jonas Vermeulen
+ORD-10123,2026-09-15 07:36,Maya Berg,Website,France,LUM-010,3,507.0,Delivered,Jonas Vermeulen
+ORD-10124,2026-09-15 09:08,Oscar Petit,Mobile App,Spain,LUM-016,1,42.0,Delivered,Mei Tanaka
+ORD-10125,2026-09-15 09:58,Noah Moreau,Mobile App,Germany,LUM-008,2,158.0,Delivered,Mei Tanaka
+ORD-10126,2026-09-15 10:18,Aisha Romero,Marketplace,France,LUM-007,1,29.0,Delivered,Mei Tanaka
+ORD-10127,2026-09-15 10:34,Emma Jansen,Mobile App,Spain,LUM-004,2,48.0,Delivered,Jonas Vermeulen
+ORD-10128,2026-09-15 11:17,Julia Petit,Website,Belgium,LUM-024,3,165.0,Delivered,Mei Tanaka
+ORD-10129,2026-09-15 11:45,Zara Costa,Website,Spain,LUM-009,1,65.0,Delivered,Mei Tanaka
+ORD-10130,2026-09-15 12:05,Omar Moreau,Website,Spain,LUM-016,1,42.0,Delivered,Mei Tanaka
+ORD-10131,2026-09-15 15:16,Theo Rossi,Mobile App,Germany,LUM-011,1,22.0,Delivered,Mei Tanaka
+ORD-10132,2026-09-15 15:40,Freya Bakker,Marketplace,France,LUM-009,1,65.0,Delivered,Jonas Vermeulen
+ORD-10133,2026-09-15 16:09,Mateo Moreau,Website,France,LUM-001,1,89.0,Delivered,Jonas Vermeulen
+ORD-10134,2026-09-15 17:51,Zara Costa,Marketplace,Spain,LUM-016,1,42.0,Delivered,Jonas Vermeulen
+ORD-10135,2026-09-15 20:56,Lena Dubois,Website,Spain,LUM-014,1,19.0,Delivered,Mei Tanaka
+ORD-10136,2026-09-15 21:00,Mateo Silva,Website,Germany,LUM-001,1,89.0,Delivered,Mei Tanaka
+ORD-10137,2026-09-16 07:13,Leon Fischer,Website,Netherlands,LUM-010,1,169.0,Delivered,Jonas Vermeulen
+ORD-10138,2026-09-16 07:23,Oscar Silva,Website,France,LUM-019,1,149.0,Delivered,Mei Tanaka
+ORD-10139,2026-09-16 08:38,Aisha Moreau,Website,Germany,LUM-005,1,54.0,Delivered,Jonas Vermeulen
+ORD-10140,2026-09-16 08:40,Sami Moreau,Mobile App,Germany,LUM-005,4,216.0,Cancelled,Mei Tanaka
+ORD-10141,2026-09-16 08:41,Emma Rossi,Mobile App,Belgium,LUM-018,1,28.0,Delivered,Jonas Vermeulen
+ORD-10142,2026-09-16 10:30,Oscar Weber,Mobile App,France,LUM-020,1,99.0,Delivered,Mei Tanaka
+ORD-10143,2026-09-16 11:01,Finn Petit,Mobile App,Belgium,LUM-015,2,68.0,Delivered,Jonas Vermeulen
+ORD-10144,2026-09-16 11:19,Theo Costa,Website,Netherlands,LUM-008,1,79.0,Delivered,Jonas Vermeulen
+ORD-10145,2026-09-16 13:34,Lucas Bakker,Website,Netherlands,LUM-019,2,298.0,Delivered,Mei Tanaka
+ORD-10146,2026-09-16 16:29,Omar Costa,Website,Netherlands,LUM-021,4,72.0,Delivered,Mei Tanaka
+ORD-10147,2026-09-16 19:38,Theo Novak,Website,Germany,LUM-005,1,54.0,Delivered,Jonas Vermeulen
+ORD-10148,2026-09-16 20:09,Julia Bakker,Mobile App,Spain,LUM-024,1,55.0,Delivered,Mei Tanaka
+ORD-10149,2026-09-16 21:11,Elena Kowalski,Mobile App,Netherlands,LUM-010,2,338.0,Delivered,Jonas Vermeulen
+ORD-10150,2026-09-17 08:29,Leon Bakker,Mobile App,Germany,LUM-014,1,19.0,Delivered,Jonas Vermeulen
+ORD-10151,2026-09-17 08:31,Felix Schulz,Website,Netherlands,LUM-001,2,178.0,Delivered,Mei Tanaka
+ORD-10152,2026-09-17 08:43,Maya Berg,Website,Belgium,LUM-007,4,116.0,Delivered,Mei Tanaka
+ORD-10153,2026-09-17 11:28,Maya Laurent,Website,Spain,LUM-018,1,28.0,Delivered,Mei Tanaka
+ORD-10154,2026-09-17 12:21,Leon Dubois,Website,Belgium,LUM-017,1,75.0,Delivered,Mei Tanaka
+ORD-10155,2026-09-17 15:13,Finn Vermeer,Marketplace,Belgium,LUM-014,1,19.0,Delivered,Jonas Vermeulen
+ORD-10156,2026-09-17 17:08,Jonas Romero,Website,France,LUM-021,1,18.0,Delivered,Mei Tanaka
+ORD-10157,2026-09-17 17:33,Julia Vermeer,Website,Belgium,LUM-019,2,298.0,Delivered,Mei Tanaka
+ORD-10158,2026-09-17 17:47,Aisha Weber,Website,Netherlands,LUM-017,1,75.0,Delivered,Mei Tanaka
+ORD-10159,2026-09-17 18:41,Maya Laurent,Website,Germany,LUM-022,1,26.0,Cancelled,Mei Tanaka
+ORD-10160,2026-09-17 19:09,Elena Andersen,Marketplace,Germany,LUM-002,1,109.0,Delivered,Jonas Vermeulen
+ORD-10161,2026-09-17 19:10,Clara Bakker,Mobile App,Germany,LUM-006,2,64.0,Delivered,Jonas Vermeulen
+ORD-10162,2026-09-17 22:09,Leon Fischer,Mobile App,France,LUM-010,2,338.0,Delivered,Jonas Vermeulen
+ORD-10163,2026-09-17 22:33,Jonas Bakker,Website,Germany,LUM-008,1,79.0,Delivered,Mei Tanaka
+ORD-10164,2026-09-17 22:44,Noah Rossi,Website,Belgium,LUM-012,1,49.0,Delivered,Jonas Vermeulen
+ORD-10165,2026-09-18 08:00,Sami Novak,Mobile App,Germany,LUM-001,1,89.0,Delivered,Jonas Vermeulen
+ORD-10166,2026-09-18 08:08,Nadia Fischer,Marketplace,France,LUM-012,1,49.0,Delivered,Mei Tanaka
+ORD-10167,2026-09-18 08:24,Aisha Novak,Website,Netherlands,LUM-010,1,169.0,Delivered,Mei Tanaka
+ORD-10168,2026-09-18 09:06,Oscar Bakker,Website,Netherlands,LUM-010,1,169.0,Delivered,Jonas Vermeulen
+ORD-10169,2026-09-18 09:23,Julia Berg,Website,France,LUM-004,1,24.0,Delivered,Mei Tanaka
+ORD-10170,2026-09-18 09:58,Lena Novak,Website,France,LUM-024,1,55.0,Delivered,Jonas Vermeulen
+ORD-10171,2026-09-18 11:48,Zara Keller,Marketplace,France,LUM-004,4,96.0,Delivered,Mei Tanaka
+ORD-10172,2026-09-18 13:43,Nadia Lambert,Website,France,LUM-020,2,198.0,Delivered,Jonas Vermeulen
+ORD-10173,2026-09-18 14:42,Lena Andersen,Website,Netherlands,LUM-005,3,162.0,Delivered,Jonas Vermeulen
+ORD-10174,2026-09-18 14:46,Omar Novak,Website,France,LUM-013,1,36.0,Delivered,Mei Tanaka
+ORD-10175,2026-09-18 16:11,Sami Andersen,Mobile App,Belgium,LUM-007,1,29.0,Delivered,Mei Tanaka
+ORD-10176,2026-09-18 18:27,Sami Fischer,Marketplace,Germany,LUM-002,2,218.0,Delivered,Mei Tanaka
+ORD-10177,2026-09-18 19:34,Theo Andersen,Website,France,LUM-006,2,64.0,Delivered,Jonas Vermeulen
+ORD-10178,2026-09-18 21:27,Emma Petit,Website,Spain,LUM-017,2,150.0,Delivered,Mei Tanaka
+ORD-10179,2026-09-18 22:53,Leon Keller,Website,Germany,LUM-021,3,54.0,Delivered,Jonas Vermeulen
+ORD-10180,2026-09-19 09:54,Oscar Petit,Mobile App,Spain,LUM-011,2,44.0,Delivered,Mei Tanaka
+ORD-10181,2026-09-19 11:04,Mateo Weber,Website,France,LUM-023,2,190.0,Delivered,Mei Tanaka
+ORD-10182,2026-09-19 11:53,Oscar Romero,Website,France,LUM-011,1,22.0,Delivered,Jonas Vermeulen
+ORD-10183,2026-09-19 11:54,Lena Schulz,Mobile App,France,LUM-019,1,149.0,Delivered,Jonas Vermeulen
+ORD-10184,2026-09-19 13:00,Jonas Fischer,Website,Belgium,LUM-003,2,90.0,Delivered,Mei Tanaka
+ORD-10185,2026-09-19 13:04,Zara Schulz,Mobile App,Germany,LUM-012,3,147.0,Delivered,Mei Tanaka
+ORD-10186,2026-09-19 19:13,Noah Schulz,Mobile App,France,LUM-024,2,110.0,Delivered,Jonas Vermeulen
+ORD-10187,2026-09-19 19:29,Zara Fischer,Mobile App,Germany,LUM-006,2,64.0,Delivered,Jonas Vermeulen
+ORD-10188,2026-09-19 19:50,Jonas Berg,Website,Spain,LUM-008,1,79.0,Delivered,Jonas Vermeulen
+ORD-10189,2026-09-19 21:11,Emma Lambert,Website,France,LUM-010,1,169.0,Delivered,Mei Tanaka
+ORD-10190,2026-09-19 22:43,Ines Berg,Mobile App,Netherlands,LUM-012,1,49.0,Delivered,Mei Tanaka
+ORD-10191,2026-09-20 08:26,Nadia Berg,Website,Belgium,LUM-023,1,95.0,Delivered,Jonas Vermeulen
+ORD-10192,2026-09-20 08:31,Freya Weber,Mobile App,Spain,LUM-001,3,267.0,Delivered,Mei Tanaka
+ORD-10193,2026-09-20 12:23,Aisha Kowalski,Marketplace,Spain,LUM-011,3,66.0,Delivered,Mei Tanaka
+ORD-10194,2026-09-20 12:55,Mateo Novak,Mobile App,Spain,LUM-024,1,55.0,Delivered,Jonas Vermeulen
+ORD-10195,2026-09-20 13:15,Finn Schulz,Website,Spain,LUM-022,1,26.0,Delivered,Mei Tanaka
+ORD-10196,2026-09-20 15:09,Finn Silva,Website,Netherlands,LUM-010,1,169.0,Delivered,Mei Tanaka
+ORD-10197,2026-09-20 16:29,Elena Kowalski,Website,Germany,LUM-005,1,54.0,Delivered,Mei Tanaka
+ORD-10198,2026-09-20 16:32,Lena Andersen,Website,Spain,LUM-012,1,49.0,Delivered,Jonas Vermeulen
+ORD-10199,2026-09-20 17:00,Felix Berg,Website,France,LUM-018,2,56.0,Delivered,Jonas Vermeulen
+ORD-10200,2026-09-20 17:19,Julia Moreau,Marketplace,Spain,LUM-011,3,66.0,Cancelled,Jonas Vermeulen
+ORD-10201,2026-09-20 17:43,Leon Moreau,Website,Netherlands,LUM-004,1,24.0,Delivered,Mei Tanaka
+ORD-10202,2026-09-20 19:40,Sami Jansen,Website,France,LUM-011,1,22.0,Delivered,Mei Tanaka
+ORD-10203,2026-09-20 20:22,Clara Fischer,Website,Germany,LUM-019,3,447.0,Delivered,Mei Tanaka
+ORD-10204,2026-09-21 09:00,Felix Costa,Website,Belgium,LUM-011,1,22.0,Delivered,Mei Tanaka
+ORD-10205,2026-09-21 09:07,Aisha Romero,Mobile App,France,LUM-018,1,28.0,Cancelled,Mei Tanaka
+ORD-10206,2026-09-21 09:26,Theo Costa,Website,Belgium,LUM-023,2,190.0,Delivered,Jonas Vermeulen
+ORD-10207,2026-09-21 09:52,Felix Moreau,Website,Netherlands,LUM-012,3,147.0,Delivered,Jonas Vermeulen
+ORD-10208,2026-09-21 10:57,Lucas Moreau,Marketplace,France,LUM-001,1,89.0,Delivered,Jonas Vermeulen
+ORD-10209,2026-09-21 15:36,Noah Weber,Mobile App,Spain,LUM-007,1,29.0,Delivered,Mei Tanaka
+ORD-10210,2026-09-21 19:34,Emma Moreau,Mobile App,Germany,LUM-001,2,178.0,Delivered,Jonas Vermeulen
+ORD-10211,2026-09-21 20:27,Lena Berg,Mobile App,Netherlands,LUM-010,1,169.0,Delivered,Jonas Vermeulen
+ORD-10212,2026-09-21 21:10,Hugo Andersen,Marketplace,Germany,LUM-010,3,507.0,Delivered,Jonas Vermeulen
+ORD-10213,2026-09-21 22:57,Aisha Rossi,Marketplace,Spain,LUM-009,1,65.0,Delivered,Jonas Vermeulen
+ORD-10214,2026-09-22 07:28,Felix Bakker,Mobile App,Netherlands,LUM-024,1,55.0,Delivered,Jonas Vermeulen
+ORD-10215,2026-09-22 10:48,Ines Silva,Website,France,LUM-020,1,99.0,Delivered,Mei Tanaka
+ORD-10216,2026-09-22 11:28,Hugo Romero,Marketplace,Netherlands,LUM-006,3,96.0,Delivered,Mei Tanaka
+ORD-10217,2026-09-22 12:14,Zara Rossi,Mobile App,Belgium,LUM-010,1,169.0,Delivered,Mei Tanaka
+ORD-10218,2026-09-22 14:25,Noah Petit,Website,France,LUM-005,1,54.0,Delivered,Mei Tanaka
+ORD-10219,2026-09-22 16:47,Hugo Novak,Marketplace,Germany,LUM-012,1,49.0,Delivered,Jonas Vermeulen
+ORD-10220,2026-09-22 20:19,Noah Keller,Mobile App,France,LUM-012,2,98.0,Delivered,Jonas Vermeulen
+ORD-10221,2026-09-22 20:54,Felix Lambert,Website,Germany,LUM-009,1,65.0,Delivered,Jonas Vermeulen
+ORD-10222,2026-09-22 21:25,Lena Jansen,Mobile App,Netherlands,LUM-005,1,54.0,Delivered,Mei Tanaka
+ORD-10223,2026-09-22 21:40,Finn Andersen,Marketplace,France,LUM-021,1,18.0,Delivered,Jonas Vermeulen
+ORD-10224,2026-09-22 22:31,Zara Petit,Website,Germany,LUM-012,3,147.0,Delivered,Jonas Vermeulen
+ORD-10225,2026-09-22 22:44,Julia Fischer,Website,Spain,LUM-020,1,99.0,Delivered,Jonas Vermeulen
+ORD-10226,2026-09-22 22:52,Julia Petit,Marketplace,Belgium,LUM-004,2,48.0,Delivered,Jonas Vermeulen
+ORD-10227,2026-09-23 07:09,Julia Kowalski,Website,Belgium,LUM-019,2,298.0,Delivered,Jonas Vermeulen
+ORD-10228,2026-09-23 07:32,Theo Petit,Marketplace,France,LUM-019,2,298.0,Delivered,Mei Tanaka
+ORD-10229,2026-09-23 07:34,Mila Laurent,Marketplace,France,LUM-019,3,447.0,Delivered,Mei Tanaka
+ORD-10230,2026-09-23 08:03,Finn Jansen,Website,Belgium,LUM-022,1,26.0,Delivered,Jonas Vermeulen
+ORD-10231,2026-09-23 12:15,Lena Dubois,Website,France,LUM-001,3,267.0,Delivered,Jonas Vermeulen
+ORD-10232,2026-09-23 12:26,Theo Petit,Website,France,LUM-010,1,169.0,Delivered,Mei Tanaka
+ORD-10233,2026-09-23 12:29,Ines Bakker,Website,Spain,LUM-007,2,58.0,Delivered,Mei Tanaka
+ORD-10234,2026-09-23 12:33,Oscar Weber,Website,Netherlands,LUM-006,1,32.0,Delivered,Mei Tanaka
+ORD-10235,2026-09-23 13:01,Leon Berg,Website,Belgium,LUM-011,1,22.0,Delivered,Mei Tanaka
+ORD-10236,2026-09-23 14:02,Clara Petit,Website,Netherlands,LUM-006,4,128.0,Delivered,Mei Tanaka
+ORD-10237,2026-09-23 14:23,Ines Silva,Website,Germany,LUM-017,2,150.0,Delivered,Jonas Vermeulen
+ORD-10238,2026-09-23 16:10,Finn Dubois,Website,France,LUM-006,1,32.0,Delivered,Mei Tanaka
+ORD-10239,2026-09-23 17:02,Zara Petit,Marketplace,Spain,LUM-021,4,72.0,Delivered,Mei Tanaka
+ORD-10240,2026-09-23 18:40,Nadia Rossi,Mobile App,France,LUM-016,1,42.0,Delivered,Jonas Vermeulen
+ORD-10241,2026-09-23 21:19,Mila Weber,Mobile App,Spain,LUM-022,2,52.0,Delivered,Jonas Vermeulen
+ORD-10242,2026-09-23 21:38,Theo Weber,Website,Spain,LUM-003,2,90.0,Delivered,Mei Tanaka
+ORD-10243,2026-09-24 07:09,Jonas Vermeer,Website,Belgium,LUM-001,2,178.0,Delivered,Mei Tanaka
+ORD-10244,2026-09-24 11:41,Mateo Silva,Mobile App,Netherlands,LUM-005,1,54.0,Delivered,Mei Tanaka
+ORD-10245,2026-09-24 14:07,Hugo Fischer,Website,France,LUM-011,1,22.0,Delivered,Mei Tanaka
+ORD-10246,2026-09-24 15:02,Mateo Fischer,Mobile App,Belgium,LUM-019,1,149.0,Delivered,Jonas Vermeulen
+ORD-10247,2026-09-24 16:22,Lena Dubois,Mobile App,France,LUM-024,1,55.0,Delivered,Jonas Vermeulen
+ORD-10248,2026-09-24 17:35,Felix Jansen,Marketplace,Germany,LUM-001,2,178.0,Delivered,Mei Tanaka
+ORD-10249,2026-09-24 18:01,Zara Weber,Website,Spain,LUM-021,1,18.0,Delivered,Mei Tanaka
+ORD-10250,2026-09-24 18:16,Mateo Lambert,Marketplace,Belgium,LUM-019,1,149.0,Delivered,Jonas Vermeulen
+ORD-10251,2026-09-24 20:40,Aisha Kowalski,Mobile App,France,LUM-011,1,22.0,Delivered,Mei Tanaka
+ORD-10252,2026-09-24 22:29,Elena Kowalski,Website,France,LUM-004,1,24.0,Delivered,Jonas Vermeulen
+ORD-10253,2026-09-24 22:49,Emma Novak,Marketplace,Germany,LUM-001,3,267.0,Delivered,Mei Tanaka
+ORD-10254,2026-09-25 08:06,Nadia Berg,Website,Spain,LUM-011,2,44.0,Delivered,Jonas Vermeulen
+ORD-10255,2026-09-25 12:37,Finn Romero,Mobile App,France,LUM-018,1,28.0,Delivered,Mei Tanaka
+ORD-10256,2026-09-25 13:00,Nadia Romero,Website,Germany,LUM-001,3,267.0,Delivered,Jonas Vermeulen
+ORD-10257,2026-09-25 13:35,Mateo Rossi,Mobile App,Belgium,LUM-003,1,45.0,Delivered,Mei Tanaka
+ORD-10258,2026-09-25 16:27,Finn Kowalski,Website,Netherlands,LUM-017,1,75.0,Delivered,Jonas Vermeulen
+ORD-10259,2026-09-25 17:18,Theo Schulz,Website,Netherlands,LUM-018,3,84.0,Delivered,Jonas Vermeulen
+ORD-10260,2026-09-25 17:38,Emma Berg,Website,France,LUM-007,1,29.0,Delivered,Mei Tanaka
+ORD-10261,2026-09-25 18:04,Leon Silva,Mobile App,Netherlands,LUM-022,1,26.0,Delivered,Mei Tanaka
+ORD-10262,2026-09-25 18:31,Sami Rossi,Marketplace,Belgium,LUM-001,2,178.0,Delivered,Mei Tanaka
+ORD-10263,2026-09-25 20:30,Noah Kowalski,Website,France,LUM-022,1,26.0,Delivered,Mei Tanaka
+ORD-10264,2026-09-25 20:46,Lucas Kowalski,Website,Netherlands,LUM-019,1,149.0,Delivered,Jonas Vermeulen
+ORD-10265,2026-09-25 20:49,Lucas Jansen,Website,France,LUM-016,3,126.0,Delivered,Mei Tanaka
+ORD-10266,2026-09-25 22:42,Felix Kowalski,Mobile App,Belgium,LUM-001,3,267.0,Delivered,Mei Tanaka
+ORD-10267,2026-09-26 08:35,Aisha Laurent,Marketplace,Netherlands,LUM-014,1,19.0,Cancelled,Jonas Vermeulen
+ORD-10268,2026-09-26 08:48,Ines Rossi,Website,Germany,LUM-020,3,297.0,Delivered,Mei Tanaka
+ORD-10269,2026-09-26 09:15,Hugo Fischer,Marketplace,France,LUM-022,1,26.0,Delivered,Jonas Vermeulen
+ORD-10270,2026-09-26 09:31,Theo Bakker,Website,Spain,LUM-024,3,165.0,Delivered,Jonas Vermeulen
+ORD-10271,2026-09-26 09:49,Noah Novak,Website,France,LUM-018,1,28.0,Delivered,Mei Tanaka
+ORD-10272,2026-09-26 12:10,Clara Jansen,Website,Spain,LUM-004,2,48.0,Delivered,Mei Tanaka
+ORD-10273,2026-09-26 13:57,Ines Schulz,Website,France,LUM-018,2,56.0,Delivered,Jonas Vermeulen
+ORD-10274,2026-09-26 15:31,Omar Moreau,Website,Germany,LUM-007,1,29.0,Delivered,Jonas Vermeulen
+ORD-10275,2026-09-26 19:07,Aisha Dubois,Website,France,LUM-017,1,75.0,Delivered,Mei Tanaka
+ORD-10276,2026-09-26 19:15,Ines Silva,Website,Netherlands,LUM-016,1,42.0,Delivered,Jonas Vermeulen
+ORD-10277,2026-09-26 22:23,Sami Andersen,Website,Spain,LUM-010,1,169.0,Delivered,Jonas Vermeulen
+ORD-10278,2026-09-27 08:46,Hugo Bakker,Mobile App,Netherlands,LUM-004,3,72.0,Delivered,Mei Tanaka
+ORD-10279,2026-09-27 11:48,Ines Laurent,Website,France,LUM-019,4,596.0,Delivered,Mei Tanaka
+ORD-10280,2026-09-27 12:10,Mateo Romero,Mobile App,Belgium,LUM-019,1,149.0,Delivered,Jonas Vermeulen
+ORD-10281,2026-09-27 12:12,Hugo Costa,Mobile App,Spain,LUM-022,1,26.0,Delivered,Mei Tanaka
+ORD-10282,2026-09-27 13:43,Lucas Bakker,Website,France,LUM-001,3,267.0,Delivered,Mei Tanaka
+ORD-10283,2026-09-27 13:51,Leon Jansen,Website,France,LUM-010,3,507.0,Delivered,Jonas Vermeulen
+ORD-10284,2026-09-27 14:27,Mateo Bakker,Website,Belgium,LUM-024,1,55.0,Delivered,Jonas Vermeulen
+ORD-10285,2026-09-27 14:46,Clara Bakker,Mobile App,Netherlands,LUM-013,1,36.0,Delivered,Mei Tanaka
+ORD-10286,2026-09-27 18:30,Ines Silva,Marketplace,Spain,LUM-007,1,29.0,Delivered,Jonas Vermeulen
+ORD-10287,2026-09-27 20:12,Lucas Silva,Website,Netherlands,LUM-016,1,42.0,Delivered,Mei Tanaka
+ORD-10288,2026-09-27 20:44,Felix Lambert,Marketplace,Belgium,LUM-022,2,52.0,Delivered,Mei Tanaka
+ORD-10289,2026-09-27 21:25,Lucas Petit,Website,Germany,LUM-020,2,198.0,Delivered,Mei Tanaka
+ORD-10290,2026-09-28 07:38,Maya Romero,Mobile App,Germany,LUM-012,1,49.0,Delivered,Jonas Vermeulen
+ORD-10291,2026-09-28 09:15,Mateo Petit,Website,Spain,LUM-011,1,22.0,Delivered,Jonas Vermeulen
+ORD-10292,2026-09-28 09:46,Oscar Laurent,Website,Germany,LUM-019,3,447.0,Delivered,Jonas Vermeulen
+ORD-10293,2026-09-28 10:26,Clara Schulz,Website,Belgium,LUM-016,2,84.0,Delivered,Jonas Vermeulen
+ORD-10294,2026-09-28 12:51,Lena Costa,Mobile App,France,LUM-007,1,29.0,Delivered,Mei Tanaka
+ORD-10295,2026-09-28 14:50,Freya Jansen,Website,Belgium,LUM-007,1,29.0,Delivered,Mei Tanaka
+ORD-10296,2026-09-28 17:20,Nadia Keller,Website,Spain,LUM-012,1,49.0,Delivered,Mei Tanaka
+ORD-10297,2026-09-28 19:25,Oscar Lambert,Website,Germany,LUM-006,1,32.0,Delivered,Mei Tanaka
+ORD-10298,2026-09-28 19:40,Elena Romero,Website,France,LUM-002,1,109.0,Delivered,Mei Tanaka
+ORD-10299,2026-09-28 21:32,Nadia Schulz,Website,France,LUM-009,1,65.0,Delivered,Mei Tanaka
+ORD-10300,2026-09-28 22:15,Hugo Kowalski,Website,Belgium,LUM-017,1,75.0,Delivered,Mei Tanaka
+ORD-10301,2026-09-28 22:56,Lena Moreau,Website,Spain,LUM-009,2,130.0,Delivered,Mei Tanaka
+ORD-10302,2026-09-29 07:48,Jonas Rossi,Website,France,LUM-006,2,64.0,Delivered,Jonas Vermeulen
+ORD-10303,2026-09-29 08:06,Felix Vermeer,Website,Spain,LUM-001,1,89.0,Delivered,Jonas Vermeulen
+ORD-10304,2026-09-29 09:17,Jonas Silva,Marketplace,Germany,LUM-010,1,169.0,Delivered,Jonas Vermeulen
+ORD-10305,2026-09-29 09:59,Maya Costa,Website,Spain,LUM-024,1,55.0,Delivered,Jonas Vermeulen
+ORD-10306,2026-09-29 10:58,Sami Andersen,Website,Netherlands,LUM-012,2,98.0,Delivered,Mei Tanaka
+ORD-10307,2026-09-29 11:22,Maya Schulz,Website,Belgium,LUM-004,2,48.0,Delivered,Mei Tanaka
+ORD-10308,2026-09-29 11:44,Lena Costa,Website,Netherlands,LUM-005,4,216.0,Delivered,Mei Tanaka
+ORD-10309,2026-09-29 14:17,Nadia Jansen,Website,Germany,LUM-019,1,149.0,Delivered,Mei Tanaka
+ORD-10310,2026-09-29 16:34,Maya Vermeer,Website,Germany,LUM-007,2,58.0,Delivered,Mei Tanaka
+ORD-10311,2026-09-29 17:48,Julia Moreau,Marketplace,Spain,LUM-006,1,32.0,Delivered,Mei Tanaka
+ORD-10312,2026-09-29 18:52,Noah Costa,Mobile App,Spain,LUM-020,1,99.0,Delivered,Mei Tanaka
+ORD-10313,2026-09-29 21:41,Ines Bakker,Website,France,LUM-009,2,130.0,Delivered,Mei Tanaka
+ORD-10314,2026-09-30 07:10,Elena Silva,Mobile App,Spain,LUM-017,1,75.0,Delivered,Mei Tanaka
+ORD-10315,2026-09-30 08:02,Aisha Lambert,Website,Netherlands,LUM-022,1,26.0,Delivered,Jonas Vermeulen
+ORD-10316,2026-09-30 08:28,Oscar Keller,Website,Netherlands,LUM-004,2,48.0,Delivered,Mei Tanaka
+ORD-10317,2026-09-30 08:42,Hugo Costa,Website,France,LUM-009,3,195.0,Delivered,Mei Tanaka
+ORD-10318,2026-09-30 11:26,Mateo Novak,Website,Germany,LUM-016,1,42.0,Delivered,Jonas Vermeulen
+ORD-10319,2026-09-30 11:29,Emma Berg,Website,Belgium,LUM-009,1,65.0,Delivered,Jonas Vermeulen
+ORD-10320,2026-09-30 11:40,Mila Romero,Website,France,LUM-016,1,42.0,Delivered,Jonas Vermeulen
+ORD-10321,2026-09-30 12:05,Hugo Weber,Mobile App,France,LUM-011,1,22.0,Delivered,Jonas Vermeulen
+ORD-10322,2026-09-30 14:30,Jonas Dubois,Website,Germany,LUM-007,2,58.0,Delivered,Jonas Vermeulen
+ORD-10323,2026-09-30 15:49,Aisha Romero,Website,Spain,LUM-001,1,89.0,Delivered,Jonas Vermeulen
+ORD-10324,2026-09-30 16:47,Emma Romero,Marketplace,France,LUM-017,2,150.0,Cancelled,Jonas Vermeulen
+ORD-10325,2026-09-30 17:22,Hugo Petit,Website,Spain,LUM-003,1,45.0,Delivered,Mei Tanaka
+ORD-10326,2026-09-30 17:41,Noah Laurent,Website,Belgium,LUM-012,1,49.0,Delivered,Jonas Vermeulen
+ORD-10327,2026-09-30 18:18,Julia Rossi,Mobile App,Belgium,LUM-020,1,99.0,Delivered,Jonas Vermeulen
+ORD-10328,2026-09-30 19:39,Leon Kowalski,Marketplace,Spain,LUM-011,1,22.0,Delivered,Jonas Vermeulen
+ORD-10329,2026-09-30 20:35,Leon Andersen,Website,Belgium,LUM-007,2,58.0,Delivered,Mei Tanaka
+ORD-10330,2026-09-30 21:04,Aisha Fischer,Website,Germany,LUM-016,1,42.0,Delivered,Mei Tanaka
+ORD-10331,2026-09-30 21:56,Noah Fischer,Marketplace,Spain,LUM-016,1,42.0,Delivered,Jonas Vermeulen
+ORD-10332,2026-10-01 07:28,Emma Petit,Mobile App,Belgium,LUM-009,1,65.0,Delivered,Mei Tanaka
+ORD-10333,2026-10-01 09:56,Theo Schulz,Marketplace,Germany,LUM-006,1,32.0,Delivered,Jonas Vermeulen
+ORD-10334,2026-10-01 10:16,Oscar Kowalski,Marketplace,Germany,LUM-021,1,18.0,Delivered,Jonas Vermeulen
+ORD-10335,2026-10-01 11:03,Emma Novak,Website,France,LUM-015,1,34.0,Delivered,Mei Tanaka
+ORD-10336,2026-10-01 11:59,Lena Bakker,Marketplace,Belgium,LUM-021,1,18.0,Delivered,Jonas Vermeulen
+ORD-10337,2026-10-01 12:54,Sami Kowalski,Website,Germany,LUM-011,1,22.0,Delivered,Mei Tanaka
+ORD-10338,2026-10-01 13:43,Lucas Jansen,Website,Germany,LUM-003,2,90.0,Delivered,Mei Tanaka
+ORD-10339,2026-10-01 15:07,Freya Bakker,Mobile App,Germany,LUM-021,1,18.0,Delivered,Jonas Vermeulen
+ORD-10340,2026-10-01 15:10,Julia Lambert,Website,Netherlands,LUM-012,1,49.0,Cancelled,Jonas Vermeulen
+ORD-10341,2026-10-01 15:45,Emma Petit,Mobile App,Germany,LUM-006,1,32.0,Delivered,Jonas Vermeulen
+ORD-10342,2026-10-01 16:41,Freya Novak,Marketplace,Belgium,LUM-010,4,676.0,Delivered,Mei Tanaka
+ORD-10343,2026-10-01 17:57,Emma Lambert,Website,France,LUM-021,1,18.0,Cancelled,Jonas Vermeulen
+ORD-10344,2026-10-01 18:27,Lucas Novak,Mobile App,Spain,LUM-003,3,135.0,Delivered,Mei Tanaka
+ORD-10345,2026-10-01 18:44,Leon Weber,Mobile App,Belgium,LUM-022,1,26.0,Delivered,Jonas Vermeulen
+ORD-10346,2026-10-01 19:10,Nadia Costa,Mobile App,France,LUM-002,2,218.0,Delivered,Jonas Vermeulen
+ORD-10347,2026-10-01 19:20,Theo Keller,Marketplace,Spain,LUM-018,2,56.0,Delivered,Jonas Vermeulen
+ORD-10348,2026-10-01 21:27,Clara Novak,Mobile App,France,LUM-012,1,49.0,Delivered,Mei Tanaka
+ORD-10349,2026-10-02 08:48,Emma Novak,Mobile App,Netherlands,LUM-020,1,99.0,Delivered,Mei Tanaka
+ORD-10350,2026-10-02 09:41,Julia Novak,Website,France,LUM-001,1,89.0,Delivered,Mei Tanaka
+ORD-10351,2026-10-02 09:47,Sami Bakker,Website,Spain,LUM-019,2,298.0,Delivered,Mei Tanaka
+ORD-10352,2026-10-02 11:03,Sami Bakker,Mobile App,Belgium,LUM-020,1,99.0,Delivered,Jonas Vermeulen
+ORD-10353,2026-10-02 12:36,Sami Jansen,Website,France,LUM-024,1,55.0,Delivered,Jonas Vermeulen
+ORD-10354,2026-10-02 13:41,Nadia Lambert,Website,France,LUM-001,2,178.0,Delivered,Mei Tanaka
+ORD-10355,2026-10-02 14:28,Jonas Novak,Marketplace,Germany,LUM-017,1,75.0,Delivered,Jonas Vermeulen
+ORD-10356,2026-10-02 14:36,Lucas Andersen,Mobile App,France,LUM-018,1,28.0,Delivered,Jonas Vermeulen
+ORD-10357,2026-10-02 15:04,Julia Romero,Website,Belgium,LUM-012,1,49.0,Delivered,Mei Tanaka
+ORD-10358,2026-10-02 15:35,Zara Petit,Website,Netherlands,LUM-011,1,22.0,Delivered,Mei Tanaka
+ORD-10359,2026-10-02 16:03,Lucas Berg,Website,Spain,LUM-001,1,89.0,Delivered,Jonas Vermeulen
+ORD-10360,2026-10-02 16:22,Theo Berg,Website,Netherlands,LUM-021,1,18.0,Cancelled,Mei Tanaka
+ORD-10361,2026-10-02 18:19,Lena Keller,Website,Germany,LUM-006,1,32.0,Delivered,Jonas Vermeulen
+ORD-10362,2026-10-02 18:54,Lena Schulz,Mobile App,Germany,LUM-020,1,99.0,Delivered,Mei Tanaka
+ORD-10363,2026-10-02 21:48,Hugo Romero,Website,Belgium,LUM-003,2,90.0,Delivered,Jonas Vermeulen
+ORD-10364,2026-10-03 07:23,Jonas Petit,Mobile App,Germany,LUM-010,1,169.0,Delivered,Jonas Vermeulen
+ORD-10365,2026-10-03 08:23,Nadia Silva,Website,Belgium,LUM-012,2,98.0,Delivered,Jonas Vermeulen
+ORD-10366,2026-10-03 09:06,Finn Bakker,Mobile App,Germany,LUM-007,1,29.0,Delivered,Jonas Vermeulen
+ORD-10367,2026-10-03 12:52,Finn Berg,Website,Spain,LUM-020,1,99.0,Delivered,Mei Tanaka
+ORD-10368,2026-10-03 14:11,Lena Weber,Mobile App,Netherlands,LUM-004,2,48.0,Delivered,Jonas Vermeulen
+ORD-10369,2026-10-03 14:24,Mila Keller,Website,France,LUM-011,1,22.0,Delivered,Mei Tanaka
+ORD-10370,2026-10-03 15:06,Jonas Costa,Website,Spain,LUM-003,1,45.0,Delivered,Mei Tanaka
+ORD-10371,2026-10-03 15:27,Freya Weber,Mobile App,Germany,LUM-016,1,42.0,Delivered,Jonas Vermeulen
+ORD-10372,2026-10-03 15:57,Oscar Weber,Mobile App,Germany,LUM-016,1,42.0,Cancelled,Mei Tanaka
+ORD-10373,2026-10-03 17:07,Theo Berg,Website,France,LUM-019,1,149.0,Delivered,Mei Tanaka
+ORD-10374,2026-10-03 17:29,Finn Kowalski,Mobile App,Belgium,LUM-010,1,169.0,Delivered,Mei Tanaka
+ORD-10375,2026-10-03 17:30,Sami Moreau,Website,Spain,LUM-007,1,29.0,Delivered,Jonas Vermeulen
+ORD-10376,2026-10-03 20:20,Julia Kowalski,Website,Belgium,LUM-024,2,110.0,Delivered,Jonas Vermeulen
+ORD-10377,2026-10-03 20:42,Oscar Fischer,Website,Spain,LUM-009,2,130.0,Delivered,Jonas Vermeulen
+ORD-10378,2026-10-03 22:18,Finn Weber,Mobile App,Germany,LUM-010,1,169.0,Delivered,Mei Tanaka
+ORD-10379,2026-10-03 22:59,Hugo Rossi,Website,Netherlands,LUM-007,3,87.0,Delivered,Mei Tanaka
+ORD-10380,2026-10-03 22:59,Hugo Dubois,Website,Netherlands,LUM-004,1,24.0,Delivered,Jonas Vermeulen
+ORD-10381,2026-10-04 07:32,Zara Fischer,Website,France,LUM-010,3,507.0,Delivered,Mei Tanaka
+ORD-10382,2026-10-04 10:09,Felix Novak,Mobile App,France,LUM-016,2,84.0,Delivered,Jonas Vermeulen
+ORD-10383,2026-10-04 10:10,Freya Novak,Website,Spain,LUM-016,1,42.0,Delivered,Jonas Vermeulen
+ORD-10384,2026-10-04 11:01,Jonas Berg,Website,Belgium,LUM-022,1,26.0,Delivered,Mei Tanaka
+ORD-10385,2026-10-04 12:21,Oscar Novak,Website,Germany,LUM-013,2,72.0,Delivered,Jonas Vermeulen
+ORD-10386,2026-10-04 12:49,Freya Petit,Website,Netherlands,LUM-020,2,198.0,Delivered,Jonas Vermeulen
+ORD-10387,2026-10-04 12:59,Ines Bakker,Marketplace,Belgium,LUM-007,1,29.0,Delivered,Jonas Vermeulen
+ORD-10388,2026-10-04 13:57,Oscar Costa,Marketplace,Spain,LUM-023,1,95.0,Delivered,Jonas Vermeulen
+ORD-10389,2026-10-04 16:32,Theo Romero,Mobile App,Germany,LUM-022,1,26.0,Delivered,Mei Tanaka
+ORD-10390,2026-10-04 16:36,Nadia Weber,Website,Belgium,LUM-010,1,169.0,Delivered,Mei Tanaka
+ORD-10391,2026-10-04 16:40,Clara Novak,Website,Spain,LUM-018,1,28.0,Delivered,Jonas Vermeulen
+ORD-10392,2026-10-04 17:00,Theo Novak,Website,France,LUM-021,1,18.0,Delivered,Jonas Vermeulen
+ORD-10393,2026-10-04 17:58,Elena Novak,Website,Netherlands,LUM-004,1,24.0,Delivered,Mei Tanaka
+ORD-10394,2026-10-04 21:03,Emma Laurent,Mobile App,France,LUM-002,2,218.0,Delivered,Jonas Vermeulen
+ORD-10395,2026-10-04 22:12,Jonas Vermeer,Website,Germany,LUM-018,4,112.0,Delivered,Jonas Vermeulen
+ORD-10396,2026-10-04 22:36,Sami Jansen,Mobile App,Netherlands,LUM-016,1,42.0,Delivered,Jonas Vermeulen
+ORD-10397,2026-10-04 22:40,Maya Costa,Website,Spain,LUM-012,2,98.0,Delivered,Mei Tanaka
+ORD-10398,2026-10-05 07:01,Finn Schulz,Mobile App,Germany,LUM-011,2,44.0,Delivered,Mei Tanaka
+ORD-10399,2026-10-05 07:30,Emma Schulz,Mobile App,Spain,LUM-022,1,26.0,Delivered,Mei Tanaka
+ORD-10400,2026-10-05 07:51,Leon Dubois,Marketplace,France,LUM-007,2,58.0,Delivered,Jonas Vermeulen
+ORD-10401,2026-10-05 08:55,Aisha Costa,Mobile App,Netherlands,LUM-022,1,26.0,Delivered,Mei Tanaka
+ORD-10402,2026-10-05 11:00,Aisha Lambert,Mobile App,Netherlands,LUM-015,1,34.0,Delivered,Mei Tanaka
+ORD-10403,2026-10-05 11:24,Aisha Vermeer,Mobile App,France,LUM-020,1,99.0,Delivered,Mei Tanaka
+ORD-10404,2026-10-05 12:44,Aisha Petit,Website,France,LUM-010,1,169.0,Delivered,Jonas Vermeulen
+ORD-10405,2026-10-05 13:37,Maya Kowalski,Marketplace,Belgium,LUM-001,2,178.0,Delivered,Mei Tanaka
+ORD-10406,2026-10-05 14:21,Freya Bakker,Website,Netherlands,LUM-004,2,48.0,Delivered,Mei Tanaka
+ORD-10407,2026-10-05 14:23,Sami Jansen,Website,France,LUM-022,2,52.0,Delivered,Mei Tanaka
+ORD-10408,2026-10-05 15:25,Theo Rossi,Website,Spain,LUM-001,3,267.0,Delivered,Mei Tanaka
+ORD-10409,2026-10-05 16:03,Jonas Jansen,Website,France,LUM-022,2,52.0,Delivered,Jonas Vermeulen
+ORD-10410,2026-10-05 19:10,Oscar Moreau,Mobile App,Belgium,LUM-013,2,72.0,Delivered,Jonas Vermeulen
+ORD-10411,2026-10-05 20:38,Maya Petit,Website,France,LUM-012,1,49.0,Delivered,Jonas Vermeulen
+ORD-10412,2026-10-05 20:56,Sami Petit,Mobile App,Germany,LUM-011,1,22.0,Delivered,Jonas Vermeulen
+ORD-10413,2026-10-05 22:24,Julia Vermeer,Marketplace,Netherlands,LUM-023,1,95.0,Delivered,Jonas Vermeulen
+ORD-10414,2026-10-06 07:40,Ines Lambert,Website,France,LUM-001,1,89.0,Delivered,Jonas Vermeulen
+ORD-10415,2026-10-06 08:53,Finn Laurent,Website,France,LUM-017,1,75.0,Delivered,Jonas Vermeulen
+ORD-10416,2026-10-06 09:19,Sami Dubois,Marketplace,Germany,LUM-008,2,158.0,Delivered,Mei Tanaka
+ORD-10417,2026-10-06 09:31,Clara Weber,Website,Netherlands,LUM-017,2,150.0,Delivered,Jonas Vermeulen
+ORD-10418,2026-10-06 09:52,Finn Weber,Website,Germany,LUM-012,2,98.0,Delivered,Jonas Vermeulen
+ORD-10419,2026-10-06 11:13,Theo Fischer,Mobile App,Netherlands,LUM-011,1,22.0,Delivered,Mei Tanaka
+ORD-10420,2026-10-06 11:30,Maya Andersen,Website,Belgium,LUM-012,2,98.0,Cancelled,Mei Tanaka
+ORD-10421,2026-10-06 13:11,Julia Bakker,Mobile App,Germany,LUM-001,3,267.0,Cancelled,Mei Tanaka
+ORD-10422,2026-10-06 13:44,Julia Bakker,Mobile App,Netherlands,LUM-001,4,356.0,Delivered,Mei Tanaka
+ORD-10423,2026-10-06 15:15,Felix Petit,Website,France,LUM-008,2,158.0,Delivered,Jonas Vermeulen
+ORD-10424,2026-10-06 16:09,Mateo Silva,Mobile App,Germany,LUM-011,3,66.0,Delivered,Jonas Vermeulen
+ORD-10425,2026-10-06 18:01,Nadia Kowalski,Marketplace,Germany,LUM-007,1,29.0,Delivered,Jonas Vermeulen
+ORD-10426,2026-10-06 20:46,Leon Silva,Website,Germany,LUM-003,3,135.0,Delivered,Jonas Vermeulen
+ORD-10427,2026-10-06 21:23,Leon Moreau,Mobile App,Belgium,LUM-006,3,96.0,Delivered,Mei Tanaka
+ORD-10428,2026-10-06 22:24,Jonas Bakker,Mobile App,Spain,LUM-016,2,84.0,Delivered,Jonas Vermeulen
+ORD-10429,2026-10-07 08:04,Clara Kowalski,Marketplace,France,LUM-011,3,66.0,Delivered,Mei Tanaka
+ORD-10430,2026-10-07 08:26,Sami Costa,Website,Spain,LUM-019,1,149.0,Delivered,Mei Tanaka
+ORD-10431,2026-10-07 08:30,Noah Moreau,Marketplace,France,LUM-012,1,49.0,Delivered,Jonas Vermeulen
+ORD-10432,2026-10-07 08:50,Clara Moreau,Marketplace,Spain,LUM-021,3,54.0,Delivered,Jonas Vermeulen
+ORD-10433,2026-10-07 09:22,Leon Novak,Website,France,LUM-001,2,178.0,Cancelled,Jonas Vermeulen
+ORD-10434,2026-10-07 10:54,Elena Dubois,Mobile App,Belgium,LUM-009,1,65.0,Delivered,Mei Tanaka
+ORD-10435,2026-10-07 12:08,Finn Dubois,Website,Spain,LUM-024,1,55.0,Delivered,Jonas Vermeulen
+ORD-10436,2026-10-07 12:31,Finn Berg,Mobile App,France,LUM-022,1,26.0,Delivered,Mei Tanaka
+ORD-10437,2026-10-07 14:42,Jonas Berg,Website,France,LUM-013,3,108.0,Delivered,Mei Tanaka
+ORD-10438,2026-10-07 16:02,Theo Bakker,Marketplace,Germany,LUM-006,2,64.0,Delivered,Jonas Vermeulen
+ORD-10439,2026-10-07 16:24,Leon Bakker,Mobile App,Germany,LUM-007,1,29.0,Delivered,Jonas Vermeulen
+ORD-10440,2026-10-07 16:55,Maya Silva,Mobile App,France,LUM-015,1,34.0,Delivered,Jonas Vermeulen
+ORD-10441,2026-10-07 18:04,Maya Jansen,Mobile App,France,LUM-018,2,56.0,Delivered,Jonas Vermeulen
+ORD-10442,2026-10-07 18:21,Elena Bakker,Mobile App,Germany,LUM-018,1,28.0,Delivered,Mei Tanaka
+ORD-10443,2026-10-07 20:02,Oscar Lambert,Mobile App,Netherlands,LUM-024,1,55.0,Delivered,Jonas Vermeulen
+ORD-10444,2026-10-07 20:56,Mateo Fischer,Website,Spain,LUM-008,2,158.0,Cancelled,Mei Tanaka
+ORD-10445,2026-10-07 22:18,Maya Bakker,Marketplace,France,LUM-001,1,89.0,Cancelled,Mei Tanaka
+ORD-10446,2026-10-08 07:29,Hugo Jansen,Mobile App,Germany,LUM-002,2,218.0,Delivered,Jonas Vermeulen
+ORD-10447,2026-10-08 07:32,Lucas Vermeer,Marketplace,France,LUM-004,3,72.0,Delivered,Mei Tanaka
+ORD-10448,2026-10-08 08:03,Felix Petit,Mobile App,Netherlands,LUM-002,1,109.0,Delivered,Jonas Vermeulen
+ORD-10449,2026-10-08 09:24,Lucas Novak,Website,Germany,LUM-010,1,169.0,Delivered,Mei Tanaka
+ORD-10450,2026-10-08 12:22,Freya Schulz,Website,Netherlands,LUM-002,2,218.0,Delivered,Mei Tanaka
+ORD-10451,2026-10-08 14:35,Lucas Andersen,Website,Belgium,LUM-019,3,447.0,Delivered,Mei Tanaka
+ORD-10452,2026-10-08 15:42,Freya Silva,Mobile App,France,LUM-022,1,26.0,Delivered,Jonas Vermeulen
+ORD-10453,2026-10-08 15:58,Clara Laurent,Marketplace,Germany,LUM-003,2,90.0,Delivered,Mei Tanaka
+ORD-10454,2026-10-08 16:58,Zara Novak,Website,France,LUM-019,2,298.0,Delivered,Jonas Vermeulen
+ORD-10455,2026-10-08 17:03,Ines Romero,Website,France,LUM-019,1,149.0,Delivered,Jonas Vermeulen
+ORD-10456,2026-10-08 17:10,Freya Silva,Mobile App,France,LUM-021,2,36.0,Delivered,Jonas Vermeulen
+ORD-10457,2026-10-08 17:37,Noah Jansen,Mobile App,France,LUM-009,3,195.0,Delivered,Mei Tanaka
+ORD-10458,2026-10-08 18:14,Julia Andersen,Website,Netherlands,LUM-016,3,126.0,Delivered,Mei Tanaka
+ORD-10459,2026-10-08 18:53,Noah Romero,Mobile App,Belgium,LUM-006,3,96.0,Delivered,Mei Tanaka
+ORD-10460,2026-10-08 19:00,Oscar Costa,Website,France,LUM-007,2,58.0,Delivered,Mei Tanaka
+ORD-10461,2026-10-08 21:19,Mateo Weber,Website,Germany,LUM-011,1,22.0,Delivered,Mei Tanaka
+ORD-10462,2026-10-08 22:06,Mila Bakker,Marketplace,Spain,LUM-007,1,29.0,Delivered,Mei Tanaka
+ORD-10463,2026-10-09 07:17,Zara Fischer,Website,Netherlands,LUM-004,4,96.0,Delivered,Mei Tanaka
+ORD-10464,2026-10-09 07:38,Ines Romero,Marketplace,Belgium,LUM-016,1,42.0,Delivered,Jonas Vermeulen
+ORD-10465,2026-10-09 07:58,Elena Bakker,Website,Netherlands,LUM-011,2,44.0,Delivered,Mei Tanaka
+ORD-10466,2026-10-09 11:18,Leon Moreau,Website,Belgium,LUM-008,2,158.0,Delivered,Jonas Vermeulen
+ORD-10467,2026-10-09 11:36,Elena Moreau,Website,Netherlands,LUM-019,1,149.0,Delivered,Mei Tanaka
+ORD-10468,2026-10-09 13:22,Elena Dubois,Marketplace,Germany,LUM-017,1,75.0,Delivered,Jonas Vermeulen
+ORD-10469,2026-10-09 14:22,Nadia Costa,Website,Germany,LUM-001,2,178.0,Delivered,Jonas Vermeulen
+ORD-10470,2026-10-09 16:07,Leon Andersen,Mobile App,Belgium,LUM-012,1,49.0,Delivered,Mei Tanaka
+ORD-10471,2026-10-09 16:34,Leon Silva,Mobile App,Germany,LUM-004,1,24.0,Delivered,Mei Tanaka
+ORD-10472,2026-10-09 17:46,Freya Bakker,Website,France,LUM-013,1,36.0,Delivered,Jonas Vermeulen
+ORD-10473,2026-10-09 18:03,Sami Berg,Marketplace,France,LUM-010,1,169.0,Delivered,Jonas Vermeulen
+ORD-10474,2026-10-09 18:40,Lena Costa,Mobile App,Netherlands,LUM-019,2,298.0,Delivered,Mei Tanaka
+ORD-10475,2026-10-09 19:39,Omar Laurent,Marketplace,France,LUM-011,1,22.0,Delivered,Mei Tanaka
+ORD-10476,2026-10-09 19:59,Mila Laurent,Website,Spain,LUM-013,1,36.0,Delivered,Mei Tanaka
+ORD-10477,2026-10-09 21:54,Zara Lambert,Mobile App,Germany,LUM-014,1,19.0,Delivered,Mei Tanaka
+ORD-10478,2026-10-10 08:05,Aisha Novak,Website,Germany,LUM-011,1,22.0,Delivered,Mei Tanaka
+ORD-10479,2026-10-10 08:41,Clara Laurent,Mobile App,Netherlands,LUM-019,1,149.0,Delivered,Jonas Vermeulen
+ORD-10480,2026-10-10 09:01,Finn Petit,Marketplace,Germany,LUM-001,2,178.0,Delivered,Jonas Vermeulen
+ORD-10481,2026-10-10 09:14,Emma Vermeer,Website,Netherlands,LUM-017,1,75.0,Delivered,Mei Tanaka
+ORD-10482,2026-10-10 10:28,Oscar Moreau,Marketplace,Spain,LUM-020,2,198.0,Delivered,Jonas Vermeulen
+ORD-10483,2026-10-10 10:43,Lucas Silva,Mobile App,Spain,LUM-016,1,42.0,Delivered,Mei Tanaka
+ORD-10484,2026-10-10 11:14,Aisha Bakker,Website,Belgium,LUM-022,1,26.0,Delivered,Jonas Vermeulen
+ORD-10485,2026-10-10 12:47,Finn Weber,Marketplace,Spain,LUM-010,2,338.0,Delivered,Jonas Vermeulen
+ORD-10486,2026-10-10 13:10,Hugo Costa,Website,France,LUM-001,1,89.0,Delivered,Mei Tanaka
+ORD-10487,2026-10-10 16:15,Zara Vermeer,Website,Netherlands,LUM-019,1,149.0,Delivered,Mei Tanaka
+ORD-10488,2026-10-10 16:26,Lucas Fischer,Mobile App,Netherlands,LUM-001,1,89.0,Delivered,Mei Tanaka
+ORD-10489,2026-10-10 17:43,Lena Silva,Website,Belgium,LUM-006,1,32.0,Delivered,Jonas Vermeulen
+ORD-10490,2026-10-10 18:23,Lena Fischer,Mobile App,Netherlands,LUM-023,2,190.0,Cancelled,Mei Tanaka
+ORD-10491,2026-10-10 19:34,Maya Rossi,Mobile App,Germany,LUM-006,1,32.0,Delivered,Mei Tanaka
+ORD-10492,2026-10-10 19:49,Freya Petit,Marketplace,Germany,LUM-007,1,29.0,Delivered,Mei Tanaka
+ORD-10493,2026-10-10 20:01,Aisha Andersen,Website,Netherlands,LUM-020,3,297.0,Delivered,Mei Tanaka
+ORD-10494,2026-10-11 09:35,Ines Keller,Marketplace,Germany,LUM-002,2,218.0,Delivered,Mei Tanaka
+ORD-10495,2026-10-11 09:53,Finn Dubois,Marketplace,Netherlands,LUM-016,4,168.0,Cancelled,Mei Tanaka
+ORD-10496,2026-10-11 10:01,Nadia Keller,Mobile App,Netherlands,LUM-022,1,26.0,Delivered,Mei Tanaka
+ORD-10497,2026-10-11 10:19,Hugo Vermeer,Mobile App,Spain,LUM-007,1,29.0,Delivered,Jonas Vermeulen
+ORD-10498,2026-10-11 10:54,Maya Laurent,Mobile App,Belgium,LUM-022,1,26.0,Delivered,Mei Tanaka
+ORD-10499,2026-10-11 11:30,Finn Lambert,Website,Germany,LUM-012,1,49.0,Delivered,Jonas Vermeulen
+ORD-10500,2026-10-11 13:36,Oscar Rossi,Mobile App,Belgium,LUM-005,2,108.0,Delivered,Jonas Vermeulen
+ORD-10501,2026-10-11 14:15,Lucas Moreau,Mobile App,France,LUM-007,1,29.0,Cancelled,Mei Tanaka
+ORD-10502,2026-10-11 15:04,Clara Dubois,Mobile App,Spain,LUM-011,1,22.0,Delivered,Jonas Vermeulen
+ORD-10503,2026-10-11 16:12,Hugo Novak,Website,Spain,LUM-005,2,108.0,Delivered,Mei Tanaka
+ORD-10504,2026-10-11 17:38,Lena Berg,Website,France,LUM-009,1,65.0,Delivered,Jonas Vermeulen
+ORD-10505,2026-10-11 17:48,Sami Vermeer,Mobile App,Germany,LUM-011,1,22.0,Delivered,Mei Tanaka
+ORD-10506,2026-10-11 19:41,Oscar Fischer,Website,Belgium,LUM-022,1,26.0,Delivered,Jonas Vermeulen
+ORD-10507,2026-10-11 20:03,Mila Fischer,Website,Germany,LUM-010,3,507.0,Delivered,Mei Tanaka
+ORD-10508,2026-10-11 20:15,Clara Andersen,Mobile App,Belgium,LUM-016,1,42.0,Delivered,Mei Tanaka
+ORD-10509,2026-10-11 20:52,Freya Kowalski,Website,Spain,LUM-011,2,44.0,Delivered,Jonas Vermeulen
+ORD-10510,2026-10-11 21:53,Leon Kowalski,Website,Belgium,LUM-001,1,89.0,Delivered,Mei Tanaka
+ORD-10511,2026-10-11 22:16,Mila Silva,Mobile App,Spain,LUM-017,1,75.0,Delivered,Mei Tanaka
+ORD-10512,2026-10-12 08:10,Mila Weber,Website,Netherlands,LUM-014,1,19.0,Delivered,Mei Tanaka
+ORD-10513,2026-10-12 08:44,Aisha Silva,Website,France,LUM-011,4,88.0,Delivered,Jonas Vermeulen
+ORD-10514,2026-10-12 08:51,Mila Berg,Mobile App,France,LUM-010,1,169.0,Delivered,Mei Tanaka
+ORD-10515,2026-10-12 10:09,Elena Romero,Website,France,LUM-002,1,109.0,Delivered,Mei Tanaka
+ORD-10516,2026-10-12 10:16,Freya Keller,Website,Germany,LUM-009,1,65.0,Delivered,Mei Tanaka
+ORD-10517,2026-10-12 11:36,Mateo Novak,Website,Germany,LUM-001,1,89.0,Delivered,Jonas Vermeulen
+ORD-10518,2026-10-12 11:48,Aisha Vermeer,Website,France,LUM-012,1,49.0,Delivered,Jonas Vermeulen
+ORD-10519,2026-10-12 13:31,Noah Berg,Mobile App,Germany,LUM-009,2,130.0,Delivered,Mei Tanaka
+ORD-10520,2026-10-12 14:07,Aisha Andersen,Website,France,LUM-010,2,338.0,Delivered,Jonas Vermeulen
+ORD-10521,2026-10-12 14:17,Felix Vermeer,Marketplace,Germany,LUM-006,2,64.0,Cancelled,Jonas Vermeulen
+ORD-10522,2026-10-12 16:42,Ines Kowalski,Website,Germany,LUM-009,1,65.0,Delivered,Jonas Vermeulen
+ORD-10523,2026-10-12 18:57,Lena Jansen,Mobile App,France,LUM-001,2,178.0,Delivered,Mei Tanaka
+ORD-10524,2026-10-12 19:34,Ines Laurent,Website,Germany,LUM-002,1,109.0,Delivered,Mei Tanaka
+ORD-10525,2026-10-12 19:45,Theo Laurent,Mobile App,Germany,LUM-017,1,75.0,Delivered,Mei Tanaka
+ORD-10526,2026-10-12 19:56,Oscar Moreau,Website,France,LUM-023,2,190.0,Delivered,Mei Tanaka
+ORD-10527,2026-10-12 20:08,Julia Petit,Mobile App,Spain,LUM-022,1,26.0,Delivered,Mei Tanaka
+ORD-10528,2026-10-12 20:16,Lucas Vermeer,Website,Spain,LUM-013,1,36.0,Delivered,Jonas Vermeulen
+ORD-10529,2026-10-12 20:25,Jonas Fischer,Website,Germany,LUM-007,1,29.0,Delivered,Mei Tanaka
+ORD-10530,2026-10-13 07:38,Lucas Keller,Mobile App,Spain,LUM-023,3,285.0,Delivered,Jonas Vermeulen
+ORD-10531,2026-10-13 08:39,Elena Dubois,Marketplace,Belgium,LUM-018,2,56.0,Delivered,Mei Tanaka
+ORD-10532,2026-10-13 08:49,Hugo Laurent,Website,Belgium,LUM-024,2,110.0,Delivered,Mei Tanaka
+ORD-10533,2026-10-13 10:58,Julia Kowalski,Website,Germany,LUM-008,1,79.0,Delivered,Mei Tanaka
+ORD-10534,2026-10-13 11:27,Omar Dubois,Website,Spain,LUM-004,1,24.0,Delivered,Jonas Vermeulen
+ORD-10535,2026-10-13 11:38,Theo Petit,Website,Netherlands,LUM-007,4,116.0,Delivered,Mei Tanaka
+ORD-10536,2026-10-13 12:42,Mila Vermeer,Marketplace,France,LUM-019,2,298.0,Delivered,Mei Tanaka
+ORD-10537,2026-10-13 13:04,Freya Petit,Mobile App,Germany,LUM-014,4,76.0,Delivered,Mei Tanaka
+ORD-10538,2026-10-13 13:59,Felix Jansen,Mobile App,Belgium,LUM-009,2,130.0,Delivered,Mei Tanaka
+ORD-10539,2026-10-13 14:57,Elena Fischer,Website,Belgium,LUM-010,1,169.0,Cancelled,Jonas Vermeulen
+ORD-10540,2026-10-13 15:48,Lena Fischer,Website,France,LUM-005,1,54.0,Delivered,Jonas Vermeulen
+ORD-10541,2026-10-13 16:03,Lucas Jansen,Marketplace,Spain,LUM-016,2,84.0,Delivered,Mei Tanaka
+ORD-10542,2026-10-13 16:28,Julia Jansen,Website,Netherlands,LUM-016,2,84.0,Delivered,Mei Tanaka
+ORD-10543,2026-10-13 17:16,Elena Keller,Website,Belgium,LUM-010,1,169.0,Delivered,Jonas Vermeulen
+ORD-10544,2026-10-13 20:20,Nadia Bakker,Website,Germany,LUM-007,3,87.0,Delivered,Jonas Vermeulen
+ORD-10545,2026-10-13 20:52,Maya Moreau,Mobile App,Belgium,LUM-004,1,24.0,Delivered,Jonas Vermeulen
+ORD-10546,2026-10-14 07:48,Finn Silva,Website,Netherlands,LUM-013,1,36.0,Cancelled,Mei Tanaka
+ORD-10547,2026-10-14 08:28,Omar Rossi,Marketplace,France,LUM-004,3,72.0,Delivered,Jonas Vermeulen
+ORD-10548,2026-10-14 08:43,Sami Silva,Mobile App,Netherlands,LUM-012,1,49.0,Delivered,Jonas Vermeulen
+ORD-10549,2026-10-14 11:48,Omar Romero,Mobile App,Netherlands,LUM-007,1,29.0,Delivered,Mei Tanaka
+ORD-10550,2026-10-14 12:04,Hugo Novak,Website,Belgium,LUM-021,1,18.0,Delivered,Mei Tanaka
+ORD-10551,2026-10-14 12:57,Maya Weber,Mobile App,Belgium,LUM-010,1,169.0,Delivered,Mei Tanaka
+ORD-10552,2026-10-14 13:25,Mila Lambert,Website,Spain,LUM-010,3,507.0,Delivered,Mei Tanaka
+ORD-10553,2026-10-14 14:02,Elena Petit,Website,Belgium,LUM-012,1,49.0,Delivered,Jonas Vermeulen
+ORD-10554,2026-10-14 14:20,Sami Fischer,Mobile App,Germany,LUM-023,1,95.0,Delivered,Mei Tanaka
+ORD-10555,2026-10-14 15:31,Julia Andersen,Marketplace,France,LUM-006,1,32.0,Delivered,Jonas Vermeulen
+ORD-10556,2026-10-14 18:41,Felix Moreau,Website,Belgium,LUM-012,1,49.0,Delivered,Mei Tanaka
+ORD-10557,2026-10-14 19:02,Felix Berg,Marketplace,Netherlands,LUM-002,1,109.0,Delivered,Mei Tanaka
+ORD-10558,2026-10-14 19:43,Ines Weber,Website,Netherlands,LUM-007,1,29.0,Delivered,Jonas Vermeulen
+ORD-10559,2026-10-14 20:20,Emma Andersen,Website,Netherlands,LUM-001,1,89.0,Delivered,Jonas Vermeulen
+ORD-10560,2026-10-14 20:36,Emma Andersen,Mobile App,Belgium,LUM-019,2,298.0,Delivered,Mei Tanaka
+ORD-10561,2026-10-14 21:22,Ines Laurent,Website,Netherlands,LUM-021,2,36.0,Delivered,Jonas Vermeulen
+ORD-10562,2026-10-14 22:29,Oscar Romero,Website,Germany,LUM-009,2,130.0,Delivered,Jonas Vermeulen
+ORD-10563,2026-10-14 22:37,Nadia Berg,Mobile App,France,LUM-007,2,58.0,Delivered,Mei Tanaka
+ORD-10564,2026-10-15 08:06,Leon Costa,Website,Spain,LUM-016,1,42.0,Delivered,Mei Tanaka
+ORD-10565,2026-10-15 08:33,Lucas Keller,Marketplace,Belgium,LUM-003,2,90.0,Delivered,Mei Tanaka
+ORD-10566,2026-10-15 09:49,Mateo Costa,Mobile App,Netherlands,LUM-010,2,338.0,Delivered,Jonas Vermeulen
+ORD-10567,2026-10-15 10:03,Felix Schulz,Mobile App,Germany,LUM-002,2,218.0,Delivered,Mei Tanaka
+ORD-10568,2026-10-15 10:04,Mila Lambert,Marketplace,Spain,LUM-022,2,52.0,Delivered,Jonas Vermeulen
+ORD-10569,2026-10-15 10:34,Sami Weber,Marketplace,Belgium,LUM-024,2,110.0,Delivered,Jonas Vermeulen
+ORD-10570,2026-10-15 10:51,Mateo Fischer,Mobile App,Germany,LUM-018,2,56.0,Delivered,Mei Tanaka
+ORD-10571,2026-10-15 11:45,Oscar Weber,Website,Germany,LUM-018,3,84.0,Delivered,Mei Tanaka
+ORD-10572,2026-10-15 12:08,Lena Berg,Mobile App,France,LUM-012,1,49.0,Delivered,Jonas Vermeulen
+ORD-10573,2026-10-15 12:34,Finn Silva,Website,Germany,LUM-019,1,149.0,Delivered,Jonas Vermeulen
+ORD-10574,2026-10-15 12:41,Elena Fischer,Website,Spain,LUM-019,2,298.0,Delivered,Jonas Vermeulen
+ORD-10575,2026-10-15 12:45,Sami Vermeer,Website,Belgium,LUM-017,1,75.0,Delivered,Mei Tanaka
+ORD-10576,2026-10-15 13:38,Finn Dubois,Website,France,LUM-004,1,24.0,Delivered,Jonas Vermeulen
+ORD-10577,2026-10-15 14:04,Hugo Silva,Website,Germany,LUM-019,1,149.0,Delivered,Mei Tanaka
+ORD-10578,2026-10-15 14:31,Nadia Costa,Website,Belgium,LUM-001,1,89.0,Delivered,Mei Tanaka
+ORD-10579,2026-10-15 14:44,Omar Schulz,Website,Germany,LUM-007,2,58.0,Delivered,Jonas Vermeulen
+ORD-10580,2026-10-15 18:39,Julia Weber,Website,Netherlands,LUM-022,1,26.0,Delivered,Jonas Vermeulen
+ORD-10581,2026-10-15 21:02,Hugo Novak,Mobile App,Spain,LUM-019,2,298.0,Delivered,Mei Tanaka
+ORD-10582,2026-10-15 21:15,Hugo Schulz,Website,Spain,LUM-010,1,169.0,Delivered,Jonas Vermeulen
+ORD-10583,2026-10-15 21:41,Sami Novak,Mobile App,Spain,LUM-006,1,32.0,Delivered,Mei Tanaka
+ORD-10584,2026-10-16 07:16,Freya Vermeer,Website,Belgium,LUM-011,1,22.0,Delivered,Jonas Vermeulen
+ORD-10585,2026-10-16 07:22,Julia Vermeer,Website,Belgium,LUM-004,4,96.0,Delivered,Mei Tanaka
+ORD-10586,2026-10-16 09:19,Mila Silva,Mobile App,Germany,LUM-019,2,298.0,Delivered,Mei Tanaka
+ORD-10587,2026-10-16 10:12,Lucas Laurent,Mobile App,Germany,LUM-007,1,29.0,Delivered,Jonas Vermeulen
+ORD-10588,2026-10-16 10:40,Felix Rossi,Marketplace,Netherlands,LUM-021,1,18.0,Delivered,Mei Tanaka
+ORD-10589,2026-10-16 13:27,Lucas Rossi,Website,France,LUM-014,1,19.0,Delivered,Mei Tanaka
+ORD-10590,2026-10-16 13:32,Finn Vermeer,Mobile App,Netherlands,LUM-008,2,158.0,Delivered,Mei Tanaka
+ORD-10591,2026-10-16 13:34,Mateo Keller,Marketplace,Spain,LUM-011,1,22.0,Delivered,Mei Tanaka
+ORD-10592,2026-10-16 13:47,Lena Weber,Mobile App,Spain,LUM-004,1,24.0,Delivered,Jonas Vermeulen
+ORD-10593,2026-10-16 15:06,Lena Schulz,Website,Netherlands,LUM-016,1,42.0,Delivered,Jonas Vermeulen
+ORD-10594,2026-10-16 15:20,Oscar Laurent,Website,Belgium,LUM-007,1,29.0,Delivered,Mei Tanaka
+ORD-10595,2026-10-16 16:27,Hugo Petit,Website,Spain,LUM-010,2,338.0,Delivered,Mei Tanaka
+ORD-10596,2026-10-16 16:42,Jonas Rossi,Mobile App,France,LUM-012,1,49.0,Cancelled,Mei Tanaka
+ORD-10597,2026-10-16 18:10,Mila Berg,Website,Netherlands,LUM-020,2,198.0,Delivered,Jonas Vermeulen
+ORD-10598,2026-10-16 20:26,Freya Romero,Website,Germany,LUM-007,1,29.0,Delivered,Jonas Vermeulen
+ORD-10599,2026-10-16 21:04,Julia Moreau,Website,Spain,LUM-019,3,447.0,Delivered,Mei Tanaka
+ORD-10600,2026-10-16 21:37,Felix Silva,Mobile App,Belgium,LUM-008,3,237.0,Delivered,Mei Tanaka
+ORD-10601,2026-10-16 21:49,Ines Novak,Website,Belgium,LUM-023,1,95.0,Delivered,Jonas Vermeulen
+ORD-10602,2026-10-16 21:52,Theo Bakker,Marketplace,France,LUM-001,1,89.0,Delivered,Mei Tanaka
+ORD-10603,2026-10-16 22:53,Freya Fischer,Marketplace,Netherlands,LUM-019,1,149.0,Delivered,Mei Tanaka
+ORD-10604,2026-10-17 07:13,Lena Andersen,Marketplace,Netherlands,LUM-018,2,56.0,Delivered,Jonas Vermeulen
+ORD-10605,2026-10-17 07:57,Clara Vermeer,Mobile App,Belgium,LUM-002,1,109.0,Delivered,Jonas Vermeulen
+ORD-10606,2026-10-17 08:21,Hugo Costa,Website,Germany,LUM-017,1,75.0,Delivered,Mei Tanaka
+ORD-10607,2026-10-17 09:46,Nadia Dubois,Website,France,LUM-018,2,56.0,Delivered,Mei Tanaka
+ORD-10608,2026-10-17 10:04,Aisha Kowalski,Website,Netherlands,LUM-004,1,24.0,Delivered,Jonas Vermeulen
+ORD-10609,2026-10-17 12:12,Mila Moreau,Marketplace,Belgium,LUM-016,3,126.0,Delivered,Mei Tanaka
+ORD-10610,2026-10-17 12:55,Hugo Keller,Marketplace,Belgium,LUM-022,3,78.0,Delivered,Mei Tanaka
+ORD-10611,2026-10-17 14:54,Clara Silva,Marketplace,Spain,LUM-012,1,49.0,Delivered,Jonas Vermeulen
+ORD-10612,2026-10-17 14:59,Theo Moreau,Marketplace,Germany,LUM-019,1,149.0,Delivered,Mei Tanaka
+ORD-10613,2026-10-17 15:11,Mateo Weber,Website,Germany,LUM-009,1,65.0,Delivered,Jonas Vermeulen
+ORD-10614,2026-10-17 15:46,Elena Novak,Website,Spain,LUM-016,1,42.0,Delivered,Jonas Vermeulen
+ORD-10615,2026-10-17 15:49,Zara Petit,Website,France,LUM-012,1,49.0,Delivered,Jonas Vermeulen
+ORD-10616,2026-10-17 16:15,Julia Dubois,Marketplace,France,LUM-005,1,54.0,Delivered,Mei Tanaka
+ORD-10617,2026-10-17 16:55,Lucas Moreau,Website,Germany,LUM-019,2,298.0,Delivered,Mei Tanaka
+ORD-10618,2026-10-17 17:52,Theo Costa,Website,France,LUM-019,1,149.0,Delivered,Mei Tanaka
+ORD-10619,2026-10-17 18:09,Maya Laurent,Mobile App,Germany,LUM-016,1,42.0,Delivered,Mei Tanaka
+ORD-10620,2026-10-17 19:15,Clara Laurent,Website,Netherlands,LUM-004,1,24.0,Delivered,Mei Tanaka
+ORD-10621,2026-10-17 19:40,Leon Costa,Mobile App,France,LUM-008,1,79.0,Delivered,Mei Tanaka
+ORD-10622,2026-10-17 20:25,Felix Weber,Website,Netherlands,LUM-016,1,42.0,Delivered,Jonas Vermeulen
+ORD-10623,2026-10-18 07:07,Emma Laurent,Marketplace,Spain,LUM-011,2,44.0,Delivered,Mei Tanaka
+ORD-10624,2026-10-18 07:32,Leon Keller,Mobile App,Spain,LUM-004,1,24.0,Delivered,Jonas Vermeulen
+ORD-10625,2026-10-18 08:38,Ines Silva,Mobile App,Belgium,LUM-002,2,218.0,Delivered,Jonas Vermeulen
+ORD-10626,2026-10-18 08:46,Finn Costa,Marketplace,France,LUM-002,4,436.0,Cancelled,Mei Tanaka
+ORD-10627,2026-10-18 09:37,Felix Andersen,Mobile App,France,LUM-010,1,169.0,Delivered,Mei Tanaka
+ORD-10628,2026-10-18 10:27,Hugo Vermeer,Website,Netherlands,LUM-001,2,178.0,Delivered,Jonas Vermeulen
+ORD-10629,2026-10-18 15:16,Maya Silva,Website,Belgium,LUM-018,1,28.0,Delivered,Mei Tanaka
+ORD-10630,2026-10-18 17:06,Ines Costa,Website,Germany,LUM-002,1,109.0,Delivered,Jonas Vermeulen
+ORD-10631,2026-10-18 18:21,Finn Jansen,Mobile App,Netherlands,LUM-017,2,150.0,Delivered,Jonas Vermeulen
+ORD-10632,2026-10-18 18:55,Finn Berg,Mobile App,Belgium,LUM-021,4,72.0,Delivered,Jonas Vermeulen
+ORD-10633,2026-10-18 19:26,Nadia Laurent,Website,Belgium,LUM-011,3,66.0,Delivered,Mei Tanaka
+ORD-10634,2026-10-18 19:43,Nadia Petit,Mobile App,Netherlands,LUM-002,4,436.0,Delivered,Mei Tanaka
+ORD-10635,2026-10-18 20:07,Emma Andersen,Website,Belgium,LUM-006,1,32.0,Delivered,Jonas Vermeulen
+ORD-10636,2026-10-18 20:37,Oscar Jansen,Mobile App,Germany,LUM-010,1,169.0,Delivered,Mei Tanaka
+ORD-10637,2026-10-18 20:54,Elena Vermeer,Mobile App,Spain,LUM-017,1,75.0,Delivered,Jonas Vermeulen
+ORD-10638,2026-10-18 22:07,Felix Rossi,Marketplace,Spain,LUM-011,2,44.0,Delivered,Jonas Vermeulen
+ORD-10639,2026-10-19 09:16,Emma Schulz,Marketplace,France,LUM-016,1,42.0,Delivered,Mei Tanaka
+ORD-10640,2026-10-19 09:39,Omar Jansen,Website,France,LUM-006,1,32.0,Delivered,Mei Tanaka
+ORD-10641,2026-10-19 10:08,Hugo Novak,Website,Netherlands,LUM-004,2,48.0,Delivered,Mei Tanaka
+ORD-10642,2026-10-19 10:27,Hugo Novak,Mobile App,Germany,LUM-013,2,72.0,Delivered,Jonas Vermeulen
+ORD-10643,2026-10-19 10:29,Mila Keller,Mobile App,Netherlands,LUM-023,4,380.0,Delivered,Jonas Vermeulen
+ORD-10644,2026-10-19 11:36,Hugo Rossi,Mobile App,Germany,LUM-005,1,54.0,Delivered,Jonas Vermeulen
+ORD-10645,2026-10-19 12:57,Lena Costa,Mobile App,France,LUM-018,2,56.0,Delivered,Jonas Vermeulen
+ORD-10646,2026-10-19 13:24,Omar Romero,Mobile App,Netherlands,LUM-006,4,128.0,Delivered,Mei Tanaka
+ORD-10647,2026-10-19 14:42,Elena Petit,Website,Spain,LUM-007,1,29.0,Delivered,Mei Tanaka
+ORD-10648,2026-10-19 15:22,Jonas Dubois,Marketplace,Germany,LUM-009,2,130.0,Delivered,Jonas Vermeulen
+ORD-10649,2026-10-19 16:55,Theo Schulz,Website,Spain,LUM-021,1,18.0,Delivered,Mei Tanaka
+ORD-10650,2026-10-19 17:48,Lucas Dubois,Website,Germany,LUM-012,2,98.0,Delivered,Mei Tanaka
+ORD-10651,2026-10-19 17:50,Freya Silva,Marketplace,Belgium,LUM-010,3,507.0,Delivered,Mei Tanaka
+ORD-10652,2026-10-19 19:51,Ines Bakker,Website,Belgium,LUM-006,1,32.0,Delivered,Mei Tanaka
+ORD-10653,2026-10-19 20:07,Lucas Rossi,Mobile App,Germany,LUM-021,1,18.0,Delivered,Mei Tanaka
+ORD-10654,2026-10-19 20:56,Lena Andersen,Website,France,LUM-016,1,42.0,Delivered,Jonas Vermeulen
+ORD-10655,2026-10-19 22:20,Ines Moreau,Website,Germany,LUM-002,2,218.0,Delivered,Jonas Vermeulen
+ORD-10656,2026-10-19 22:36,Freya Weber,Marketplace,Belgium,LUM-019,3,447.0,Delivered,Mei Tanaka
+ORD-10657,2026-10-20 07:36,Lucas Schulz,Mobile App,Germany,LUM-006,1,32.0,Delivered,Mei Tanaka
+ORD-10658,2026-10-20 08:01,Felix Fischer,Website,Germany,LUM-001,1,89.0,Delivered,Mei Tanaka
+ORD-10659,2026-10-20 08:54,Nadia Romero,Mobile App,Netherlands,LUM-015,2,68.0,Delivered,Mei Tanaka
+ORD-10660,2026-10-20 11:04,Leon Dubois,Marketplace,Belgium,LUM-009,1,65.0,Delivered,Jonas Vermeulen
+ORD-10661,2026-10-20 11:25,Lucas Dubois,Website,Belgium,LUM-020,1,99.0,Delivered,Mei Tanaka
+ORD-10662,2026-10-20 13:32,Oscar Schulz,Website,Spain,LUM-007,2,58.0,Shipped,Mei Tanaka
+ORD-10663,2026-10-20 15:09,Zara Schulz,Website,Belgium,LUM-019,1,149.0,Cancelled,Jonas Vermeulen
+ORD-10664,2026-10-20 15:11,Mateo Lambert,Mobile App,Germany,LUM-011,1,22.0,Delivered,Mei Tanaka
+ORD-10665,2026-10-20 15:58,Sami Petit,Mobile App,Netherlands,LUM-001,1,89.0,Delivered,Mei Tanaka
+ORD-10666,2026-10-20 16:09,Leon Jansen,Marketplace,Germany,LUM-022,2,52.0,Delivered,Jonas Vermeulen
+ORD-10667,2026-10-20 16:50,Zara Bakker,Website,France,LUM-009,1,65.0,Delivered,Mei Tanaka
+ORD-10668,2026-10-20 18:30,Julia Novak,Mobile App,Spain,LUM-004,2,48.0,Delivered,Jonas Vermeulen
+ORD-10669,2026-10-20 18:52,Theo Vermeer,Website,Germany,LUM-023,3,285.0,Delivered,Jonas Vermeulen
+ORD-10670,2026-10-20 20:47,Emma Dubois,Website,Belgium,LUM-004,2,48.0,Delivered,Mei Tanaka
+ORD-10671,2026-10-20 21:34,Noah Bakker,Website,Spain,LUM-008,2,158.0,Cancelled,Mei Tanaka
+ORD-10672,2026-10-20 22:40,Theo Schulz,Marketplace,France,LUM-013,1,36.0,Delivered,Mei Tanaka
+ORD-10673,2026-10-21 08:52,Sami Bakker,Mobile App,France,LUM-001,1,89.0,Delivered,Mei Tanaka
+ORD-10674,2026-10-21 10:23,Zara Lambert,Marketplace,Germany,LUM-007,1,29.0,Delivered,Jonas Vermeulen
+ORD-10675,2026-10-21 10:43,Zara Weber,Mobile App,France,LUM-005,2,108.0,Delivered,Jonas Vermeulen
+ORD-10676,2026-10-21 12:45,Felix Fischer,Marketplace,Netherlands,LUM-005,2,108.0,Delivered,Mei Tanaka
+ORD-10677,2026-10-21 13:05,Aisha Schulz,Website,Belgium,LUM-009,3,195.0,Delivered,Jonas Vermeulen
+ORD-10678,2026-10-21 15:05,Jonas Silva,Marketplace,Netherlands,LUM-009,1,65.0,Delivered,Mei Tanaka
+ORD-10679,2026-10-21 15:29,Theo Petit,Website,Spain,LUM-013,1,36.0,Delivered,Jonas Vermeulen
+ORD-10680,2026-10-21 16:36,Ines Vermeer,Website,Spain,LUM-011,3,66.0,Delivered,Mei Tanaka
+ORD-10681,2026-10-21 16:46,Nadia Keller,Mobile App,France,LUM-011,1,22.0,Delivered,Jonas Vermeulen
+ORD-10682,2026-10-21 17:48,Lena Kowalski,Website,Netherlands,LUM-016,3,126.0,Delivered,Jonas Vermeulen
+ORD-10683,2026-10-21 18:08,Clara Keller,Website,Belgium,LUM-010,2,338.0,Cancelled,Mei Tanaka
+ORD-10684,2026-10-21 18:38,Ines Weber,Marketplace,Belgium,LUM-009,1,65.0,Delivered,Jonas Vermeulen
+ORD-10685,2026-10-21 20:52,Lucas Silva,Mobile App,Belgium,LUM-013,1,36.0,Delivered,Jonas Vermeulen
+ORD-10686,2026-10-21 21:05,Lena Schulz,Website,Spain,LUM-004,1,24.0,Cancelled,Jonas Vermeulen
+ORD-10687,2026-10-21 21:21,Emma Bakker,Mobile App,Netherlands,LUM-018,2,56.0,Delivered,Jonas Vermeulen
+ORD-10688,2026-10-21 22:21,Elena Rossi,Website,France,LUM-006,1,32.0,Shipped,Mei Tanaka
+ORD-10689,2026-10-22 07:29,Hugo Berg,Website,Belgium,LUM-015,3,102.0,Delivered,Mei Tanaka
+ORD-10690,2026-10-22 08:36,Zara Andersen,Website,France,LUM-004,1,24.0,Delivered,Mei Tanaka
+ORD-10691,2026-10-22 08:52,Clara Moreau,Marketplace,Germany,LUM-018,2,56.0,Delivered,Jonas Vermeulen
+ORD-10692,2026-10-22 09:05,Oscar Moreau,Marketplace,Netherlands,LUM-002,3,327.0,Delivered,Mei Tanaka
+ORD-10693,2026-10-22 09:48,Aisha Dubois,Mobile App,Spain,LUM-003,2,90.0,Delivered,Jonas Vermeulen
+ORD-10694,2026-10-22 10:03,Finn Keller,Mobile App,France,LUM-016,3,126.0,Delivered,Mei Tanaka
+ORD-10695,2026-10-22 12:23,Omar Novak,Mobile App,Spain,LUM-009,2,130.0,Delivered,Jonas Vermeulen
+ORD-10696,2026-10-22 13:24,Felix Rossi,Website,Netherlands,LUM-021,2,36.0,Delivered,Jonas Vermeulen
+ORD-10697,2026-10-22 13:58,Clara Laurent,Website,Spain,LUM-006,1,32.0,Delivered,Mei Tanaka
+ORD-10698,2026-10-22 14:52,Finn Romero,Website,Germany,LUM-024,1,55.0,Delivered,Jonas Vermeulen
+ORD-10699,2026-10-22 15:59,Oscar Romero,Marketplace,France,LUM-016,3,126.0,Delivered,Jonas Vermeulen
+ORD-10700,2026-10-22 17:31,Mila Romero,Mobile App,France,LUM-016,1,42.0,Delivered,Mei Tanaka
+ORD-10701,2026-10-22 18:31,Omar Romero,Website,Spain,LUM-009,2,130.0,Delivered,Mei Tanaka
+ORD-10702,2026-10-22 19:01,Julia Keller,Mobile App,France,LUM-008,4,316.0,Delivered,Jonas Vermeulen
+ORD-10703,2026-10-22 19:55,Clara Laurent,Mobile App,Germany,LUM-002,1,109.0,Delivered,Jonas Vermeulen
+ORD-10704,2026-10-22 20:00,Nadia Romero,Website,Germany,LUM-019,2,298.0,Delivered,Mei Tanaka
+ORD-10705,2026-10-22 20:54,Hugo Romero,Website,Netherlands,LUM-007,1,29.0,Delivered,Mei Tanaka
+ORD-10706,2026-10-22 21:22,Finn Kowalski,Website,Germany,LUM-015,1,34.0,Delivered,Jonas Vermeulen
+ORD-10707,2026-10-23 07:54,Mila Rossi,Mobile App,France,LUM-014,3,57.0,Delivered,Mei Tanaka
+ORD-10708,2026-10-23 08:14,Hugo Romero,Mobile App,Spain,LUM-016,1,42.0,Delivered,Mei Tanaka
+ORD-10709,2026-10-23 08:44,Lena Novak,Marketplace,Belgium,LUM-023,2,190.0,Delivered,Jonas Vermeulen
+ORD-10710,2026-10-23 08:48,Ines Laurent,Marketplace,Netherlands,LUM-019,2,298.0,Delivered,Jonas Vermeulen
+ORD-10711,2026-10-23 09:06,Elena Vermeer,Mobile App,Germany,LUM-004,1,24.0,Delivered,Mei Tanaka
+ORD-10712,2026-10-23 09:48,Lucas Moreau,Website,France,LUM-011,1,22.0,Delivered,Jonas Vermeulen
+ORD-10713,2026-10-23 09:59,Mila Costa,Website,Spain,LUM-016,1,42.0,Delivered,Mei Tanaka
+ORD-10714,2026-10-23 12:33,Julia Keller,Mobile App,Netherlands,LUM-003,1,45.0,Delivered,Jonas Vermeulen
+ORD-10715,2026-10-23 13:50,Freya Schulz,Mobile App,Netherlands,LUM-007,4,116.0,Delivered,Mei Tanaka
+ORD-10716,2026-10-23 14:44,Lena Kowalski,Website,France,LUM-024,2,110.0,Shipped,Jonas Vermeulen
+ORD-10717,2026-10-23 15:43,Clara Petit,Website,Spain,LUM-022,1,26.0,Shipped,Jonas Vermeulen
+ORD-10718,2026-10-23 17:36,Theo Laurent,Website,Germany,LUM-011,1,22.0,Delivered,Mei Tanaka
+ORD-10719,2026-10-23 17:52,Julia Weber,Website,Spain,LUM-005,1,54.0,Delivered,Jonas Vermeulen
+ORD-10720,2026-10-23 19:41,Noah Bakker,Website,Netherlands,LUM-009,1,65.0,Delivered,Jonas Vermeulen
+ORD-10721,2026-10-23 20:20,Nadia Andersen,Mobile App,Belgium,LUM-020,1,99.0,Delivered,Mei Tanaka
+ORD-10722,2026-10-23 20:27,Clara Silva,Mobile App,Belgium,LUM-012,2,98.0,Delivered,Mei Tanaka
+ORD-10723,2026-10-23 20:46,Hugo Schulz,Marketplace,Belgium,LUM-003,1,45.0,Delivered,Jonas Vermeulen
+ORD-10724,2026-10-23 21:58,Leon Petit,Website,Spain,LUM-007,1,29.0,Delivered,Mei Tanaka
+ORD-10725,2026-10-23 22:11,Zara Bakker,Website,France,LUM-011,1,22.0,Delivered,Mei Tanaka
+ORD-10726,2026-10-24 08:00,Hugo Dubois,Mobile App,Germany,LUM-019,2,298.0,Delivered,Mei Tanaka
+ORD-10727,2026-10-24 08:06,Clara Fischer,Website,Belgium,LUM-012,1,49.0,Delivered,Mei Tanaka
+ORD-10728,2026-10-24 08:34,Emma Schulz,Website,Belgium,LUM-018,1,28.0,Delivered,Mei Tanaka
+ORD-10729,2026-10-24 08:59,Lucas Andersen,Website,Spain,LUM-021,2,36.0,Shipped,Jonas Vermeulen
+ORD-10730,2026-10-24 09:40,Leon Silva,Mobile App,France,LUM-021,2,36.0,Delivered,Mei Tanaka
+ORD-10731,2026-10-24 11:01,Finn Kowalski,Marketplace,Belgium,LUM-012,2,98.0,Delivered,Jonas Vermeulen
+ORD-10732,2026-10-24 11:08,Omar Keller,Mobile App,Netherlands,LUM-004,1,24.0,Delivered,Jonas Vermeulen
+ORD-10733,2026-10-24 11:50,Lucas Novak,Website,France,LUM-009,1,65.0,Delivered,Jonas Vermeulen
+ORD-10734,2026-10-24 12:15,Lena Bakker,Marketplace,France,LUM-011,1,22.0,Shipped,Mei Tanaka
+ORD-10735,2026-10-24 12:20,Emma Weber,Marketplace,France,LUM-010,2,338.0,Delivered,Jonas Vermeulen
+ORD-10736,2026-10-24 15:56,Maya Laurent,Website,Netherlands,LUM-001,2,178.0,Delivered,Jonas Vermeulen
+ORD-10737,2026-10-24 18:15,Jonas Vermeer,Mobile App,Netherlands,LUM-022,2,52.0,Cancelled,Jonas Vermeulen
+ORD-10738,2026-10-24 19:06,Julia Weber,Website,Belgium,LUM-005,3,162.0,Delivered,Mei Tanaka
+ORD-10739,2026-10-24 19:21,Elena Fischer,Website,Netherlands,LUM-021,1,18.0,Delivered,Jonas Vermeulen
+ORD-10740,2026-10-24 20:24,Finn Schulz,Website,Netherlands,LUM-009,1,65.0,Delivered,Mei Tanaka
+ORD-10741,2026-10-24 21:11,Lena Vermeer,Website,Spain,LUM-024,4,220.0,Shipped,Mei Tanaka
+ORD-10742,2026-10-24 21:15,Omar Lambert,Marketplace,Belgium,LUM-024,1,55.0,Delivered,Jonas Vermeulen
+ORD-10743,2026-10-24 21:28,Elena Vermeer,Website,Netherlands,LUM-010,2,338.0,Delivered,Mei Tanaka
+ORD-10744,2026-10-24 21:43,Felix Weber,Website,Netherlands,LUM-011,3,66.0,Delivered,Mei Tanaka
+ORD-10745,2026-10-24 22:41,Leon Lambert,Marketplace,Germany,LUM-018,3,84.0,Delivered,Jonas Vermeulen
+ORD-10746,2026-10-24 22:53,Clara Fischer,Website,Netherlands,LUM-016,2,84.0,Delivered,Mei Tanaka
+ORD-10747,2026-10-25 09:13,Noah Andersen,Website,Netherlands,LUM-019,1,149.0,Delivered,Jonas Vermeulen
+ORD-10748,2026-10-25 09:19,Omar Kowalski,Website,Netherlands,LUM-006,2,64.0,Delivered,Jonas Vermeulen
+ORD-10749,2026-10-25 09:26,Felix Vermeer,Website,Germany,LUM-009,2,130.0,Shipped,Jonas Vermeulen
+ORD-10750,2026-10-25 09:47,Zara Keller,Website,France,LUM-005,1,54.0,Shipped,Jonas Vermeulen
+ORD-10751,2026-10-25 11:52,Sami Vermeer,Website,Netherlands,LUM-019,4,596.0,Delivered,Jonas Vermeulen
+ORD-10752,2026-10-25 11:58,Freya Romero,Mobile App,Netherlands,LUM-011,2,44.0,Delivered,Jonas Vermeulen
+ORD-10753,2026-10-25 12:34,Freya Kowalski,Mobile App,Spain,LUM-007,4,116.0,Shipped,Mei Tanaka
+ORD-10754,2026-10-25 13:48,Clara Petit,Website,Spain,LUM-017,1,75.0,Shipped,Jonas Vermeulen
+ORD-10755,2026-10-25 14:48,Freya Weber,Mobile App,France,LUM-010,1,169.0,Shipped,Jonas Vermeulen
+ORD-10756,2026-10-25 16:59,Leon Jansen,Mobile App,Spain,LUM-002,1,109.0,Shipped,Mei Tanaka
+ORD-10757,2026-10-25 17:04,Lena Andersen,Mobile App,France,LUM-002,1,109.0,Shipped,Mei Tanaka
+ORD-10758,2026-10-25 17:21,Omar Berg,Mobile App,France,LUM-021,1,18.0,Delivered,Mei Tanaka
+ORD-10759,2026-10-25 17:31,Oscar Schulz,Website,Netherlands,LUM-008,4,316.0,Delivered,Mei Tanaka
+ORD-10760,2026-10-25 18:29,Hugo Vermeer,Website,Belgium,LUM-016,1,42.0,Delivered,Mei Tanaka
+ORD-10761,2026-10-25 18:59,Theo Vermeer,Mobile App,Spain,LUM-002,1,109.0,Shipped,Mei Tanaka
+ORD-10762,2026-10-25 20:07,Nadia Jansen,Mobile App,France,LUM-007,2,58.0,Delivered,Mei Tanaka
+ORD-10763,2026-10-25 20:08,Lucas Andersen,Mobile App,Netherlands,LUM-003,3,135.0,Delivered,Jonas Vermeulen
+ORD-10764,2026-10-25 20:37,Maya Weber,Marketplace,Belgium,LUM-010,1,169.0,Delivered,Jonas Vermeulen
+ORD-10765,2026-10-25 21:24,Noah Silva,Website,Netherlands,LUM-019,3,447.0,Delivered,Mei Tanaka
+ORD-10766,2026-10-25 22:24,Leon Berg,Mobile App,Netherlands,LUM-006,2,64.0,Delivered,Mei Tanaka
+ORD-10767,2026-10-25 22:59,Zara Rossi,Marketplace,Spain,LUM-007,2,58.0,Delivered,Mei Tanaka
+ORD-10768,2026-10-26 08:24,Zara Weber,Website,France,LUM-022,2,52.0,Shipped,Jonas Vermeulen
+ORD-10769,2026-10-26 08:25,Nadia Laurent,Marketplace,France,LUM-015,2,68.0,Shipped,Mei Tanaka
+ORD-10770,2026-10-26 08:40,Mila Rossi,Website,France,LUM-020,3,297.0,Shipped,Mei Tanaka
+ORD-10771,2026-10-26 09:01,Theo Novak,Website,Netherlands,LUM-002,2,218.0,Shipped,Jonas Vermeulen
+ORD-10772,2026-10-26 09:11,Omar Rossi,Website,France,LUM-006,1,32.0,Shipped,Jonas Vermeulen
+ORD-10773,2026-10-26 09:51,Aisha Kowalski,Website,Spain,LUM-004,1,24.0,Shipped,Jonas Vermeulen
+ORD-10774,2026-10-26 12:15,Emma Vermeer,Marketplace,Spain,LUM-022,2,52.0,Shipped,Mei Tanaka
+ORD-10775,2026-10-26 12:50,Sami Dubois,Website,France,LUM-007,2,58.0,Shipped,Mei Tanaka
+ORD-10776,2026-10-26 15:09,Julia Bakker,Website,Spain,LUM-010,2,338.0,Shipped,Mei Tanaka
+ORD-10777,2026-10-26 17:28,Oscar Moreau,Mobile App,Netherlands,LUM-014,3,57.0,Shipped,Jonas Vermeulen
+ORD-10778,2026-10-26 19:01,Ines Lambert,Website,Belgium,LUM-019,1,149.0,Shipped,Jonas Vermeulen
+ORD-10779,2026-10-26 19:27,Lucas Costa,Mobile App,Belgium,LUM-021,1,18.0,Shipped,Mei Tanaka
+ORD-10780,2026-10-26 19:32,Finn Schulz,Marketplace,France,LUM-016,1,42.0,Shipped,Jonas Vermeulen
+ORD-10781,2026-10-26 19:47,Clara Berg,Marketplace,Spain,LUM-019,3,447.0,Shipped,Mei Tanaka
+ORD-10782,2026-10-26 19:55,Theo Weber,Website,Netherlands,LUM-022,1,26.0,Delivered,Mei Tanaka
+ORD-10783,2026-10-26 20:43,Freya Novak,Website,France,LUM-012,1,49.0,Shipped,Mei Tanaka
+ORD-10784,2026-10-26 21:09,Elena Dubois,Website,Germany,LUM-012,1,49.0,Shipped,Jonas Vermeulen
+ORD-10785,2026-10-26 21:19,Hugo Andersen,Website,France,LUM-006,1,32.0,Shipped,Jonas Vermeulen
+ORD-10786,2026-10-26 21:26,Jonas Vermeer,Website,Germany,LUM-005,2,108.0,Shipped,Mei Tanaka
+ORD-10787,2026-10-27 07:41,Clara Rossi,Website,Spain,LUM-001,3,267.0,Shipped,Mei Tanaka
+ORD-10788,2026-10-27 08:15,Hugo Jansen,Website,Netherlands,LUM-006,1,32.0,Shipped,Jonas Vermeulen
+ORD-10789,2026-10-27 09:19,Emma Lambert,Website,Netherlands,LUM-010,1,169.0,Shipped,Jonas Vermeulen
+ORD-10790,2026-10-27 09:28,Theo Romero,Website,Netherlands,LUM-012,1,49.0,Shipped,Jonas Vermeulen
+ORD-10791,2026-10-27 10:28,Jonas Silva,Website,Netherlands,LUM-022,1,26.0,Shipped,Mei Tanaka
+ORD-10792,2026-10-27 10:30,Oscar Kowalski,Website,Netherlands,LUM-015,1,34.0,Shipped,Mei Tanaka
+ORD-10793,2026-10-27 10:51,Lucas Lambert,Mobile App,France,LUM-011,3,66.0,Shipped,Mei Tanaka
+ORD-10794,2026-10-27 11:39,Hugo Fischer,Mobile App,France,LUM-016,1,42.0,Shipped,Mei Tanaka
+ORD-10795,2026-10-27 12:52,Finn Novak,Mobile App,Netherlands,LUM-002,1,109.0,Shipped,Mei Tanaka
+ORD-10796,2026-10-27 13:30,Aisha Lambert,Website,Netherlands,LUM-021,1,18.0,Shipped,Mei Tanaka
+ORD-10797,2026-10-27 14:22,Lena Laurent,Marketplace,Spain,LUM-008,2,158.0,Shipped,Mei Tanaka
+ORD-10798,2026-10-27 14:34,Clara Moreau,Website,Belgium,LUM-020,1,99.0,Shipped,Mei Tanaka
+ORD-10799,2026-10-27 15:03,Theo Rossi,Website,Spain,LUM-016,1,42.0,Shipped,Mei Tanaka
+ORD-10800,2026-10-27 16:19,Oscar Petit,Website,Spain,LUM-010,1,169.0,Shipped,Mei Tanaka
+ORD-10801,2026-10-27 19:23,Jonas Laurent,Marketplace,Netherlands,LUM-012,1,49.0,Shipped,Jonas Vermeulen
+ORD-10802,2026-10-27 20:20,Freya Lambert,Marketplace,Netherlands,LUM-011,1,22.0,Shipped,Jonas Vermeulen
+ORD-10803,2026-10-27 20:54,Aisha Laurent,Website,Spain,LUM-011,2,44.0,Shipped,Mei Tanaka
+ORD-10804,2026-10-27 21:11,Hugo Petit,Mobile App,Spain,LUM-013,2,72.0,Shipped,Jonas Vermeulen
+ORD-10805,2026-10-27 21:29,Omar Weber,Website,Netherlands,LUM-024,1,55.0,Shipped,Mei Tanaka
+ORD-10806,2026-10-27 22:17,Nadia Silva,Website,Netherlands,LUM-011,1,22.0,Shipped,Mei Tanaka
+ORD-10807,2026-10-27 22:19,Finn Novak,Website,Spain,LUM-012,4,196.0,Shipped,Jonas Vermeulen
+ORD-10808,2026-10-27 22:33,Theo Moreau,Website,Spain,LUM-012,2,98.0,Shipped,Jonas Vermeulen
+ORD-10809,2026-10-28 07:02,Omar Moreau,Website,Germany,LUM-010,3,507.0,Shipped,Jonas Vermeulen
+ORD-10810,2026-10-28 07:11,Freya Silva,Website,Belgium,LUM-022,1,26.0,Shipped,Mei Tanaka
+ORD-10811,2026-10-28 07:26,Clara Jansen,Website,Spain,LUM-006,1,32.0,Shipped,Mei Tanaka
+ORD-10812,2026-10-28 07:39,Hugo Silva,Website,France,LUM-016,2,84.0,Shipped,Jonas Vermeulen
+ORD-10813,2026-10-28 08:05,Freya Moreau,Mobile App,France,LUM-019,1,149.0,Shipped,Mei Tanaka
+ORD-10814,2026-10-28 08:05,Felix Moreau,Website,Germany,LUM-021,1,18.0,Shipped,Jonas Vermeulen
+ORD-10815,2026-10-28 09:12,Aisha Novak,Marketplace,Germany,LUM-016,1,42.0,Shipped,Jonas Vermeulen
+ORD-10816,2026-10-28 09:35,Clara Dubois,Marketplace,France,LUM-019,3,447.0,Shipped,Mei Tanaka
+ORD-10817,2026-10-28 13:58,Zara Vermeer,Mobile App,Germany,LUM-021,2,36.0,Shipped,Mei Tanaka
+ORD-10818,2026-10-28 15:48,Nadia Keller,Website,Spain,LUM-024,1,55.0,Processing,Jonas Vermeulen
+ORD-10819,2026-10-28 16:02,Finn Rossi,Marketplace,Spain,LUM-017,2,150.0,Shipped,Jonas Vermeulen
+ORD-10820,2026-10-28 16:08,Hugo Weber,Marketplace,Spain,LUM-005,1,54.0,Shipped,Jonas Vermeulen
+ORD-10821,2026-10-28 16:33,Zara Kowalski,Mobile App,France,LUM-006,3,96.0,Shipped,Jonas Vermeulen
+ORD-10822,2026-10-28 17:12,Lucas Schulz,Website,France,LUM-004,1,24.0,Shipped,Jonas Vermeulen
+ORD-10823,2026-10-28 17:17,Sami Silva,Website,Netherlands,LUM-011,1,22.0,Shipped,Mei Tanaka
+ORD-10824,2026-10-28 18:58,Finn Bakker,Website,Germany,LUM-020,1,99.0,Shipped,Mei Tanaka
+ORD-10825,2026-10-28 19:46,Jonas Bakker,Mobile App,Netherlands,LUM-011,2,44.0,Shipped,Mei Tanaka
+ORD-10826,2026-10-28 19:51,Finn Kowalski,Website,Spain,LUM-020,1,99.0,Shipped,Jonas Vermeulen
+ORD-10827,2026-10-28 20:13,Lena Berg,Website,Spain,LUM-013,1,36.0,Shipped,Jonas Vermeulen
+ORD-10828,2026-10-28 20:36,Felix Dubois,Website,Netherlands,LUM-004,1,24.0,Shipped,Jonas Vermeulen
+ORD-10829,2026-10-28 21:06,Theo Dubois,Mobile App,Germany,LUM-018,3,84.0,Shipped,Jonas Vermeulen
+ORD-10830,2026-10-29 09:15,Julia Schulz,Mobile App,Germany,LUM-017,2,150.0,Processing,Jonas Vermeulen
+ORD-10831,2026-10-29 09:17,Felix Fischer,Website,Netherlands,LUM-004,1,24.0,Processing,Jonas Vermeulen
+ORD-10832,2026-10-29 09:36,Lena Moreau,Website,Netherlands,LUM-024,1,55.0,Pending,Mei Tanaka
+ORD-10833,2026-10-29 10:21,Julia Berg,Mobile App,Netherlands,LUM-022,1,26.0,Processing,Mei Tanaka
+ORD-10834,2026-10-29 10:31,Oscar Costa,Website,France,LUM-014,1,19.0,Pending,Jonas Vermeulen
+ORD-10835,2026-10-29 10:36,Lucas Andersen,Mobile App,Belgium,LUM-018,1,28.0,Processing,Mei Tanaka
+ORD-10836,2026-10-29 10:50,Omar Vermeer,Website,Belgium,LUM-004,2,48.0,Pending,Mei Tanaka
+ORD-10837,2026-10-29 11:38,Lena Weber,Website,Germany,LUM-004,2,48.0,Pending,Jonas Vermeulen
+ORD-10838,2026-10-29 12:08,Elena Keller,Website,Germany,LUM-004,1,24.0,Pending,Jonas Vermeulen
+ORD-10839,2026-10-29 12:36,Theo Bakker,Mobile App,Spain,LUM-016,2,84.0,Pending,Mei Tanaka
+ORD-10840,2026-10-29 12:40,Sami Romero,Website,Belgium,LUM-010,2,338.0,Pending,Mei Tanaka
+ORD-10841,2026-10-29 14:57,Nadia Lambert,Marketplace,Spain,LUM-016,1,42.0,Processing,Jonas Vermeulen
+ORD-10842,2026-10-29 15:30,Zara Dubois,Mobile App,Germany,LUM-012,2,98.0,Processing,Jonas Vermeulen
+ORD-10843,2026-10-29 17:19,Nadia Schulz,Marketplace,France,LUM-007,1,29.0,Processing,Mei Tanaka
+ORD-10844,2026-10-29 17:47,Noah Rossi,Marketplace,Spain,LUM-006,4,128.0,Pending,Mei Tanaka
+ORD-10845,2026-10-29 18:51,Aisha Lambert,Website,Germany,LUM-024,1,55.0,Pending,Mei Tanaka
+ORD-10846,2026-10-29 18:59,Lucas Bakker,Marketplace,Belgium,LUM-016,1,42.0,Processing,Jonas Vermeulen
+ORD-10847,2026-10-29 19:40,Hugo Rossi,Website,Belgium,LUM-001,1,89.0,Pending,Jonas Vermeulen
+ORD-10848,2026-10-29 19:46,Mateo Moreau,Marketplace,Spain,LUM-012,1,49.0,Pending,Mei Tanaka
+ORD-10849,2026-10-29 20:25,Freya Romero,Website,Belgium,LUM-017,2,150.0,Processing,Jonas Vermeulen
+ORD-10850,2026-10-29 22:00,Clara Laurent,Marketplace,France,LUM-004,2,48.0,Pending,Mei Tanaka
+ORD-10851,2026-10-30 00:41,Finn Andersen,Website,France,LUM-018,2,56.0,Pending,Mei Tanaka
+ORD-10852,2026-10-30 01:55,Oscar Andersen,Mobile App,Belgium,LUM-019,1,149.0,Processing,Mei Tanaka
+ORD-10853,2026-10-30 02:43,Felix Dubois,Marketplace,Belgium,LUM-006,1,32.0,Pending,Jonas Vermeulen
+ORD-10854,2026-10-30 03:17,Hugo Keller,Website,Spain,LUM-009,1,65.0,Pending,Mei Tanaka
+ORD-10855,2026-10-30 03:27,Oscar Berg,Mobile App,Belgium,LUM-003,2,90.0,Processing,Jonas Vermeulen
+ORD-10856,2026-10-30 03:27,Felix Rossi,Mobile App,Belgium,LUM-011,1,22.0,Processing,Jonas Vermeulen
+ORD-10857,2026-10-30 03:42,Zara Schulz,Website,France,LUM-009,2,130.0,Processing,Jonas Vermeulen
+ORD-10858,2026-10-30 03:45,Mila Keller,Marketplace,Germany,LUM-010,1,169.0,Processing,Jonas Vermeulen
+ORD-10859,2026-10-30 04:17,Freya Keller,Mobile App,Belgium,LUM-016,3,126.0,Processing,Mei Tanaka
+ORD-10860,2026-10-30 04:47,Freya Kowalski,Website,Spain,LUM-002,2,218.0,Processing,Mei Tanaka
+ORD-10861,2026-10-30 05:14,Noah Berg,Mobile App,Netherlands,LUM-004,1,24.0,Processing,Mei Tanaka
+ORD-10862,2026-10-30 06:01,Finn Weber,Website,Netherlands,LUM-009,1,65.0,Pending,Mei Tanaka
+ORD-10863,2026-10-30 06:27,Zara Costa,Mobile App,Belgium,LUM-020,1,99.0,Pending,Jonas Vermeulen
+ORD-10864,2026-10-30 06:29,Lena Lambert,Mobile App,France,LUM-017,2,150.0,Pending,Mei Tanaka
+ORD-10865,2026-10-30 06:38,Lena Moreau,Website,Belgium,LUM-020,2,198.0,Processing,Jonas Vermeulen
+ORD-10866,2026-10-30 07:30,Elena Berg,Website,Netherlands,LUM-005,1,54.0,Pending,Mei Tanaka
+ORD-10867,2026-10-30 07:36,Hugo Vermeer,Marketplace,Germany,LUM-009,1,65.0,Pending,Mei Tanaka
+ORD-10868,2026-10-30 07:37,Ines Weber,Website,France,LUM-007,1,29.0,Pending,Mei Tanaka
+ORD-10869,2026-10-30 07:44,Finn Moreau,Marketplace,Netherlands,LUM-017,1,75.0,Cancelled,Jonas Vermeulen
+ORD-10870,2026-10-30 07:48,Freya Vermeer,Mobile App,Germany,LUM-011,1,22.0,Pending,Jonas Vermeulen

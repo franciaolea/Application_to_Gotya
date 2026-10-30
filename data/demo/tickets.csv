@@ -1,31 +1,31 @@
 ticket_id,created_at,customer_name,order_id,channel,category,subject,priority,status,sla_deadline,resolved_at,owner
-TCK-3001,2026-10-23 10:00,Ines Berg,ORD-10021,Phone,Damaged item,Lamp shade dented on arrival,Medium,Resolved,2026-10-25 10:00,2026-10-24 06:10,Ben Carter
-TCK-3002,2026-10-23 14:00,Sami Moreau,ORD-10184,Email,Where is my order,Tracking hasn't updated in days,Medium,Resolved,2026-10-25 14:00,2026-10-24 08:07,Ravi Patel
-TCK-3003,2026-10-23 18:00,Clara Lambert,ORD-10039,Email,Where is my order,Parcel not arrived yet,High,Resolved,2026-10-24 18:00,2026-10-24 23:49,Chloé Martin
-TCK-3004,2026-10-23 18:00,Theo Rossi,ORD-10033,Phone,Refund request,Refund not received after return,Low,Closed,2026-10-26 18:00,2026-10-24 11:52,Ben Carter
-TCK-3005,2026-10-24 06:00,Theo Romero,ORD-10143,Email,Where is my order,Tracking hasn't updated in days,Medium,Closed,2026-10-26 06:00,2026-10-25 22:03,Ben Carter
-TCK-3006,2026-10-24 08:00,Maya Lambert,ORD-10026,Chat,Wrong item,Received king instead of double,High,Resolved,2026-10-25 08:00,2026-10-25 13:43,Ben Carter
-TCK-3007,2026-10-24 13:00,Jonas Kowalski,ORD-10233,Chat,Where is my order,Parcel not arrived yet,Medium,Resolved,2026-10-26 13:00,2026-10-25 01:19,Ben Carter
-TCK-3008,2026-10-24 18:00,Oscar Lambert,ORD-10282,Email,Where is my order,Tracking hasn't updated in days,Medium,Resolved,2026-10-26 18:00,2026-10-26 21:44,Noor Haddad
-TCK-3009,2026-10-24 19:00,Oscar Lambert,ORD-10122,Email,Where is my order,Delivery date keeps changing,High,Resolved,2026-10-25 19:00,2026-10-25 14:58,Ben Carter
-TCK-3010,2026-10-24 23:00,Oscar Jansen,ORD-10214,Email,Damaged item,Lamp shade dented on arrival,Medium,Closed,2026-10-26 23:00,2026-10-25 10:54,Chloé Martin
-TCK-3011,2026-10-25 00:00,Theo Jansen,ORD-10249,Phone,Damaged item,Lamp shade dented on arrival,Medium,Closed,2026-10-27 00:00,2026-10-27 11:54,Chloé Martin
-TCK-3012,2026-10-25 03:00,Noah Costa,ORD-10016,Phone,Damaged item,Plates arrived cracked,Medium,Resolved,2026-10-27 03:00,2026-10-27 11:57,Ravi Patel
-TCK-3013,2026-10-25 14:00,Noah Vermeer,ORD-10194,Phone,Refund request,Refund not received after return,High,Closed,2026-10-26 14:00,2026-10-25 19:50,Ben Carter
-TCK-3014,2026-10-25 18:00,Freya Jansen,ORD-10216,Phone,Damaged item,Lamp shade dented on arrival,Low,Open,2026-10-28 18:00,,Chloé Martin
-TCK-3015,2026-10-25 23:00,Emma Novak,ORD-10123,Email,Wrong item,Received king instead of double,High,Resolved,2026-10-26 23:00,2026-10-27 01:12,Ravi Patel
-TCK-3016,2026-10-26 01:00,Clara Lambert,,Chat,Product question,Is the throw machine washable?,Critical,Closed,2026-10-26 05:00,2026-10-26 03:46,Ben Carter
-TCK-3017,2026-10-26 05:00,Omar Vermeer,ORD-10025,Email,Damaged item,Plates arrived cracked,High,Resolved,2026-10-27 05:00,2026-10-27 04:48,Ravi Patel
-TCK-3018,2026-10-26 15:00,Omar Lambert,,Chat,Product question,Bulb type for the floor lamp?,High,Resolved,2026-10-27 15:00,2026-10-27 04:14,Ravi Patel
-TCK-3019,2026-10-27 12:00,Aisha Bakker,ORD-10053,Chat,Damaged item,Lamp shade dented on arrival,Medium,Resolved,2026-10-29 12:00,2026-10-28 13:16,Ben Carter
-TCK-3020,2026-10-27 12:00,Mateo Bakker,ORD-10169,Chat,Payment issue,Discount code not applied,Low,In Progress,2026-10-30 12:00,,Noor Haddad
-TCK-3021,2026-10-27 13:00,Zara Dubois,,Email,Product question,Bulb type for the floor lamp?,Low,Open,2026-10-30 13:00,,Ravi Patel
-TCK-3022,2026-10-28 05:00,Ines Romero,ORD-10240,Phone,Where is my order,Parcel not arrived yet,Low,In Progress,2026-10-31 05:00,,Ravi Patel
-TCK-3023,2026-10-28 06:00,Mila Dubois,ORD-10078,Chat,Where is my order,Delivery date keeps changing,Medium,Open,2026-10-30 06:00,,Ravi Patel
-TCK-3024,2026-10-28 09:00,Lena Dubois,ORD-10155,Email,Where is my order,Tracking hasn't updated in days,Medium,In Progress,2026-10-30 09:00,,Ravi Patel
-TCK-3025,2026-10-29 00:00,Leon Laurent,ORD-10163,Email,Refund request,Refund not received after return,High,Resolved,2026-10-30 00:00,2026-10-29 11:12,Ravi Patel
-TCK-3026,2026-10-29 02:00,Emma Bakker,ORD-10057,Chat,Where is my order,Tracking hasn't updated in days,Low,Open,2026-11-01 02:00,,Chloé Martin
-TCK-3027,2026-10-29 12:00,Mila Silva,ORD-10015,Email,Where is my order,Tracking hasn't updated in days,Critical,Closed,2026-10-29 16:00,2026-10-29 13:01,Ben Carter
-TCK-3028,2026-10-29 14:00,Julia Weber,,Chat,Product question,Is the throw machine washable?,Medium,Open,2026-10-31 14:00,,Ravi Patel
-TCK-3029,2026-10-29 16:00,Noah Laurent,,Chat,Product question,Is the throw machine washable?,Low,In Progress,2026-11-01 16:00,,Ben Carter
-TCK-3030,2026-10-29 18:00,Freya Jansen,ORD-10111,Chat,Refund request,Want to cancel and refund,Critical,Closed,2026-10-29 22:00,2026-10-29 19:20,Ravi Patel
+TCK-3001,2026-10-23 20:00,Lena Andersen,ORD-10654,Email,Refund request,Refund not received after return,Medium,Resolved,2026-10-25 20:00,2026-10-24 21:09,Chloé Martin
+TCK-3002,2026-10-24 02:00,Hugo Rossi,ORD-10379,Email,Refund request,Want to cancel and refund,Low,Closed,2026-10-27 02:00,2026-10-26 19:48,Noor Haddad
+TCK-3003,2026-10-24 07:00,Elena Rossi,ORD-10688,Chat,Where is my order,Tracking hasn't updated in days,Critical,Resolved,2026-10-24 11:00,2026-10-24 09:19,Ben Carter
+TCK-3004,2026-10-24 08:00,Omar Novak,ORD-10174,Email,Where is my order,Tracking hasn't updated in days,Critical,Resolved,2026-10-24 12:00,2026-10-24 09:30,Chloé Martin
+TCK-3005,2026-10-24 12:00,Oscar Moreau,ORD-10692,Email,Where is my order,Delivery date keeps changing,Medium,Resolved,2026-10-26 12:00,2026-10-26 19:01,Ravi Patel
+TCK-3006,2026-10-24 13:00,Sami Vermeer,ORD-10505,Email,Damaged item,Plates arrived cracked,High,Resolved,2026-10-25 13:00,2026-10-25 10:47,Chloé Martin
+TCK-3007,2026-10-24 14:00,Leon Bakker,,Email,Product question,Is the throw machine washable?,Low,Resolved,2026-10-27 14:00,2026-10-27 11:43,Ravi Patel
+TCK-3008,2026-10-25 03:00,Ines Silva,ORD-10286,Chat,Refund request,Want to cancel and refund,Low,Closed,2026-10-28 03:00,2026-10-28 16:45,Ben Carter
+TCK-3009,2026-10-25 04:00,Mila Bakker,ORD-10462,Chat,Where is my order,Parcel not arrived yet,Low,In Progress,2026-10-28 04:00,,Ravi Patel
+TCK-3010,2026-10-25 14:00,Elena Keller,,Chat,Product question,Is the throw machine washable?,Medium,Closed,2026-10-27 14:00,2026-10-26 16:44,Ravi Patel
+TCK-3011,2026-10-25 15:00,Freya Moreau,ORD-10813,Chat,Where is my order,Parcel not arrived yet,Low,Resolved,2026-10-28 15:00,2026-10-27 06:59,Ben Carter
+TCK-3012,2026-10-25 16:00,Finn Schulz,ORD-10398,Chat,Where is my order,Parcel not arrived yet,Medium,In Progress,2026-10-27 16:00,,Chloé Martin
+TCK-3013,2026-10-25 19:00,Clara Kowalski,ORD-10429,Email,Damaged item,Lamp shade dented on arrival,Medium,Resolved,2026-10-27 19:00,2026-10-26 06:48,Ben Carter
+TCK-3014,2026-10-25 23:00,Nadia Romero,ORD-10704,Chat,Payment issue,Charged twice at checkout,Medium,Resolved,2026-10-27 23:00,2026-10-26 17:13,Ben Carter
+TCK-3015,2026-10-26 08:00,Theo Dubois,ORD-10829,Chat,Refund request,Refund not received after return,Critical,Resolved,2026-10-26 12:00,2026-10-26 11:10,Noor Haddad
+TCK-3016,2026-10-26 08:00,Oscar Weber,,Email,Product question,Is the throw machine washable?,Medium,Resolved,2026-10-28 08:00,2026-10-28 07:04,Ben Carter
+TCK-3017,2026-10-26 11:00,Maya Schulz,ORD-10307,Chat,Wrong item,Wrong colour delivered,Low,Resolved,2026-10-29 11:00,2026-10-28 08:03,Ravi Patel
+TCK-3018,2026-10-26 18:00,Julia Keller,ORD-10702,Email,Damaged item,Mirror frame scratched,High,Closed,2026-10-27 18:00,2026-10-27 12:21,Noor Haddad
+TCK-3019,2026-10-27 01:00,Felix Fischer,ORD-10831,Chat,Where is my order,Parcel not arrived yet,High,Resolved,2026-10-28 01:00,2026-10-27 22:40,Ravi Patel
+TCK-3020,2026-10-28 03:00,Sami Petit,ORD-10665,Email,Where is my order,Parcel not arrived yet,High,Resolved,2026-10-29 03:00,2026-10-29 08:11,Chloé Martin
+TCK-3021,2026-10-28 11:00,Emma Rossi,,Chat,Product question,Is the throw machine washable?,Low,Open,2026-10-31 11:00,,Noor Haddad
+TCK-3022,2026-10-28 12:00,Nadia Costa,,Email,Product question,Is the throw machine washable?,Medium,Waiting on Customer,2026-10-30 12:00,,Ravi Patel
+TCK-3023,2026-10-28 19:00,Theo Bakker,ORD-10602,Email,Damaged item,Mirror frame scratched,High,Closed,2026-10-29 19:00,2026-10-30 00:06,Chloé Martin
+TCK-3024,2026-10-28 19:00,Leon Dubois,ORD-10046,Phone,Where is my order,Delivery date keeps changing,Medium,Resolved,2026-10-30 19:00,2026-10-30 03:44,Noor Haddad
+TCK-3025,2026-10-28 21:00,Julia Bakker,ORD-10422,Chat,Where is my order,Parcel not arrived yet,High,Waiting on Customer,2026-10-29 21:00,,Chloé Martin
+TCK-3026,2026-10-29 05:00,Omar Laurent,ORD-10475,Email,Wrong item,Wrong colour delivered,High,Resolved,2026-10-30 05:00,2026-10-30 07:55,Ravi Patel
+TCK-3027,2026-10-29 10:00,Lena Moreau,ORD-10301,Email,Refund request,Want to cancel and refund,Medium,In Progress,2026-10-31 10:00,,Noor Haddad
+TCK-3028,2026-10-29 10:00,Aisha Kowalski,ORD-10773,Chat,Where is my order,Delivery date keeps changing,Medium,In Progress,2026-10-31 10:00,,Chloé Martin
+TCK-3029,2026-10-30 04:00,Oscar Romero,ORD-10699,Chat,Damaged item,Plates arrived cracked,Medium,Resolved,2026-11-01 04:00,2026-10-30 07:55,Noor Haddad
+TCK-3030,2026-10-30 07:00,Hugo Silva,ORD-10812,Email,Where is my order,Delivery date keeps changing,High,Open,2026-10-31 07:00,,Chloé Martin
