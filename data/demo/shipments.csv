@@ -1,0 +1,105 @@
+shipment_id,order_id,carrier,tracking_number,destination,status,ship_date,expected_delivery_date,actual_delivery_date,owner
+SHP-5001,ORD-10001,EuroPost Express,TRK1195066088,France,Delivered,2026-10-05,2026-10-09,2026-10-09,Lukas Brandt
+SHP-5002,ORD-10002,EuroPost Express,TRK5060136033,Spain,Delivered,2026-10-05,2026-10-09,2026-10-08,Amara Okafor
+SHP-5003,ORD-10003,SwiftParcel,TRK2849649210,Belgium,Delivered,2026-10-05,2026-10-08,2026-10-08,Amara Okafor
+SHP-5004,ORD-10004,GreenRoute Logistics,TRK8757570742,Belgium,Delivered,2026-10-05,2026-10-07,2026-10-07,Amara Okafor
+SHP-5005,ORD-10005,EuroPost Express,TRK4956362540,Netherlands,Delivered,2026-10-05,2026-10-07,2026-10-07,Lukas Brandt
+SHP-5006,ORD-10006,GreenRoute Logistics,TRK8044354825,Belgium,Delivered,2026-10-07,2026-10-10,2026-10-10,Lukas Brandt
+SHP-5007,ORD-10007,EuroPost Express,TRK2554145481,France,Delivered,2026-10-06,2026-10-10,2026-10-09,Lukas Brandt
+SHP-5008,ORD-10008,EuroPost Express,TRK3250402001,Germany,Delivered,2026-10-07,2026-10-10,2026-10-10,Lukas Brandt
+SHP-5009,ORD-10009,SwiftParcel,TRK9917981516,Netherlands,Delivered,2026-10-07,2026-10-10,2026-10-10,Sofia Marchetti
+SHP-5010,ORD-10010,EuroPost Express,TRK1634323009,Spain,Delivered,2026-10-07,2026-10-11,2026-10-13,Amara Okafor
+SHP-5011,ORD-10011,GreenRoute Logistics,TRK1323639855,Germany,Delivered,2026-10-07,2026-10-11,2026-10-11,Sofia Marchetti
+SHP-5012,ORD-10012,GreenRoute Logistics,TRK7977267911,Germany,Delivered,2026-10-08,2026-10-12,2026-10-13,Sofia Marchetti
+SHP-5013,ORD-10013,EuroPost Express,TRK5536224717,France,Delivered,2026-10-08,2026-10-11,2026-10-11,Sofia Marchetti
+SHP-5014,ORD-10014,SwiftParcel,TRK5539308214,Belgium,Delivered,2026-10-08,2026-10-11,2026-10-11,Lukas Brandt
+SHP-5015,ORD-10015,GreenRoute Logistics,TRK6946306973,Spain,Delivered,2026-10-08,2026-10-12,2026-10-12,Sofia Marchetti
+SHP-5016,ORD-10016,GreenRoute Logistics,TRK3799620568,Belgium,Delivered,2026-10-10,2026-10-12,2026-10-12,Lukas Brandt
+SHP-5017,ORD-10017,SwiftParcel,TRK2934982045,Netherlands,Delivered,2026-10-10,2026-10-13,2026-10-13,Lukas Brandt
+SHP-5018,ORD-10018,SwiftParcel,TRK1168114160,Spain,Delivered,2026-10-10,2026-10-14,2026-10-14,Sofia Marchetti
+SHP-5019,ORD-10019,GreenRoute Logistics,TRK5976777081,Netherlands,Delivered,2026-10-10,2026-10-13,2026-10-13,Lukas Brandt
+SHP-5020,ORD-10021,EuroPost Express,TRK2437308013,Belgium,Delivered,2026-10-10,2026-10-13,2026-10-13,Lukas Brandt
+SHP-5021,ORD-10022,GreenRoute Logistics,TRK5940815822,Spain,Delivered,2026-10-10,2026-10-15,2026-10-15,Amara Okafor
+SHP-5022,ORD-10023,EuroPost Express,TRK2683446724,France,Delivered,2026-10-12,2026-10-15,2026-10-17,Sofia Marchetti
+SHP-5023,ORD-10024,EuroPost Express,TRK9991312028,Belgium,Delivered,2026-10-12,2026-10-14,2026-10-14,Sofia Marchetti
+SHP-5024,ORD-10025,EuroPost Express,TRK6214917780,Belgium,Delivered,2026-10-11,2026-10-14,2026-10-13,Lukas Brandt
+SHP-5025,ORD-10026,SwiftParcel,TRK5626388820,Netherlands,Delivered,2026-10-11,2026-10-13,2026-10-15,Amara Okafor
+SHP-5026,ORD-10027,GreenRoute Logistics,TRK2617999521,Germany,Delivered,2026-10-13,2026-10-16,2026-10-16,Amara Okafor
+SHP-5027,ORD-10028,SwiftParcel,TRK7059591606,Netherlands,Delivered,2026-10-12,2026-10-14,2026-10-14,Sofia Marchetti
+SHP-5028,ORD-10030,GreenRoute Logistics,TRK2928130926,Germany,Exception,2026-10-14,2026-10-17,,Sofia Marchetti
+SHP-5029,ORD-10031,EuroPost Express,TRK6128260438,France,Delivered,2026-10-13,2026-10-17,2026-10-19,Sofia Marchetti
+SHP-5030,ORD-10032,EuroPost Express,TRK8636984580,Belgium,Delivered,2026-10-14,2026-10-17,2026-10-17,Sofia Marchetti
+SHP-5031,ORD-10033,SwiftParcel,TRK2073755632,Netherlands,Delivered,2026-10-14,2026-10-17,2026-10-19,Sofia Marchetti
+SHP-5032,ORD-10034,SwiftParcel,TRK5830454240,Belgium,Delivered,2026-10-13,2026-10-16,2026-10-16,Amara Okafor
+SHP-5033,ORD-10035,GreenRoute Logistics,TRK2878930355,France,Delivered,2026-10-14,2026-10-18,2026-10-18,Amara Okafor
+SHP-5034,ORD-10036,EuroPost Express,TRK5523703900,Germany,Delivered,2026-10-14,2026-10-18,2026-10-20,Sofia Marchetti
+SHP-5035,ORD-10038,SwiftParcel,TRK2610237679,Spain,Delivered,2026-10-14,2026-10-18,2026-10-18,Amara Okafor
+SHP-5036,ORD-10039,GreenRoute Logistics,TRK1627276995,Netherlands,Delivered,2026-10-15,2026-10-17,2026-10-18,Amara Okafor
+SHP-5037,ORD-10040,SwiftParcel,TRK7309779967,Spain,Delivered,2026-10-15,2026-10-20,2026-10-20,Sofia Marchetti
+SHP-5038,ORD-10041,SwiftParcel,TRK4586139213,Belgium,Delivered,2026-10-15,2026-10-17,2026-10-16,Sofia Marchetti
+SHP-5039,ORD-10042,EuroPost Express,TRK6315624319,France,Delivered,2026-10-16,2026-10-20,2026-10-19,Amara Okafor
+SHP-5040,ORD-10043,GreenRoute Logistics,TRK2963288053,France,Delivered,2026-10-16,2026-10-19,2026-10-19,Amara Okafor
+SHP-5041,ORD-10044,GreenRoute Logistics,TRK5911625145,Spain,Delivered,2026-10-16,2026-10-20,2026-10-20,Lukas Brandt
+SHP-5042,ORD-10045,EuroPost Express,TRK3869961166,Belgium,Delivered,2026-10-16,2026-10-19,2026-10-19,Sofia Marchetti
+SHP-5043,ORD-10047,GreenRoute Logistics,TRK3380064537,Netherlands,Delivered,2026-10-16,2026-10-18,2026-10-20,Lukas Brandt
+SHP-5044,ORD-10048,EuroPost Express,TRK5364727160,Spain,Delivered,2026-10-17,2026-10-21,2026-10-21,Amara Okafor
+SHP-5045,ORD-10049,GreenRoute Logistics,TRK8544878538,Germany,Delivered,2026-10-17,2026-10-20,2026-10-20,Amara Okafor
+SHP-5046,ORD-10050,GreenRoute Logistics,TRK8281641403,Netherlands,Delivered,2026-10-17,2026-10-20,2026-10-20,Sofia Marchetti
+SHP-5047,ORD-10051,EuroPost Express,TRK5453811475,France,Delivered,2026-10-17,2026-10-20,2026-10-19,Amara Okafor
+SHP-5048,ORD-10052,EuroPost Express,TRK9303765140,Spain,Exception,2026-10-17,2026-10-21,,Sofia Marchetti
+SHP-5049,ORD-10053,GreenRoute Logistics,TRK6115750294,Belgium,Delivered,2026-10-17,2026-10-20,2026-10-20,Lukas Brandt
+SHP-5050,ORD-10054,EuroPost Express,TRK9403012103,Belgium,In Transit,2026-10-18,2026-10-21,,Lukas Brandt
+SHP-5051,ORD-10055,EuroPost Express,TRK7525240100,Spain,Delivered,2026-10-18,2026-10-23,2026-10-23,Amara Okafor
+SHP-5052,ORD-10056,GreenRoute Logistics,TRK6556684476,Germany,Delivered,2026-10-19,2026-10-23,2026-10-22,Amara Okafor
+SHP-5053,ORD-10057,EuroPost Express,TRK8377306021,Netherlands,Delivered,2026-10-18,2026-10-21,2026-10-21,Amara Okafor
+SHP-5054,ORD-10058,SwiftParcel,TRK9210290540,Belgium,Delivered,2026-10-20,2026-10-23,2026-10-23,Sofia Marchetti
+SHP-5055,ORD-10059,SwiftParcel,TRK9912233947,Netherlands,Delivered,2026-10-19,2026-10-22,2026-10-22,Sofia Marchetti
+SHP-5056,ORD-10060,GreenRoute Logistics,TRK3918046336,France,Delivered,2026-10-19,2026-10-23,2026-10-23,Amara Okafor
+SHP-5057,ORD-10061,SwiftParcel,TRK8065920767,Netherlands,In Transit,2026-10-19,2026-10-22,,Lukas Brandt
+SHP-5058,ORD-10062,GreenRoute Logistics,TRK6888247736,Belgium,Delivered,2026-10-19,2026-10-21,2026-10-21,Lukas Brandt
+SHP-5059,ORD-10063,EuroPost Express,TRK2196963451,Belgium,Delivered,2026-10-20,2026-10-22,2026-10-22,Amara Okafor
+SHP-5060,ORD-10064,EuroPost Express,TRK5800746936,France,Delivered,2026-10-20,2026-10-23,2026-10-23,Lukas Brandt
+SHP-5061,ORD-10066,GreenRoute Logistics,TRK3109688769,Netherlands,Delivered,2026-10-21,2026-10-24,2026-10-24,Amara Okafor
+SHP-5062,ORD-10067,GreenRoute Logistics,TRK9868845806,Germany,Delivered,2026-10-20,2026-10-23,2026-10-23,Sofia Marchetti
+SHP-5063,ORD-10068,GreenRoute Logistics,TRK1963110410,Belgium,Delivered,2026-10-20,2026-10-23,2026-10-24,Amara Okafor
+SHP-5064,ORD-10069,SwiftParcel,TRK7752880042,Spain,Delivered,2026-10-20,2026-10-24,2026-10-25,Lukas Brandt
+SHP-5065,ORD-10070,SwiftParcel,TRK5577353273,Spain,Delivered,2026-10-22,2026-10-26,2026-10-26,Lukas Brandt
+SHP-5066,ORD-10071,EuroPost Express,TRK1316756902,France,Delivered,2026-10-22,2026-10-26,2026-10-26,Lukas Brandt
+SHP-5067,ORD-10072,GreenRoute Logistics,TRK7517011632,France,Delivered,2026-10-22,2026-10-25,2026-10-25,Amara Okafor
+SHP-5068,ORD-10073,SwiftParcel,TRK5952163720,France,Delivered,2026-10-22,2026-10-25,2026-10-26,Amara Okafor
+SHP-5069,ORD-10074,SwiftParcel,TRK9138644862,Spain,Delivered,2026-10-21,2026-10-26,2026-10-28,Amara Okafor
+SHP-5070,ORD-10075,GreenRoute Logistics,TRK2178758213,Netherlands,Delivered,2026-10-21,2026-10-23,2026-10-23,Sofia Marchetti
+SHP-5071,ORD-10076,SwiftParcel,TRK3493857758,Belgium,Delivered,2026-10-22,2026-10-24,2026-10-24,Amara Okafor
+SHP-5072,ORD-10077,GreenRoute Logistics,TRK4709911999,Belgium,Out for Delivery,2026-10-23,2026-10-26,,Amara Okafor
+SHP-5073,ORD-10078,GreenRoute Logistics,TRK3744446292,Belgium,Delivered,2026-10-22,2026-10-25,2026-10-25,Lukas Brandt
+SHP-5074,ORD-10079,EuroPost Express,TRK3074232200,France,Delivered,2026-10-23,2026-10-27,2026-10-27,Sofia Marchetti
+SHP-5075,ORD-10080,GreenRoute Logistics,TRK1257324536,Germany,Delivered,2026-10-22,2026-10-26,2026-10-26,Lukas Brandt
+SHP-5076,ORD-10081,EuroPost Express,TRK3605585995,France,Delivered,2026-10-23,2026-10-27,2026-10-27,Lukas Brandt
+SHP-5077,ORD-10082,EuroPost Express,TRK9484167278,France,Delivered,2026-10-24,2026-10-28,2026-10-28,Amara Okafor
+SHP-5078,ORD-10083,EuroPost Express,TRK5821194895,Belgium,Delivered,2026-10-23,2026-10-25,2026-10-25,Lukas Brandt
+SHP-5079,ORD-10085,EuroPost Express,TRK9355364489,Netherlands,Delivered,2026-10-23,2026-10-25,2026-10-24,Sofia Marchetti
+SHP-5080,ORD-10086,SwiftParcel,TRK8788828039,Germany,Exception,2026-10-23,2026-10-26,,Sofia Marchetti
+SHP-5081,ORD-10087,SwiftParcel,TRK7505693643,Spain,In Transit,2026-10-25,2026-10-30,,Lukas Brandt
+SHP-5082,ORD-10088,EuroPost Express,TRK7465834732,Belgium,Delivered,2026-10-24,2026-10-27,2026-10-26,Amara Okafor
+SHP-5083,ORD-10089,EuroPost Express,TRK7316122432,Netherlands,Delivered,2026-10-24,2026-10-27,2026-10-26,Sofia Marchetti
+SHP-5084,ORD-10090,EuroPost Express,TRK8419590655,Belgium,Delivered,2026-10-24,2026-10-26,2026-10-26,Lukas Brandt
+SHP-5085,ORD-10091,GreenRoute Logistics,TRK3412985084,Germany,In Transit,2026-10-24,2026-10-27,,Lukas Brandt
+SHP-5086,ORD-10092,GreenRoute Logistics,TRK7656585531,Netherlands,Delivered,2026-10-26,2026-10-29,2026-10-28,Sofia Marchetti
+SHP-5087,ORD-10093,SwiftParcel,TRK6986770879,France,In Transit,2026-10-26,2026-10-29,,Lukas Brandt
+SHP-5088,ORD-10094,SwiftParcel,TRK1172893522,Netherlands,Out for Delivery,2026-10-26,2026-10-29,,Amara Okafor
+SHP-5089,ORD-10096,GreenRoute Logistics,TRK2962750929,France,Out for Delivery,2026-10-25,2026-10-29,,Sofia Marchetti
+SHP-5090,ORD-10097,GreenRoute Logistics,TRK2368076065,France,Delivered,2026-10-27,2026-10-30,2026-10-30,Lukas Brandt
+SHP-5091,ORD-10098,GreenRoute Logistics,TRK7581349462,France,In Transit,2026-10-27,2026-10-31,,Sofia Marchetti
+SHP-5092,ORD-10100,SwiftParcel,TRK6877052039,France,In Transit,2026-10-27,2026-10-31,,Sofia Marchetti
+SHP-5093,ORD-10101,GreenRoute Logistics,TRK3702653209,Germany,Delivered,2026-10-26,2026-10-30,2026-10-30,Sofia Marchetti
+SHP-5094,ORD-10102,GreenRoute Logistics,TRK3480920839,Spain,Exception,2026-10-26,2026-10-31,,Sofia Marchetti
+SHP-5095,ORD-10103,GreenRoute Logistics,TRK2632905061,Netherlands,In Transit,2026-10-27,2026-10-30,,Sofia Marchetti
+SHP-5096,ORD-10104,GreenRoute Logistics,TRK1471997674,France,In Transit,2026-10-27,2026-10-30,,Amara Okafor
+SHP-5097,ORD-10105,EuroPost Express,TRK3965676060,Germany,Delivered,2026-10-27,2026-10-31,2026-10-30,Lukas Brandt
+SHP-5098,ORD-10107,GreenRoute Logistics,TRK4124168227,Spain,Exception,2026-10-28,2026-11-02,,Sofia Marchetti
+SHP-5099,ORD-10110,GreenRoute Logistics,TRK6913417379,Netherlands,In Transit,2026-10-28,2026-10-30,,Amara Okafor
+SHP-5100,ORD-10113,GreenRoute Logistics,TRK8272725281,Germany,In Transit,2026-10-28,2026-11-01,,Sofia Marchetti
+SHP-5101,ORD-10116,EuroPost Express,TRK7691931213,Germany,Exception,2026-10-29,2026-11-01,,Amara Okafor
+SHP-5102,ORD-10118,GreenRoute Logistics,TRK8322868827,Belgium,In Transit,2026-10-29,2026-11-01,,Lukas Brandt
+SHP-5103,ORD-10119,GreenRoute Logistics,TRK6469458472,Spain,In Transit,2026-10-29,2026-11-03,,Amara Okafor
+SHP-5104,ORD-10120,EuroPost Express,TRK8809871735,Spain,Exception,2026-10-30,2026-11-04,,Amara Okafor

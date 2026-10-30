@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
+
+# Real business data must never be committed.
+data/live/*
+!data/live/README.md
