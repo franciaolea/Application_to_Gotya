@@ -64,7 +64,7 @@ SCHEMAS: Dict[str, DatasetSchema] = {
     "orders": DatasetSchema(
         id_column="order_id",
         columns=["order_id", "order_date", "customer_name", "channel", "region", "sku",
-                 "quantity", "order_value", "status"],
+                 "quantity", "order_value", "status", "owner"],
         date_columns=["order_date"],
         numeric_columns=["quantity", "order_value"],
         allowed_values={"status": ORDER_STATUSES},

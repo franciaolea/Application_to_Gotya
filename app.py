@@ -24,8 +24,11 @@ with st.sidebar:
 ui.data_banner(bundle)
 
 pages = {
+    "Overview": [
+        st.Page("views/executive_dashboard.py", title="Executive Dashboard", icon="📊", default=True),
+    ],
     "System": [
-        st.Page("views/data_health.py", title="Data Health", icon="🩺", default=True),
+        st.Page("views/data_health.py", title="Data Health", icon="🩺"),
     ],
 }
 st.navigation(pages).run()

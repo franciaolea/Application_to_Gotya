@@ -39,15 +39,24 @@ def data_dir(mode: Optional[str] = None) -> Path:
 
 
 # --- Business rules --------------------------------------------------------
+# Orders: should leave the warehouse within this many hours of being placed.
+# Past it an order is "stuck"; past the escalation limit it is critical.
+ORDER_FULFILMENT_HOURS = 48
+ORDER_ESCALATION_HOURS = 96
+
 # Shipping: a shipment past its expected delivery date is "delayed";
 # delayed by this many days or more it gets escalated.
 SHIPMENT_ESCALATION_DAYS = 3
+ON_TIME_DELIVERY_TARGET = 0.95
 
 # Inventory: stock at or below this share of the minimum is "critical".
 CRITICAL_STOCK_RATIO = 0.5
 
 # Support: hours allowed to resolve a ticket, by priority.
 TICKET_SLA_HOURS = {"Critical": 4, "High": 24, "Medium": 48, "Low": 72}
+# An open ticket this close to its deadline is "at risk".
+TICKET_AT_RISK_HOURS = 4
+SLA_COMPLIANCE_TARGET = 0.90
 
 # Payments: unpaid items this many days past due are escalated.
 PAYMENT_ESCALATION_DAYS = 7

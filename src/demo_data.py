@@ -28,7 +28,7 @@ import pandas as pd
 
 from src import config
 
-SEED = 42
+SEED = 27  # chosen because it produces a balanced, realistic scenario for demos
 DEFAULT_AS_OF = date(2026, 10, 30)
 COMPANY = "Lumora Home & Living"  # fictional company
 
@@ -37,6 +37,7 @@ DATETIME_FMT = "%Y-%m-%d %H:%M"
 
 TEAM = {
     "inventory": ["Priya Raman", "Tomás Herrera"],
+    "fulfilment": ["Jonas Vermeulen", "Mei Tanaka"],
     "logistics": ["Amara Okafor", "Lukas Brandt", "Sofia Marchetti"],
     "finance": ["Hannah Lindqvist", "Daniel Mensah"],
     "support": ["Chloé Martin", "Ravi Patel", "Noor Haddad", "Ben Carter"],
@@ -80,6 +81,16 @@ LAST_NAMES = ["Vermeer", "Schulz", "Dubois", "Kowalski", "Rossi", "Jansen", "Mor
 REGIONS = {"Netherlands": 2, "Germany": 3, "France": 3, "Belgium": 2, "Spain": 4}
 CHANNELS = ["Website", "Mobile App", "Marketplace"]
 CARRIERS = ["SwiftParcel", "EuroPost Express", "GreenRoute Logistics"]
+# Planted bottleneck: GreenRoute delivers late more often, loses more parcels
+# ("stuck") and raises more exceptions than the other two carriers.
+CARRIER_PROFILES = {
+    "SwiftParcel": {"share": 0.4, "stuck": 0.01, "exception": 0.05,
+                    "delay_days": {"-1": 0.15, "0": 0.75, "1": 0.07, "2": 0.03}},
+    "EuroPost Express": {"share": 0.35, "stuck": 0.01, "exception": 0.05,
+                         "delay_days": {"-1": 0.1, "0": 0.78, "1": 0.09, "2": 0.03}},
+    "GreenRoute Logistics": {"share": 0.25, "stuck": 0.12, "exception": 0.35,
+                             "delay_days": {"-1": 0.05, "0": 0.5, "1": 0.25, "2": 0.2}},
+}
 WAREHOUSES = ["Rotterdam DC", "Leipzig DC"]
 
 
@@ -136,24 +147,27 @@ def make_products(rng: random.Random, as_of: date) -> pd.DataFrame:
 def _order_status(rng: random.Random, age_days: int) -> str:
     """Older orders are further along the fulfilment pipeline.
 
-    A small share of older orders stays stuck in early stages on purpose:
-    those are the bottlenecks the dashboard should surface.
+    "Dispatched" is temporary: make_shipments() turns it into Shipped or
+    Delivered depending on what happened to the parcel. A few 2-3 day old
+    orders are still unshipped on purpose: the warehouse bottleneck to surface.
     """
     if age_days <= 1:
         return _pick(rng, {"Pending": 0.5, "Processing": 0.45, "Cancelled": 0.05})
     if age_days <= 3:
-        return _pick(rng, {"Pending": 0.08, "Processing": 0.27, "Shipped": 0.62, "Cancelled": 0.03})
-    if age_days <= 7:
-        return _pick(rng, {"Processing": 0.05, "Shipped": 0.55, "Delivered": 0.37, "Cancelled": 0.03})
-    return _pick(rng, {"Shipped": 0.08, "Delivered": 0.88, "Cancelled": 0.04})
+        return _pick(rng, {"Pending": 0.04, "Processing": 0.14, "Dispatched": 0.79, "Cancelled": 0.03})
+    return _pick(rng, {"Dispatched": 0.96, "Cancelled": 0.04})
 
 
 def _daily_order_counts(rng: random.Random, days: int) -> List[int]:
-    """Orders per day, oldest first: a steady growth trend (~3 -> ~7 a day) with noise."""
+    """Orders per day, oldest first: a steady growth trend (~3 -> ~7 a day) with noise.
+
+    57 calendar days (8 full weeks + today) lets the dashboard compare the last
+    28 days with the 28 before.
+    """
     return [max(1, round(3 + 4 * i / (days - 1) + rng.uniform(-1.5, 1.5))) for i in range(days)]
 
 
-def make_orders(rng: random.Random, as_of: date, products: pd.DataFrame, days: int = 28) -> pd.DataFrame:
+def make_orders(rng: random.Random, as_of: date, products: pd.DataFrame, days: int = 57) -> pd.DataFrame:
     rows = []
     order_times = []
     for i, count in enumerate(_daily_order_counts(rng, days)):
@@ -175,6 +189,7 @@ def make_orders(rng: random.Random, as_of: date, products: pd.DataFrame, days: i
             "quantity": int(qty),
             "order_value": round(int(qty) * float(product["unit_price"]), 2),
             "status": _order_status(rng, age_days),
+            "owner": rng.choice(TEAM["fulfilment"]),
         })
     df = pd.DataFrame(rows).sort_values("order_date").reset_index(drop=True)
     df.insert(0, "order_id", [f"ORD-{10001 + i}" for i in range(len(df))])
@@ -182,30 +197,41 @@ def make_orders(rng: random.Random, as_of: date, products: pd.DataFrame, days: i
     return df
 
 
-def make_shipments(rng: random.Random, as_of: date, orders: pd.DataFrame) -> pd.DataFrame:
+def make_shipments(rng: random.Random, as_of: date, orders: pd.DataFrame):
+    """Simulate each dispatched parcel's journey.
+
+    Returns (orders, shipments): an order becomes "Delivered" if its parcel
+    arrived before the snapshot day, otherwise "Shipped".
+    """
+    orders = orders.copy()
     rows = []
-    shipped = orders[orders["status"].isin(["Shipped", "Delivered"])]
-    for _, order in shipped.iterrows():
+    shares = {name: profile["share"] for name, profile in CARRIER_PROFILES.items()}
+    for idx, order in orders[orders["status"] == "Dispatched"].iterrows():
+        carrier = _pick(rng, shares)
+        profile = CARRIER_PROFILES[carrier]
         order_day = datetime.strptime(order["order_date"], DATETIME_FMT).date()
         age = (as_of - order_day).days
-        ship_date = order_day + timedelta(days=min(rng.choice([1, 1, 2]), max(age, 1)))
-        transit = REGIONS[order["region"]] + rng.choice([0, 1])
-        expected = ship_date + timedelta(days=transit)
+        ship_date = order_day + timedelta(days=min(rng.choice([1, 1, 2]), age))
+        expected = ship_date + timedelta(days=REGIONS[order["region"]] + rng.choice([0, 1]))
 
-        if order["status"] == "Delivered":
-            # Most arrive on time; some early, some a day or two late.
-            delta = int(_pick(rng, {"-1": 0.15, "0": 0.6, "1": 0.15, "2": 0.1}))
-            actual = expected + timedelta(days=delta)
-            actual = min(max(actual, ship_date + timedelta(days=1)), as_of)
+        # Parcels lost in the network stay open; only recent ones are still being chased.
+        stuck = age <= 10 and rng.random() < profile["stuck"]
+        actual = None if stuck else max(expected + timedelta(days=int(_pick(rng, profile["delay_days"]))),
+                                         ship_date + timedelta(days=1))
+        if actual is not None and actual < as_of:
             status = "Delivered"
         else:
             actual = None
-            status = _pick(rng, {"In Transit": 0.75, "Out for Delivery": 0.12, "Exception": 0.13})
+            if stuck or rng.random() < profile["exception"]:
+                status = "Exception" if rng.random() < profile["exception"] * 2 else "In Transit"
+            else:
+                status = _pick(rng, {"In Transit": 0.8, "Out for Delivery": 0.2})
+        orders.at[idx, "status"] = "Delivered" if status == "Delivered" else "Shipped"
 
         rows.append({
             "shipment_id": f"SHP-{len(rows) + 5001}",
             "order_id": order["order_id"],
-            "carrier": rng.choice(CARRIERS),
+            "carrier": carrier,
             "tracking_number": f"TRK{rng.randint(10**9, 10**10 - 1)}",
             "destination": order["region"],
             "status": status,
@@ -214,7 +240,7 @@ def make_shipments(rng: random.Random, as_of: date, orders: pd.DataFrame) -> pd.
             "actual_delivery_date": _d(actual),
             "owner": rng.choice(TEAM["logistics"]),
         })
-    return pd.DataFrame(rows)
+    return orders, pd.DataFrame(rows)
 
 
 def make_payments(rng: random.Random, as_of: date, orders: pd.DataFrame, n: int = 28) -> pd.DataFrame:
@@ -241,13 +267,17 @@ def make_payments(rng: random.Random, as_of: date, orders: pd.DataFrame, n: int 
             counterparty = rng.choice(parties)
 
         due = as_of + timedelta(days=rng.randint(-20, 14))
-        if due < as_of:  # past due: mostly paid, some outstanding (the problems)
-            status = _pick(rng, {"Paid": 0.6, "Pending": 0.15, "Failed": 0.1, "On Hold": 0.15})
+        days_past_due = (as_of - due).days
+        # Finance is in decent shape: old items are settled, a few recent ones slipped.
+        if days_past_due >= config.PAYMENT_ESCALATION_DAYS:
+            status = "Paid"
+        elif days_past_due > 0:
+            status = _pick(rng, {"Paid": 0.6, "Pending": 0.4})
         else:
-            status = _pick(rng, {"Pending": 0.55, "Processing": 0.3, "Paid": 0.15})
+            status = _pick(rng, {"Pending": 0.55, "Processing": 0.35, "Paid": 0.1})
         paid = None
         if status == "Paid":
-            paid = min(due + timedelta(days=rng.randint(-3, 2)), as_of)
+            paid = min(due + timedelta(days=rng.randint(-3, 0)), as_of - timedelta(days=1))
 
         rows.append({
             "payment_id": f"PAY-{7001 + i}",
@@ -290,11 +320,20 @@ def make_tickets(rng: random.Random, as_of: date, orders: pd.DataFrame, n: int =
         sla = created + timedelta(hours=config.TICKET_SLA_HOURS[priority])
         category = _pick(rng, {"Where is my order": 0.3, "Damaged item": 0.15, "Wrong item": 0.1,
                                "Refund request": 0.2, "Payment issue": 0.1, "Product question": 0.15})
-        status = _pick(rng, {"Open": 0.3, "In Progress": 0.25, "Waiting on Customer": 0.1,
-                             "Resolved": 0.25, "Closed": 0.1})
+        sla_hours = config.TICKET_SLA_HOURS[priority]
+        age_hours = (as_of_ts - created).total_seconds() / 3600
+        # Tickets older than their SLA are usually done; a few slipped through (breaches).
+        if age_hours > sla_hours:
+            status = _pick(rng, {"Resolved": 0.55, "Closed": 0.3, "Open": 0.05,
+                                 "In Progress": 0.05, "Waiting on Customer": 0.05})
+        else:
+            status = _pick(rng, {"Open": 0.4, "In Progress": 0.35, "Waiting on Customer": 0.1,
+                                 "Resolved": 0.15})
         resolved = None
         if status in ("Resolved", "Closed"):
-            resolved = min(created + timedelta(hours=rng.randint(1, 60)), as_of_ts)
+            # Most are solved within the SLA, some take up to 25% longer.
+            took = timedelta(hours=sla_hours * rng.uniform(0.2, 1.25))
+            resolved = min(created + took, as_of_ts - timedelta(minutes=5))
         order = orders.iloc[rng.randrange(len(orders))]
         rows.append({
             "ticket_id": "",  # numbered after sorting below
@@ -323,7 +362,7 @@ def make_actions(as_of: date, products: pd.DataFrame, shipments: pd.DataFrame,
     """A few existing actions so the Action Tracker isn't empty on first launch."""
     out_of_stock = products[products["stock_on_hand"] == 0].iloc[0]
     exception = shipments[shipments["status"] == "Exception"]
-    failed = payments[payments["status"].isin(["Failed", "On Hold"])]
+    overdue = payments[(payments["status"] != "Paid") & (payments["due_date"] < _d(as_of))]
     critical = tickets[tickets["priority"] == "Critical"]
 
     rows = [
@@ -331,8 +370,8 @@ def make_actions(as_of: date, products: pd.DataFrame, shipments: pd.DataFrame,
          out_of_stock["owner"], "High", "In Progress", -2, 1, "", "Supplier confirmed dispatch, awaiting ETA."),
         ("Shipping", exception.iloc[0]["shipment_id"] if len(exception) else "",
          "Carrier exception - confirm address with customer", "Amara Okafor", "High", "Open", -1, 0, "", ""),
-        ("Payments", failed.iloc[0]["payment_id"] if len(failed) else "",
-         "Investigate failed/held payment and resubmit", "Hannah Lindqvist", "Medium", "Blocked", -4, -1, "",
+        ("Payments", overdue.iloc[0]["payment_id"] if len(overdue) else "",
+         "Chase overdue payment with counterparty", "Hannah Lindqvist", "Medium", "Blocked", -4, -1, "",
          "Waiting on bank details from counterparty."),
         ("Support", critical.iloc[0]["ticket_id"] if len(critical) else "",
          "Call back customer on critical ticket", "Chloé Martin", "Critical", "Resolved", -3, -2, "-2",
@@ -364,7 +403,7 @@ def generate_all(as_of: date = DEFAULT_AS_OF, seed: int = SEED) -> Dict[str, pd.
     rng = random.Random(seed)
     products = make_products(rng, as_of)
     orders = make_orders(rng, as_of, products)
-    shipments = make_shipments(rng, as_of, orders)
+    orders, shipments = make_shipments(rng, as_of, orders)
     payments = make_payments(rng, as_of, orders)
     tickets = make_tickets(rng, as_of, orders)
     actions = make_actions(as_of, products, shipments, payments, tickets)
