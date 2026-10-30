@@ -346,6 +346,7 @@ Things to know before sharing:
 - **Anyone with the link can use the Action Tracker.** Their changes affect the online demo only (never your GitHub repository) and disappear when the app restarts. Use **Demo controls → Reset demo actions** before a presentation.
 - Free apps **go to sleep** after a period without visits; the first visitor then waits about a minute. Open the link yourself shortly before an interview.
 - Every `git push` to `main` updates the online app automatically.
+- **After a push that changes files in `src/`, reboot the app** (Manage app → ⋮ → Reboot app) and check it. The running app can keep old copies of those files in memory and mix them with new ones, which shows as an error such as `AttributeError: module 'src.config' has no attribute ...`. A reboot loads everything fresh.
 - The demo is a snapshot dated 30 Oct 2026. To show "today", run `python -m src.demo_data --as-of today`, commit and push.
 
 Alternatives: Hugging Face Spaces (free, Streamlit template) or Render (free tier, `streamlit run app.py --server.port $PORT`).
