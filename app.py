@@ -26,6 +26,7 @@ ui.data_banner(bundle)
 pages = {
     "Overview": [
         st.Page("views/executive_dashboard.py", title="Executive Dashboard", icon="📊", default=True),
+        st.Page("views/daily_briefing.py", title="Daily Briefing", icon="☀️"),
     ],
     "Operations": [
         st.Page("views/inventory.py", title="Inventory", icon="📦"),

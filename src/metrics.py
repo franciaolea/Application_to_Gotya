@@ -545,7 +545,8 @@ ISSUE_COLUMNS = ["severity", "area", "reference", "issue", "owner", "detail", "e
 def _finalise(parts: List[pd.DataFrame]) -> pd.DataFrame:
     parts = [part for part in parts if not part.empty]
     if not parts:
-        return pd.DataFrame(columns=ISSUE_COLUMNS)
+        # Typed empty table: "escalate" must be boolean so items[items["escalate"]] still filters rows.
+        return pd.DataFrame(columns=ISSUE_COLUMNS).astype({"escalate": bool})
     items = pd.concat(parts, ignore_index=True)
     items["escalate"] = items["severity"].astype(str) == "Critical"
     items["severity"] = pd.Categorical(items["severity"].astype(str), SEVERITIES, ordered=True)

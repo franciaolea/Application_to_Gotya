@@ -48,6 +48,8 @@ ORDER_ESCALATION_HOURS = 96
 # delayed by this many days or more it gets escalated.
 SHIPMENT_ESCALATION_DAYS = 3
 ON_TIME_DELIVERY_TARGET = 0.95
+# A carrier at or above this rate is reported as performing well, even if below target.
+ON_TIME_ACCEPTABLE = 0.90
 
 # Inventory: minimum stock (reorder point) = daily demand x (lead time + safety days).
 SAFETY_STOCK_DAYS = 7
@@ -67,3 +69,12 @@ PAYMENT_ESCALATION_DAYS = 7
 
 # Time of day the morning briefing is produced (used for SLA calculations).
 BRIEFING_HOUR = 8
+
+# Daily briefing: who each area's critical issues are escalated to.
+ESCALATION_PATHS = {
+    "Orders": "Warehouse manager",
+    "Shipping": "Carrier account manager",
+    "Inventory": "Purchasing lead",
+    "Payments": "Finance lead",
+    "Support": "Head of customer service",
+}
