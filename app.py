@@ -10,13 +10,13 @@ import streamlit as st
 from src import ui
 
 st.set_page_config(page_title="Operations Control Tower", page_icon="🛰️", layout="wide")
+st.logo("assets/logo.svg", size="large")
 ui.inject_css()
 
 bundle = ui.get_data()
 
 with st.sidebar:
-    st.markdown("### 🛰️ Operations Control Tower")
-    st.caption("Demo data" if bundle.is_demo else "Live data")
+    st.caption("Showing fictional demo data" if bundle.is_demo else "Showing live data")
     if st.button("Reload data", width="stretch"):
         ui.reload_data()
         st.rerun()

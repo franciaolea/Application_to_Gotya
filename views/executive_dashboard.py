@@ -67,6 +67,14 @@ with cards[5]:
                 f"{kpi['breached_tickets']} past SLA · {kpi['at_risk_tickets']} at risk<br>"
                 f"{ui.fmt_pct(kpi['sla_compliance'])} resolved within SLA", health["Support"])
 
+# Drill-down links under the cards that have a detail page: from "how many" to "which ones" in one click.
+links = [None, None, ("views/shipping.py", "Shipping details"), ("views/inventory.py", "Inventory details"),
+         ("views/payments.py", "Payment details"), ("views/support.py", "Support details")]
+for col, link in zip(st.columns(6), links):
+    if link:
+        with col:
+            st.page_link(link[0], label=f"{link[1]} →")
+
 # --- 2. Yesterday at a glance ---------------------------------------------
 day = metrics.yesterday_overview(e, as_of)
 st.subheader(f"Yesterday at a glance · {day['date']:%a %d %b}")
