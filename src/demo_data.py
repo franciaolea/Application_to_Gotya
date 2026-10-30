@@ -444,7 +444,8 @@ def make_actions(as_of: date, products: pd.DataFrame, shipments: pd.DataFrame,
             "status": status,
             "due_date": _d(as_of + timedelta(days=due)),
             "resolution_date": _d(as_of + timedelta(days=int(resolved))) if resolved else "",
-            "comments": comment,
+            # Same "YYYY-MM-DD: text" history format the Action Tracker uses.
+            "comments": f"{_d(as_of + timedelta(days=created))}: {comment}" if comment else "",
         })
     return pd.DataFrame(records)
 

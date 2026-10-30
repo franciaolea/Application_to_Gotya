@@ -1,6 +1,6 @@
 action_id,created_date,module,reference_id,issue,owner,priority,status,due_date,resolution_date,comments
-ACT-001,2026-10-28,Inventory,LUM-019,Expedite PO for out-of-stock 'Jute Area Rug 160x230',Priya Raman,High,In Progress,2026-10-31,,"Supplier confirmed dispatch, awaiting ETA."
+ACT-001,2026-10-28,Inventory,LUM-019,Expedite PO for out-of-stock 'Jute Area Rug 160x230',Priya Raman,High,In Progress,2026-10-31,,"2026-10-28: Supplier confirmed dispatch, awaiting ETA."
 ACT-002,2026-10-29,Shipping,SHP-5717,Carrier exception - confirm address with customer,Amara Okafor,High,Open,2026-10-30,,
-ACT-003,2026-10-26,Payments,PAY-7021,Chase overdue payment with counterparty,Hannah Lindqvist,Medium,Blocked,2026-10-29,,Waiting on bank details from counterparty.
-ACT-004,2026-10-27,Support,TCK-3012,Call back customer on critical ticket,Chloé Martin,Critical,Resolved,2026-10-28,2026-10-28,"Customer refunded, ticket closed."
+ACT-003,2026-10-26,Payments,PAY-7021,Chase overdue payment with counterparty,Hannah Lindqvist,Medium,Blocked,2026-10-29,,2026-10-26: Waiting on bank details from counterparty.
+ACT-004,2026-10-27,Support,TCK-3012,Call back customer on critical ticket,Chloé Martin,Critical,Resolved,2026-10-28,2026-10-28,"2026-10-27: Customer refunded, ticket closed."
 ACT-005,2026-10-25,General,,Review weekend staffing for peak season,Lukas Brandt,Low,Open,2026-11-05,,
