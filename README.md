@@ -57,11 +57,10 @@ Operations data usually lives in separate tools: the shop platform, the warehous
 
 | | |
 |---|---|
+| ![AI Operations Assistant](docs/screenshots/09_ai_assistant.png) **AI Operations Assistant** | ![Dashboard trends](docs/screenshots/02_dashboard_trends.png) **Executive Dashboard: performance trends** |
 | ![Daily Briefing](docs/screenshots/03_daily_briefing.png) **Daily Briefing** | ![Action Tracker](docs/screenshots/04_action_tracker.png) **Action Tracker** |
 | ![Inventory](docs/screenshots/05_inventory.png) **Inventory** | ![Shipping](docs/screenshots/06_shipping.png) **Shipping** |
 | ![Payments](docs/screenshots/07_payments.png) **Payments** | ![Support](docs/screenshots/08_support.png) **Support: root causes** |
-
-![Dashboard trends](docs/screenshots/02_dashboard_trends.png)
 
 ---
 
