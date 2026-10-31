@@ -9,13 +9,15 @@ import streamlit as st
 
 from src import ui
 
-st.set_page_config(page_title="Operations Control Tower", page_icon="🛰️", layout="wide")
-st.logo("assets/logo.svg", size="large")
+st.set_page_config(page_title="Operations Control Tower", page_icon="assets/logo_icon.png", layout="wide")
+# Logo slot and browser tab: the emblem only (Streamlit shows logos at ~32px, too small for text).
+st.logo("assets/logo_icon.png", size="large")
 ui.inject_css()
 
 bundle = ui.get_data()
 
 with st.sidebar:
+    st.image("assets/logo.png", width=180)  # the full logo, readable, under the menu
     st.caption("Showing fictional demo data" if bundle.is_demo else "Showing live data")
     if st.button("Reload data", width="stretch"):
         ui.reload_data()

@@ -183,7 +183,8 @@ data/demo/                 Fictional CSVs + _metadata.json ("FICTIONAL DEMO DATA
 data/live/                 Place for real exports (git-ignored)
 tests/                     126 automated tests (pytest)
 docs/screenshots/          Images used in this README
-assets/logo.svg            Sidebar logo
+assets/logo.png            Full logo (shown in the sidebar)
+assets/logo_icon.png       Emblem crop of the logo (logo slot and browser tab)
 .streamlit/config.toml     Theme and toolbar settings
 ```
 
